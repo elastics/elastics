@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href='/elastics/assets/global-74df1a51e3d7075c146b619ddfd07904.css' rel='stylesheet' type='text/css' />
+<script src='/elastics/assets/global-aacc71e3a462796a62993fb5a8b696a3.js' type='text/javascript'></script>
+
+    <title>
+      Elastics - elastics-models - Elastics::ModelSyncer
+    </title>
+    <script type="text/javascript">
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      
+      ga('create', 'UA-42574355-3', 'elasticston
+      .github.io');
+      ga('send', 'pageview');
+    </script>
+  </head>
+  <body>
+    <div id="page-nav" class="nocontent">
+      <ul id="nav-menu" class="menu_h_list"><li><a href="#" class="isLabel">elastics</a><ul><li><a href="/elastics/doc/1-elastics/1-Overview.html">Elastics Overview</a></li><li><a href="/elastics/doc/1-elastics/2-Usage-Overview.html">Usage Overview</a></li><li><a href="/elastics/doc/1-elastics/3-Configuration.html">Configuration</a></li><li><a href="/elastics/doc/1-elastics/4-Rake-Tasks.html">Rake Tasks</a></li></ul></li><li><a href="#" class="isLabel">elastics-client</a><ul><li><a href="/elastics/doc/2-elastics-client/1-Overview.html">Overview</a></li><li><a href="/elastics/doc/2-elastics-client/2-API-Methods.html">API Methods</a></li><li><a href="#" class="isLabel">Templating</a><div class="arrow right"></div><ul><li><a href="/elastics/doc/2-elastics-client/3-Templating/1-Templates.html">Templates</a></li><li><a href="/elastics/doc/2-elastics-client/3-Templating/2-Sources.html">Template Sources</a></li><li><a href="/elastics/doc/2-elastics-client/3-Templating/3-Tags.html">Tags</a></li><li><a href="/elastics/doc/2-elastics-client/3-Templating/4-Variables.html">Variables</a></li><li><a href="/elastics/doc/2-elastics-client/3-Templating/5-Interpolation.html">Interpolation</a></li><li><a href="/elastics/doc/2-elastics-client/3-Templating/6-Partials.html">Partial Templates</a></li></ul></li><li><a href="/elastics/doc/2-elastics-client/4-Result-Extenders.html">Result Extenders</a></li><li><a href="/elastics/doc/2-elastics-client/5-Self-Documentation.html">Self Documentation</a></li><li><a href="/elastics/doc/2-elastics-client/6-Utility-Methods.html">Utility Methods</a></li></ul></li><li><a href="#" class="isLabel">elastics-scopes</a><ul><li><a href="/elastics/doc/3-elastics-scopes/1-Overview.html">Overview</a></li><li><a href="/elastics/doc/3-elastics-scopes/2-Scopes.html">Scopes</a></li></ul></li><li><a href="#" class="isLabel">elastics-models</a><ul><li><a href="/elastics/doc/4-elastics-models/1-Overview.html">Overview</a></li><li><a href="/elastics/doc/4-elastics-models/2-ActiveRecord-And-Mongoid-Integration.html">ActiveRecord And Mongoid Integration</a></li><li><a href="/elastics/doc/4-elastics-models/3-ActiveModel-Integration.html">ActiveModel Integration</a></li><li><a href="#" class="isLabel">Modules</a><div class="arrow right"></div><ul><li><a href="/elastics/doc/4-elastics-models/4-Modules/1-Elastics::ModelSyncer.html">Elastics::ModelSyncer</a></li><li><a href="/elastics/doc/4-elastics-models/4-Modules/2-Elastics::ModelIndexer.html">Elastics::ModelIndexer</a></li><li><a href="/elastics/doc/4-elastics-models/4-Modules/3-Elastics::ActiveModel.html">Elastics::ActiveModel</a></li></ul></li><li><a href="/elastics/doc/4-elastics-models/5-Result-Extenders.html">Result Extenders</a></li></ul></li><li><a href="#" class="isLabel">elastics-rails</a><ul><li><a href="/elastics/doc/5-elastics-rails/1-Overview.html">Overview</a></li><li><a href="/elastics/doc/5-elastics-rails/2-Result-Extenders.html">Result Extenders</a></li></ul></li><li><a href="#" class="isLabel">elastics-admin</a><ul><li><a href="/elastics/doc/6-elastics-admin/1-Binary.html">Binary</a></li><li><a href="/elastics/doc/6-elastics-admin/2-Live-Reindex.html">Live Reindex</a></li></ul></li><li><a href="#" class="isLabel">tutorials</a><ul><li><a href="/elastics/doc/7-tutorials/1-Elastics-vs-Tire.html">Why you should use Elastics rather than Tire</a></li><li><a href="/elastics/doc/7-tutorials/2-Migrate-from-0.x.html">How to migrate from Flex 0.x</a></li><li><a href="/elastics/doc/7-tutorials/3-Index-and-Search-your-Models.html">Index and Search your Models</a></li><li><a href="/elastics/doc/7-tutorials/4-Index-and-Search-External-Data.html">Index and Search External Data</a></li></ul></li></ul>
+      <div id="google-search">
+        <script type="text/javascript">
+          (function() {
+            var cx = '001168365143071728136:w4opkcwdl3y';
+            var gcse = document.createElement('script');
+            gcse.type = 'text/javascript';
+            gcse.async = true;
+            gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                '//www.google.com/cse/cse.js?cx=' + cx;
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(gcse, s);
+          })();
+        </script>
+        <gcse:search>&nbsp;</gcse:search>
+      </div>
+    </div>
+    <div id="page-toc">
+      <div id="logo">
+        <img src="/elastics/images/elastics-logo-200.png" />
+      </div>
+    </div>
+    <div id="content">
+      <a id="badge" href="https://badge.fury.io/rb/elastics-models"><img src="https://badge.fury.io/rb/elastics-models.png" /></a>
+      <div class="breadcrumb nocontent">
+        <span><a href="/elastics/doc">Elastics</a></span> &gt; <span><a href="/elastics/doc/4-elastics-models">elastics-models</a></span> &gt; <span><a href="/elastics/doc/4-elastics-models/4-Modules">Modules</a></span> &gt; <span>Elastics::ModelSyncer</span>
+      </div>
+      <h1 id='elasticsmodelsyncer'>Elastics::ModelSyncer</h1>
+
+<blockquote>
+<p><strong>Notice</strong>: Syncing is not needed if you use other external means to sync (like rivers or background jobs).</p>
+</blockquote>
+
+<p>The <code>Elastics::ModelSyncer</code> model is included in <code>Elastics::ModelIndexer</code> which is included in <code>Elastics::ActiveModel</code>, so they all include the sync-related methods (see <a href='/elastics/doc/4-elastics-models/4-Modules/1-Elastics::ModelSyncer.html#class_methods'>Class Methods</a> and <a href='/elastics/doc/4-elastics-models/4-Modules/1-Elastics::ModelSyncer.html#instance_methods'>Instance Methods</a>). However you may need to explicitly include the <code>Elastics::ModelSyncer</code> (see <a href='/elastics/doc/4-elastics-models/4-Modules/1-Elastics::ModelSyncer.html#including_elasticsmodelsyncer'>Including Elastics::ModelSyncer</a>).</p>
+
+<h2 id='syncing_self'>Syncing self</h2>
+
+<p>Each time you save or destroy a record belonging to a elastics model, you may want to sync the changes with the index. You can implement automatic synchronization by just declaring it. For example:</p>
+<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>Comment</span>
+  <span class='kp'>include</span> <span class='ss'>Elastics</span><span class='p'>:</span><span class='ss'>:ModelIndexer</span>
+  <span class='n'>elastics</span><span class='o'>.</span><span class='n'>sync</span> <span class='nb'>self</span>
+<span class='k'>end</span>
+</code></pre></div>
+<p>That means that each time a Comment record gets saved or destroyed, Elastics will sync <code>self</code> (the <code>Comment</code> instance) with its related elasticsearch document, so the index will always contain the updated data from the DB(s).</p>
+
+<h2 id='syncing_relating_models'>Syncing relating models</h2>
+
+<p>Sometimes, you may need to sync also other records that are related with the changing record. That is needed when the other record embeds data from the changing record, as in our example with the <code>Parent</code> model (see <a href='/elastics/doc/4-elastics-models/2-ActiveRecord-And-Mongoid-Integration.html#indexing_fields'>Indexing Fields</a>). In that case we mapped the indexed source to contain the <code>children.count</code>, so each time we add or remove a <code>Child</code> record, we need also to sync its <code>:parent</code> record (i.e. the <code>self.parent</code>). For example:</p>
+<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>Child</span>
+  <span class='n'>belongs_to</span> <span class='ss'>:parent</span>
+  <span class='kp'>include</span> <span class='ss'>Elastics</span><span class='p'>:</span><span class='ss'>:ModelIndexer</span>
+  <span class='n'>elastics</span><span class='o'>.</span><span class='n'>sync</span> <span class='nb'>self</span><span class='p'>,</span> <span class='ss'>:parent</span>
+<span class='k'>end</span>
+</code></pre></div>
+<p>That means that besides syncing <code>self</code>, Elastics will also sync the <code>:parent</code> parent record.</p>
+
+<h2 id='propagation'>Propagation</h2>
+
+<p>Notice that Elastics calls <code>sync</code> on the synced records as well, so also their defined synced models will be synced as well. This feature automatically propagates the syncronization over models, still keeping its implementation very simple on a per-model basis.</p>
+
+<p>Elastics tracks the propagation, so it avoids circular references. For example you can sync both the parent from the child and the child from the parent and it will work in either ways, because the propagation will not go backward.</p>
+
+<h2 id='including_elasticsmodelsyncer'>Including Elastics::ModelSyncer</h2>
+
+<p>Sometimes you may have a model that doesn&#8217;t need to be indexed as a document, however part of its data is referred (and indexed) as part of another model. In that case you don&#8217;t need the full fledged <code>Elastics::ModelIndexer</code> which will add typical index related capabilities to your model (like <code>index</code>, <code>type</code>, <code>store</code>, <code>remove</code>, &#8230;). Indeed you need just to <code>sync</code> some other referring model(s). For example:</p>
+<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>NotIndexedModel</span>
+  <span class='n'>belongs_to</span> <span class='ss'>:parent</span>
+  <span class='kp'>include</span> <span class='ss'>Elastics</span><span class='p'>:</span><span class='ss'>:ModelSyncer</span>
+  <span class='c1'># parts of the data of this model are referred in :parent and :other_model</span>
+  <span class='n'>elastics</span><span class='o'>.</span><span class='n'>sync</span> <span class='ss'>:parent</span><span class='p'>,</span> <span class='ss'>:other_model</span>
+
+  <span class='k'>def</span> <span class='nf'>other_model</span>
+    <span class='c1'># should return the record that needs to be synced</span>
+  <span class='k'>end</span>
+
+<span class='k'>end</span>
+</code></pre></div>
+<p>In this example, each time a <code>NotIndexedModel</code> record changes, the <code>:parent</code> and the <code>:other_model</code> records will be synced. Notice that a <code>Elastics::ModelSyncer.sync</code> cannot sync <code>self</code>: indeed you included that module instead of <code>Elastics::ModelIndexer</code> exactly because you don&#8217;t need to sync <code>self</code>. :-)</p>
+
+<h2 id='class_methods'>Class Methods</h2>
+<table cellpadding='0' cellspacing='0' class='code-topics' id='syncer-class-methods'>
+  <tr>
+    <td>
+      <code>elastics.sync(*synced)</code>
+    </td>
+    <td><p>With this method you actually define the callback needed to keep the index in sync when the record change, and set the <code>elastics.synced</code> array.</p>
+
+<p>It accepts <code>self</code>, symbols and strings. For example:</p>
+<div class='highlight'><pre><code class='ruby'>      <span class='n'>elastics</span><span class='o'>.</span><span class='n'>sync</span> <span class='nb'>self</span><span class='p'>,</span> <span class='ss'>:review</span><span class='p'>,</span> <span class='s1'>&#39;blog&#39;</span>
+      
+</code></pre></div>
+<ul>
+<li><code>self</code> will sync the record itself (it is required only for <code>Elastics::ModelIndexer</code> models, it&#8217;s illegal for <code>Elastics::ModelSyncer</code> models and already included for <code>Elastics::ActiveModel</code> models)</li>
+
+<li><code>:review</code> is a symbol which identifies a method of the record, which is supposed to return another (relating) record. It is usually a <code>belongs_to</code> association symbol name, but it could be any method that you defined</li>
+
+<li><code>&#39;blog&#39;</code> is a string which is supposed to be a parent name, as defined in a parent-child map (see <a href='/elastics/doc/4-elastics-models/2-ActiveRecord-And-Mongoid-Integration.html#elasticsearch_parentchildren_relations'>elasticsearch Parent/Child Relationship</a>)</li>
+</ul>
+
+<p>When a record of this model changes, it is synced with its related elasticsearch-document, then the record returned by the <code>record.review</code> (must be a elastics model) is synced as well, and finally the parent record (defined in the parent/child relationship) is synced IF its type is <code>blog</code>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>elastics.synced</code>
+    </td>
+    <td><p>Attribute accessor for the Array of items to sync. You may need to set this Array only in the very special case that you want to sync the record manually. In that case you should not use the <code>elastics.sync</code> that does it automatically. (see also <code>record.elastics.sync</code> below). If you use <code>Model.elastics.sync</code> you can ignore this.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>elastics.refresh_index</code>
+    </td>
+    <td><p>It refreshes the index by using <code>Elastics.refresh_index</code> API method. For automatic refresh you can also use <code>Elastics::RefreshCallback</code> (see <a href='/elastics/doc/4-elastics-models/4-Modules/3-Elastics::ActiveModel.html#elasticsrefreshcallback'>Elastics::RefreshCallback</a>).</p>
+    </td>
+  </tr>
+</table>
+<h2 id='instance_methods'>Instance Methods</h2>
+<table cellpadding='0' cellspacing='0' class='code-topics' id='syncer-instance-methods'>
+  <tr>
+    <td>
+      <code>elastics.sync</code>
+    </td>
+    <td><p>It syncs the list of synced models, as set in the <code>elastics.synced</code> array. This method is automatically called when the record changes, so you probably don&#8217;t need to use it explicitly. If you need to sync manually, then you should not use <code>Model.elastics.sync(*synced)</code> which will define the callbacks. Instead you should use <code>Model.elastics.synced = [self, :other, ...]</code> that causes the same behaviour, without setting the callbacks.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>elastics.refresh_index</code>
+    </td>
+    <td><p>It refreshes the index by using <code>Elastics.refresh_index</code> API method. For automatic refresh you can also use <code>Elastics::RefreshCallback</code> (see <a href='/elastics/doc/4-elastics-models/4-Modules/3-Elastics::ActiveModel.html#elasticsrefreshcallback'>Elastics::RefreshCallback</a>).</p>
+    </td>
+  </tr>
+</table><br />
+      <div class="breadcrumb nocontent">
+        <span><a href="/elastics/doc">Elastics</a></span> &gt; <span><a href="/elastics/doc/4-elastics-models">elastics-models</a></span> &gt; <span><a href="/elastics/doc/4-elastics-models/4-Modules">Modules</a></span> &gt; <span>Elastics::ModelSyncer</span>
+      </div>
+    </div>
+    <div id="footer" class="nocontent">
+      Copyright &copy; 2012-2013 by <a href="mailto://dd.nexus@gmail.com">Domizio Demichelis</a> &mdash; Sponsored by <a href="http://www.escalatemedia.com">Escalate Media</a> and <a href="http://www.barquin.com">Barquin International</a>
+    </div>
+  </body>
+</html>
