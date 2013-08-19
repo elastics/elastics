@@ -1,7 +1,11 @@
 #! /usr/bin/env ruby
 
 require 'fileutils'
-gems    = %w[flex flex-admin flex-models flex-rails flex-scopes]
+gems = %w[ elastics-client
+           elastics-admin
+           elastics-scopes
+           elastics-models
+           elastics-rails ]
 
 begin
 

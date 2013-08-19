@@ -1,0 +1,1 @@
+raise NotImplementedError, %(The "flex/rails" file has been replaced by the "elastics-rails" gem. Please, use "elastics-rails" in place of "flex" in Rails applications (change "gem 'flex', require => 'flex/rails'" to "gem 'elastics-rails'" in your Gemfile). Please, read the upgrade notes at http://elastics.github.io/elastics/doc/7-Tutorials/2-Migrate-from-0.x.html.)
