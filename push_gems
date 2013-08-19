@@ -1,7 +1,11 @@
 #! /usr/bin/env ruby
 
 require 'fileutils'
-gems    = %w[flex flex-admin flex-models flex-rails flex-scopes]
+gems = %w[ elastics-client
+           elastics-admin
+           elastics-scopes
+           elastics-models
+           elastics-rails ]
 
 begin
 
@@ -9,6 +13,8 @@ begin
     puts 'aborted: the working tree is dirty!'
     exit(1)
   end
+
+  version = ''
 
   gems.each do |gem_name|
     FileUtils.chdir(gem_name) do
