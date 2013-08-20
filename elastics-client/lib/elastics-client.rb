@@ -44,7 +44,6 @@ require 'elastics/utility_methods'
 
 require 'progressbar'
 require 'elastics/prog_bar'
-require 'elastics/deprecation'
 
 require 'elastics/api_stubs'
 require 'elastics/tasks'

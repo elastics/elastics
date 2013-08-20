@@ -8,7 +8,15 @@ It covers ALL the elasticsearch API, and transparently integrates it with your a
 
 It also implements and integrates very advanced features like chainable scopes, live-reindex, cross-model syncing, query fragment reuse, parent/child relationships, templating, self-documenting tools, detailed debugging, ...
 
-It is composed by 5 gems: `elastics-client`, `elastics-rails`, `elastics-models`, `elastics-scopes`, `elastics-admin`. You can use them together or separately, depending on your needs.
+It is composed by 6 gems: you can use them together or separately, depending on your needs:
+
+- `elastics-client`
+- `elastics-rails`
+- `elastics-models`
+- `elastics-scopes`
+- `elastics-admin`
+- `elastics-legacy` (helps migrating from Flex)
+
 
 ## Quick Start
 

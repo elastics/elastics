@@ -5,7 +5,8 @@ gems = %w[ elastics-client
            elastics-admin
            elastics-scopes
            elastics-models
-           elastics-rails ]
+           elastics-rails
+           elastics-legacy ]
 
 begin
 

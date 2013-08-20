@@ -62,8 +62,8 @@ module Elastics
       def type
         @type ||= case
                   when instance.respond_to?(:elastics_type) then instance.elastics_type
-                  when is_child?                           then class_elastics.parent_child_map[parent_instance.elastics.type]
-                  else                                          class_elastics.type
+                  when is_child?                            then class_elastics.parent_child_map[parent_instance.elastics.type]
+                  else                                           class_elastics.type
                   end
       end
       attr_writer :type
@@ -75,8 +75,8 @@ module Elastics
       def routing
         @routing ||= case
                      when instance.respond_to?(:elastics_routing) then instance.elastics_routing
-                     when is_child?                              then parent_instance.elastics.routing
-                     when is_parent?                             then create_routing
+                     when is_child?                               then parent_instance.elastics.routing
+                     when is_parent?                              then create_routing
                      end
       end
       attr_writer :routing
@@ -84,7 +84,7 @@ module Elastics
       def parent
         @parent ||= case
                     when instance.respond_to?(:elastics_parent) then instance.elastics_parent
-                    when is_child?                             then parent_instance.id.to_s
+                    when is_child?                              then parent_instance.id.to_s
                     else nil
                     end
       end
