@@ -1,18 +1,8 @@
-require 'elastics'
+require 'elastics-client'
 
 env   = defined?(Rails) ? :environment : []
 
-namespace :'elastics-client' do
-
-  # deprecated tasks
-  task(:create_indices => env) do
-    Elastics::Deprecation.warn 'flex:create_indices', 'elastics:index:create', nil
-    Elastics::Tasks.new.create_indices
-  end
-  task(:delete_indices => env) do
-    Elastics::Deprecation.warn 'flex:delete_indices', 'elastics:index:delete', nil
-    Elastics::Tasks.new.delete_indices
-  end
+namespace :elastics do
 
   namespace :index do
 

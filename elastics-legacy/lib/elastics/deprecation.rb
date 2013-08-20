@@ -80,8 +80,26 @@ module Elastics
       Deprecation.warn 'Flex::Configuration.raise_proc=', 'Elastics::Configuration.http_client.raise_proc='
       http_client.raise_proc = val
     end
+    def flex_models
+      elastics_models
+    end
+    def flex_active_models
+      elastics_active_models
+    end
   end
 
+  module Rails
+    class Logger
+      def log_to_stdout
+        Deprecation.warn 'Flex::Configuration.logger.log_to_stdout', 'Elastics::Configuration.logger.log_to_stderr'
+        log_to_stderr
+      end
+      def log_to_stdout=(val)
+        Deprecation.warn 'Flex::Configuration.logger.log_to_stdout=', 'Elastics::Configuration.logger.log_to_stderr='
+        self.log_to_stderr = val
+      end
+    end
+  end
 
   class Variables
     def add(*hashes)
@@ -129,7 +147,7 @@ module Elastics
 
   module Model
     def self.included(base)
-      if defined?(Flex::ModelIndexer)
+      if defined?(Elastics::ModelIndexer)
         Deprecation.warn 'Flex::Model', 'Elastics::ModelIndexer'
         base.send :include, Elastics::ModelIndexer
       else
@@ -141,7 +159,7 @@ module Elastics
 
   module RelatedModel
     def self.included(base)
-      if defined?(Flex::ModelSyncer)
+      if defined?(Elastics::ModelSyncer)
         Deprecation.warn 'Flex::RelatedModel', 'Elastics::ModelSyncer'
         base.send :include, Elastics::ModelSyncer
       else
@@ -150,4 +168,47 @@ module Elastics
     end
   end
 
+  %w[Templates ModelSyncer ModelIndexer ActiveModel].each do |mod|
+    module_eval <<-ruby
+      if defined?(#{mod})
+        module #{mod}
+          class << self
+            alias_method :original_included, :included
+            def included(base)
+              original_included(base)
+
+              def base.flex
+                elastics
+              end
+
+              def base.elastics_result(result)
+                respond_to?(:flex_result) ? flex_result(result) : result
+              end
+
+            end
+          end
+          alias_method :flex, :elastics if method_defined?(:elastics)
+        end
+      end
+    ruby
+  end
+
+  module Legacy
+
+    extend self
+
+    def fix_models
+      (Elastics::Conf.elastics_models + Elastics::Conf.elastics_active_models).each do |mod|
+        mod = eval("::#{mod}") if mod.is_a?(String)
+        mod.class_eval do
+          alias_method :flex_id,      :elastics_id      if method_defined?(:elastics_id)
+          alias_method :flex_type,    :elastics_type    if method_defined?(:elastics_type)
+          alias_method :flex_index,   :elastics_index   if method_defined?(:elastics_index)
+          alias_method :flex_parent,  :elastics_parent  if method_defined?(:elastics_parent)
+          alias_method :flex_routing, :elastics_routing if method_defined?(:elastics_routing)
+        end
+      end
+    end
+
+  end
 end

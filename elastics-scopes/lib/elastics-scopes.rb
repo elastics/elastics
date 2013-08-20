@@ -1,4 +1,4 @@
-require 'elastics'
+require 'elastics-client'
 require 'elastics/scope/utils'
 require 'elastics/scope/filter_methods'
 require 'elastics/scope/vars_methods'

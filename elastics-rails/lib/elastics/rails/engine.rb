@@ -28,6 +28,7 @@ module Elastics
         config.elastics.logger.log_to_stderr       = true
         config.elastics.logger.debug_variables     = false
         config.elastics.logger.debug_result        = false
+        ::El = Elastics unless defined?(::El)
       end
 
       config.to_prepare do

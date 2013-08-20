@@ -15,15 +15,6 @@ module Elastics
         @log_to_stderr       = false
       end
 
-      def log_to_stdout
-        Deprecation.warn 'Flex::Configuration.logger.log_to_stdout', 'Elastics::Configuration.logger.log_to_stderr'
-        log_to_stderr
-      end
-      def log_to_stdout=(val)
-        Deprecation.warn 'Flex::Configuration.logger.log_to_stdout=', 'Elastics::Configuration.logger.log_to_stderr='
-        self.log_to_stderr = val
-      end
-
     end
   end
 end

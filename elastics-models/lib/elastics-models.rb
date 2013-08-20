@@ -1,4 +1,4 @@
-require 'elastics'
+require 'elastics-client'
 require 'elastics-scopes'
 require 'active_attr'
 

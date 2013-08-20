@@ -5,7 +5,7 @@ module Elastics
       attr_reader :instance, :class_elastics
 
       def initialize(instance)
-        @instance   = instance
+        @instance       = instance
         @class_elastics = instance.class.elastics
       end
 
