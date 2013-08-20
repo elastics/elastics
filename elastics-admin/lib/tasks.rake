@@ -3,7 +3,7 @@ require 'elastics-admin'
 
 env = defined?(Rails) ? :environment : []
 
-namespace :'elastics-client' do
+namespace :elastics do
   namespace :admin do
 
     desc 'Dumps the data from one or more Elasticsearch indices to a file'
