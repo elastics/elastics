@@ -1,4 +1,4 @@
-require 'elastics'
+require 'elastics-client'
 
 env   = defined?(Rails) ? :environment : []
 

@@ -1,4 +1,4 @@
-require 'elastics'
+require 'elastics-client'
 require 'elastics-models'
 require 'rails'
 require 'elastics/result/rails_helper'

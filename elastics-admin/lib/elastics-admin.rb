@@ -1,4 +1,4 @@
-require 'elastics'
+require 'elastics-client'
 require 'elastics/admin'
 require 'elastics/live_reindex'
 
