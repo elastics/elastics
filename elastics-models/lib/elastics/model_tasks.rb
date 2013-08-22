@@ -43,8 +43,8 @@ module Elastics
 
     def default_options
       @default_options ||= { :force          => false,
-                             :timeout        => 20,
-                             :batch_size     => 1000,
+                             :timeout        => 60,
+                             :batch_size     => 500,
                              :import_options => { },
                              :models         => Conf.elastics_models,
                              :config_file    => Conf.config_file,

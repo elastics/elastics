@@ -22,8 +22,8 @@ module Elastics
                                :type       => Conf.variables[:type],
                                :scroll     => '5m',
                                :size       => 50,
-                               :timeout    => 20,
-                               :batch_size => 1000,
+                               :timeout    => 60,
+                               :batch_size => 500,
                                :verbose    => true,
                                :index_map  => nil }
       end
