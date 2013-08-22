@@ -54,7 +54,7 @@ module Elastics
           file.puts bulk_string
           if options[:verbose]
             total_count += batch.size
-            pbar.pbar.inc(batch.size)
+            pbar.pbar.progress += batch.size
           end
         end
         file_size = file.size if options[:verbose]
@@ -62,7 +62,7 @@ module Elastics
 
         if options[:verbose]
           formatted_file_size = file_size.to_s.reverse.gsub(/...(?=.)/, '\&,').reverse
-          pbar.pbar.finish
+          pbar.pbar.finish unless pbar.pbar.finished?
           puts "\n***** WARNING: Expected document to dump: #{total_hits}, dumped: #{total_count}. *****" \
                unless total_hits == total_count
           puts "\nDumped #{total_count} documents to #{path} (size: #{formatted_file_size} bytes)"

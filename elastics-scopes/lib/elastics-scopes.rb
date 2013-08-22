@@ -10,5 +10,3 @@ require 'elastics/result/scope'
 Elastics::LIB_PATHS << File.dirname(__FILE__)
 
 Elastics::Conf.result_extenders |= [Elastics::Result::Scope]
-
-Elastics.send(:include, Elastics::Scopes)
