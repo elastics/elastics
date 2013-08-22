@@ -42,7 +42,7 @@ require 'elastics/http_clients/loader'
 require 'elastics/configuration'
 require 'elastics/utility_methods'
 
-require 'progressbar'
+require 'ruby-progressbar'
 require 'elastics/prog_bar'
 require 'elastics/client_live_reindex'
 
