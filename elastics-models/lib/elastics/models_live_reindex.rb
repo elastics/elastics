@@ -32,7 +32,7 @@ module Elastics
 
     def reindex_active_models(opts={})
 
-      raise NotImplementedError, 'Elastics::LiveReindex.reindex_models requires the "elastics-admin" gem. PLease, install it.' \
+      raise NotImplementedError, 'Elastics::LiveReindex.reindex_models requires the "elastics-admin" gem. Please, install it.' \
             unless defined?(Elastics::Admin)
 
       yield self if block_given?

@@ -1,3 +1,6 @@
+# ensure to load it before overriding it
+require 'elastics/client_live_reindex'
+
 module Elastics
   # private module
   module LiveReindex
@@ -43,8 +46,6 @@ module Elastics
       end
 
     end
-
-    extend self
 
     def on_reindex(&block)
       @reindex = block

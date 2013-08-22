@@ -1,6 +1,6 @@
 require 'elastics-client'
 require 'elastics/admin'
-require 'elastics/live_reindex'
+require 'elastics/admin_live_reindex'
 
 Elastics::LIB_PATHS << File.dirname(__FILE__)
 

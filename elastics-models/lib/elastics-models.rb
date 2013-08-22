@@ -22,7 +22,7 @@ require 'elastics/active_model'
 
 require 'elastics/refresh_callbacks'
 
-require 'elastics/live_reindex_model'
+require 'elastics/models_live_reindex'
 
 require 'elastics/result/document_loader'
 require 'elastics/result/search_loader'
