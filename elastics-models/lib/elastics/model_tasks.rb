@@ -65,14 +65,14 @@ module Elastics
           unless deleted.include?(index)
             delete_index(index)
             deleted << index
-            puts "#{index} index deleted" if options[:verbose]
+            Prompter.say_warning "#{index} index deleted" if options[:verbose]
           end
         end
 
         # block never called during live-reindex, since prefix_index creates it
         unless exist?(index)
           create(index)
-          puts "#{index} index created" if options[:verbose]
+          Prompter.say_ok "#{index} index created" if options[:verbose]
         end
 
         if defined?(Mongoid::Document) && model.include?(Mongoid::Document)

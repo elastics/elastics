@@ -1,4 +1,5 @@
 require 'dye'
+require 'prompter'
 require 'yaml'
 require 'ostruct'
 require 'erb'

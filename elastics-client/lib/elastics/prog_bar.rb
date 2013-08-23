@@ -8,13 +8,12 @@ module Elastics
       @failed_count     = 0
       @pbar             = ::ProgressBar.create(:total         => total_count,
                                                :progress_mark => '|',
-                                               :format        => 'processing... |%b%i| %p%% %E',
-                                               :length        => 80)
+                                               :format        => 'processing... |%b%i| %p%% %E')
       @pbar.clear
-      puts '_' * @pbar.send(:length)
+      Prompter.say_notice '_' * @pbar.send(:length)
       message = "#{prefix_message}Processing #{total_count} documents"
       message << " in batches of #{batch_size}:" unless batch_size.nil?
-      puts message
+      Prompter.say_notice message
       @pbar.start
     end
 
@@ -35,8 +34,8 @@ module Elastics
 
     def finish
       @pbar.finish unless @pbar.finished?
-      puts "Processed #{@pbar.total}. Successful #@successful_count. Skipped #{@pbar.total - @successful_count - @failed_count}. Failed #@failed_count."
-      puts 'See the log for the details about the failures.' unless @failed_count == 0
+      Prompter.say_log "Processed #{@pbar.total}. Successful #@successful_count. Skipped #{@pbar.total - @successful_count - @failed_count}. Failed #@failed_count."
+      Prompter.say_warning 'See the log for the details about the failures.' unless @failed_count == 0
     end
 
   end

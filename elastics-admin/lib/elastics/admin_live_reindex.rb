@@ -127,7 +127,10 @@ module Elastics
     end
 
     def perform(opts={})
-      Conf.logger.warn 'Safe reindex is disabled!' if opts[:safe_reindex] == false
+      if opts[:safe_reindex] == false
+        Conf.logger.warn 'Safe reindex is disabled!'
+        Prompter.say_warning 'Safe reindex is disabled!' if opts[:verbose]
+      end
       Redis.init
       @indices        = []
       @timestamp      = Time.now.strftime('%Y%m%d%H%M%S_')
@@ -159,11 +162,11 @@ module Elastics
       # at this point the changes list should be empty or contain the minimum number of changes we could achieve live
       # the @stop_indexing should ensure to stop/suspend all the actions that would produce changes in the indices being reindexed
       if @stop_indexing
-        puts 'Calling on_stop_indexing...' if opts[:verbose]
+        Prompter.say_notice 'Calling on_stop_indexing...' if opts[:verbose]
         @stop_indexing.call
-        puts 'Indexing stopped' if opts[:verbose]
+        Prompter.say_notice 'Indexing stopped.' if opts[:verbose]
       else
-        puts 'No on_stop_indexing provided' if opts[:verbose]
+        Prompter.say_warning 'No on_stop_indexing provided!' if opts[:verbose]
       end
 
       # if we have still changes, we can index them all, now that the indexing is stopped
@@ -204,7 +207,7 @@ module Elastics
 
       batch_size  = opts[:batch_size] || 100
       bulk_string = ''
-      puts "Reindexing #{left_changes_count} live-changes..." if opts[:verbose]
+      Prompter.say_notice "Reindexing #{left_changes_count} live-changes..." if opts[:verbose]
 
       until left_changes_count == 0
         batch_count = left_changes_count > batch_size ? batch_size : left_changes_count

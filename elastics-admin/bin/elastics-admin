@@ -77,12 +77,12 @@ optparse = OptionParser.new do |opts|
   opts.separator 'Other options:'
 
   opts.on( '-v', '--version', 'Shows the version and exits' ) do
-    puts version
+    Prompter.say_ok version
     exit
   end
 
   opts.on_tail( '-h', '--help', 'Displays this screen' ) do
-    puts copy
+    Prompter.say_log copy, :style => [:blue, :bold]
     puts opts
     exit
   end
@@ -92,7 +92,7 @@ end
 optparse.parse!
 command = ARGV.first
 exec "#{$0} -h" if command.nil?
-puts copy
+Prompter.say_log copy, :style => [:blue, :bold]
 
 case command
 
@@ -103,10 +103,10 @@ when 'load'
   Elastics::Admin::Tasks.new(options).load_from_file
 
 when 'stats'
-  puts '>> puts Elastics.index_stats.to_yaml'
-  puts Elastics.index_stats.to_yaml
+  Prompter.say_notice '>> puts Elastics.index_stats.to_yaml'
+  Prompter.say_log Elastics.index_stats.to_yaml
 
 else
-  puts "unknown command: #{command.inspect}"
+  Prompter.say_warning "unknown command: #{command.inspect}"
 
 end

@@ -19,6 +19,4 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'elastics-client',        version
   s.add_runtime_dependency 'elastics-models', version
-
-  s.add_runtime_dependency 'prompter', '~> 0.1.5'
 end
