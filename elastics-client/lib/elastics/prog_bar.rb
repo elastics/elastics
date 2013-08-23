@@ -4,7 +4,6 @@ module Elastics
     attr_reader :pbar, :total_count
 
     def initialize(total_count, batch_size=nil, prefix_message=nil)
-      @total_count      = total_count
       @successful_count = 0
       @failed_count     = 0
       @pbar             = ::ProgressBar.create(:total         => total_count,
@@ -28,12 +27,15 @@ module Elastics
         @failed_count     += result.failed.size
         @successful_count += result.successful.size
       end
-      @pbar.progress += inc
+      new_progress   = @pbar.progress + inc
+      # avoids an error in case progress > total (may happen in import)
+      @pbar.total    = (new_progress + 1) if new_progress > @pbar.total
+      @pbar.progress = new_progress
     end
 
     def finish
       @pbar.finish unless @pbar.finished?
-      puts "Processed #@total_count. Successful #@successful_count. Skipped #{@total_count - @successful_count - @failed_count}. Failed #@failed_count."
+      puts "Processed #{@pbar.total}. Successful #@successful_count. Skipped #{@pbar.total - @successful_count - @failed_count}. Failed #@failed_count."
       puts 'See the log for the details about the failures.' unless @failed_count == 0
     end
 
