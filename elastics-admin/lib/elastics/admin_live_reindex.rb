@@ -62,6 +62,7 @@ module Elastics
 
     def reindex(opts={})
       yield self
+      opts[:verbose] = true unless opts.has_key?(:verbose)
       perform(opts)
     end
 
@@ -127,7 +128,11 @@ module Elastics
     end
 
     def perform(opts={})
-      Conf.logger.warn 'Safe reindex is disabled!' if opts[:safe_reindex] == false
+      Prompter.say_title 'Live-Reindex' if opts[:verbose]
+      if opts[:safe_reindex] == false
+        Conf.logger.warn 'Safe reindex is disabled!'
+        Prompter.say_warning 'WARNING: Safe reindex is disabled!' if opts[:verbose]
+      end
       Redis.init
       @indices        = []
       @timestamp      = Time.now.strftime('%Y%m%d%H%M%S_')
@@ -153,30 +158,27 @@ module Elastics
 
       @reindex.call
 
-      # when the reindexing is finished we try to empty the changes list a few times
-      tries = 0
-      bulk_string = ''
-      until (count = Redis.llen(:changes)) == 0 || tries > 9
-        count.times { bulk_string << build_bulk_string_from_change(Redis.lpop(:changes))}
-        Elastics.post_bulk_string(:bulk_string => bulk_string)
-        bulk_string = ''
-        tries += 1
-      end
+      # try to empty the changes for 10 times before stopping the indexing
+      10.times{ index_changes(opts) }
+
       # at this point the changes list should be empty or contain the minimum number of changes we could achieve live
       # the @stop_indexing should ensure to stop/suspend all the actions that would produce changes in the indices being reindexed
-      @stop_indexing.call if @stop_indexing
-      # if we have still changes, we can index them (until the list will be empty)
-      bulk_string = ''
-      while (change = Redis.lpop(:changes))
-        bulk_string << build_bulk_string_from_change(change)
+      if @stop_indexing
+        Prompter.say_notice 'Calling on_stop_indexing...' if opts[:verbose]
+        @stop_indexing.call
+        Prompter.say_notice 'Indexing stopped.' if opts[:verbose]
+      else
+        Prompter.say_warning 'No on_stop_indexing provided!' if opts[:verbose]
       end
-      Elastics.post_bulk_string(:bulk_string => bulk_string)
+
+      # if we have still changes, we can index them all, now that the indexing is stopped
+      index_changes(opts)
 
       # deletes the old indices and create the aliases to the new
       @indices.each do |index|
         Elastics.delete_index :index => index
         Elastics.put_index_alias :alias => index,
-                             :index => @timestamp + index
+                                 :index => @timestamp + index
       end
       # after the execution of this method the user should deploy the new code and then resume the regular app processing
 
@@ -201,8 +203,28 @@ module Elastics
       Redis.reset_keys
     end
 
+    def index_changes(opts)
+      left_changes_count = Redis.llen(:changes)
+      return if left_changes_count == 0
+
+      batch_size  = opts[:batch_size] || 100
+      bulk_string = ''
+      Prompter.say_notice "Reindexing #{left_changes_count} live-changes..." if opts[:verbose]
+
+      until left_changes_count == 0
+        batch_count = left_changes_count > batch_size ? batch_size : left_changes_count
+        batch_count.times do
+          bulk_string << build_bulk_string_from_change(Redis.lpop(:changes))
+          left_changes_count -= 1
+        end
+        Elastics.post_bulk_string(:bulk_string => bulk_string)
+        bulk_string = ''
+      end
+    end
 
     def migrate_indices(opts)
+      Conf.http_client.options[:timeout] = opts[:timeout] || 60
+
       opts[:verbose] = true unless opts.has_key?(:verbose)
       pbar = ProgBar.new(Elastics.count(opts)['count'], nil, "index #{opts[:index].inspect}: ") if opts[:verbose]
 

@@ -38,12 +38,12 @@ end
 
 meth
           end
-          puts doc
+          Prompter.say_log doc
         end
 
         def usage(name)
           meth_call = [context, name].join('.')
-          puts build_usage(meth_call, templates[name])
+          Prompter.say_log build_usage(meth_call, templates[name])
         end
 
       private

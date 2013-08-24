@@ -116,7 +116,7 @@ module Elastics
 
     def to_bulk_string(meta, source, options)
       action = options[:action] || 'index'
-      return '' if source.nil? || source.empty? &&! (action == 'delete')
+      return '' if (source.nil? || source.empty?) && (action != 'delete')
       meta['_index'] = LiveReindex.prefix_index(meta['_index']) if LiveReindex.should_prefix_index?
       bulk_string = MultiJson.encode(action => meta) + "\n"
       unless action == 'delete'

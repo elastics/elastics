@@ -22,8 +22,8 @@ module Elastics
                                :type       => Conf.variables[:type],
                                :scroll     => '5m',
                                :size       => 50,
-                               :timeout    => 20,
-                               :batch_size => 1000,
+                               :timeout    => 60,
+                               :batch_size => 500,
                                :verbose    => true,
                                :index_map  => nil }
       end
@@ -31,6 +31,7 @@ module Elastics
       def dump_to_file(cli=false)
         vars = { :index => cli ? options[:index] : (options[:index] || Elastics::Tasks.new.config_hash.keys),
                  :type  => options[:type] }
+        Prompter.say_title "Dumping indices: #{vars[:index].inspect}" if options[:verbose]
         if options[:verbose]
           total_hits  = Elastics.count(vars)['count'].to_i
           total_count = 0
@@ -63,10 +64,10 @@ module Elastics
         if options[:verbose]
           formatted_file_size = file_size.to_s.reverse.gsub(/...(?=.)/, '\&,').reverse
           pbar.pbar.finish unless pbar.pbar.finished?
-          puts "\n***** WARNING: Expected document to dump: #{total_hits}, dumped: #{total_count}. *****" \
+          Prompter.say_warning "\n***** WARNING: Expected document to dump: #{total_hits}, dumped: #{total_count}. *****" \
                unless total_hits == total_count
-          puts "\nDumped #{total_count} documents to #{path} (size: #{formatted_file_size} bytes)"
-          puts dump_stats.to_yaml
+          Prompter.say_notice "\nDumped #{total_count} documents to #{path} (size: #{formatted_file_size} bytes)"
+          Prompter.say_log dump_stats.to_yaml
         end
       end
 
@@ -80,7 +81,7 @@ module Elastics
           line_count = 0
           file.lines { line_count += 1 }
           file.rewind
-          puts "\nLoading from #{path}...\n"
+          Prompter.say_title "Loading: #{path}"
           pbar = ProgBar.new(line_count / 2, options[:batch_size])
         end
         file.lines do |line|

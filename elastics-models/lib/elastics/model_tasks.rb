@@ -43,8 +43,8 @@ module Elastics
 
     def default_options
       @default_options ||= { :force          => false,
-                             :timeout        => 20,
-                             :batch_size     => 1000,
+                             :timeout        => 60,
+                             :batch_size     => 500,
                              :import_options => { },
                              :models         => Conf.elastics_models,
                              :config_file    => Conf.config_file,
@@ -52,6 +52,7 @@ module Elastics
     end
 
     def import_models
+      Prompter.say_title "Import models: #{models.map(&:to_s).inspect}" if options[:verbose]
       Conf.http_client.options[:timeout] = options[:timeout]
       deleted = []
       models.each do |model|
@@ -65,14 +66,14 @@ module Elastics
           unless deleted.include?(index)
             delete_index(index)
             deleted << index
-            puts "#{index} index deleted" if options[:verbose]
+            Prompter.say_warning "#{index} index deleted" if options[:verbose]
           end
         end
 
         # block never called during live-reindex, since prefix_index creates it
         unless exist?(index)
           create(index)
-          puts "#{index} index created" if options[:verbose]
+          Prompter.say_ok "#{index} index created" if options[:verbose]
         end
 
         if defined?(Mongoid::Document) && model.include?(Mongoid::Document)

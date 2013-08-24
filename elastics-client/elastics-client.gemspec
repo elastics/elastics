@@ -4,7 +4,8 @@ version = File.read(File.expand_path('../VERSION', __FILE__)).strip
 Gem::Specification.new do |s|
   s.name                      = 'elastics-client'
   s.summary                   = 'Client gem for elasticsearch'
-  s.description               = 'Core gem used by all the elastics gems.'
+  s.description               = 'Core gem used by all the elastics gems. Provides the core resources: HTTP clients,
+Elasticsearch API Methods, Templating System, Cascading Variables Management, Result Extenders, Logging & Debugging, Self-documenting Tool, Rake Tasks, ...'
   s.homepage                  = 'http://elastics.github.io/elastics'
   s.authors                   = ['Domizio Demichelis']
   s.email                     = 'dd.nexus@gmail.com'
@@ -30,4 +31,5 @@ EOM
   s.add_runtime_dependency     'multi_json',       '>= 1.3.4'
   s.add_runtime_dependency     'ruby-progressbar', '>= 1.2.0'
   s.add_runtime_dependency     'dye',              '~> 0.1.4'
+  s.add_runtime_dependency     'prompter',         '~> 0.1.6'
 end

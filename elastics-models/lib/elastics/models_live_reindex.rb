@@ -3,7 +3,6 @@ module Elastics
   module LiveReindex
 
     def reindex_models(opts={})
-
       raise NotImplementedError, 'Elastics::LiveReindex.reindex_models requires the "elastics-admin" gem. Please, install it.' \
             unless defined?(Elastics::Admin)
 
@@ -21,6 +20,8 @@ module Elastics
 
       yield self if block_given?
 
+      opts[:verbose]  = true unless opts.has_key?(:verbose)
+
       # we override the on_reindex eventually set
       on_reindex do
         opts = opts.merge(:force => false)
@@ -31,6 +32,7 @@ module Elastics
     end
 
     def reindex_active_models(opts={})
+      Conf.http_client.options[:timeout] = opts[:timeout] || 60
 
       raise NotImplementedError, 'Elastics::LiveReindex.reindex_models requires the "elastics-admin" gem. Please, install it.' \
             unless defined?(Elastics::Admin)
