@@ -62,6 +62,7 @@ module Elastics
 
     def reindex(opts={})
       yield self
+      opts[:verbose] = true unless opts.has_key?(:verbose)
       perform(opts)
     end
 

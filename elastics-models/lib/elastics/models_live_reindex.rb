@@ -20,6 +20,8 @@ module Elastics
 
       yield self if block_given?
 
+      opts[:verbose]  = true unless opts.has_key?(:verbose)
+
       # we override the on_reindex eventually set
       on_reindex do
         opts = opts.merge(:force => false)
