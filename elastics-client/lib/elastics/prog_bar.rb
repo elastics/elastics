@@ -1,5 +1,3 @@
-require 'ruby-progressbar'
-
 class ProgressBar
   module Format
     class Base

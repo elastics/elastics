@@ -12,7 +12,7 @@ if ::Rails.respond_to?(:version) && ::Rails.version.to_i >= 3
 else
   Elastics::Conf.configure do |c|
     c.config_file       = "#{RAILS_ROOT}/config/elastics.yml"
-    c.elastics_dir       = "#{RAILS_ROOT}app/elastics"
+    c.elastics_dir      = "#{RAILS_ROOT}app/elastics"
     c.logger            = Logger.new(STDOUT)
     c.logger.level      = ::Logger::DEBUG if RAILS_ENV == 'development'
     c.result_extenders |= [ Elastics::Result::RailsHelper ]

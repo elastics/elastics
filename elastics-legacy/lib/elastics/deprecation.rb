@@ -98,6 +98,14 @@ module Elastics
         Deprecation.warn 'Flex::Configuration.logger.log_to_stdout=', 'Elastics::Configuration.logger.log_to_stderr='
         self.log_to_stderr = val
       end
+      def color
+        Deprecation.warn 'Flex::Configuration.logger.color', 'Elastics::Configuration.ansi'
+        Configuration.ansi
+      end
+      def color=(bool)
+        Deprecation.warn 'Flex::Configuration.logger.color=', 'Elastics::Configuration.ansi='
+        Configuration.ansi=(bool)
+      end
     end
   end
 

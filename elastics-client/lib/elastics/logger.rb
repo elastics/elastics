@@ -24,14 +24,5 @@ module Elastics
       msg.split("\n").map{|l| prefix + l}.join("\n") + "\n"
     end
 
-    # force color in console (used with jruby)
-    def color=(bool)
-      Dye.color = bool
-    end
-
-    def color
-      Dye.color?
-    end
-
   end
 end

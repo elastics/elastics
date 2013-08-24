@@ -10,7 +10,7 @@ module Elastics
                                                                 :params     => {},
                                                                 :no_pruning => [] ),
                                  :config_file      => './config/elastics.yml',
-                                 :elastics_dir         => './elastics',
+                                 :elastics_dir     => './elastics',
                                  :http_client      => HttpClients::Loader.new_http_client
 
   # shorter alias
@@ -19,6 +19,14 @@ module Elastics
   Conf.instance_eval do
     def configure
       yield self
+    end
+    # force color in console (used with jruby)
+    def ansi=(bool)
+      Dye.color = bool
+    end
+
+    def ansi
+      Dye.color?
     end
   end
 
