@@ -131,7 +131,7 @@ module Elastics
       Prompter.say_title 'Live-Reindex' if opts[:verbose]
       if opts[:safe_reindex] == false
         Conf.logger.warn 'Safe reindex is disabled!'
-        Prompter.say_warning 'Safe reindex is disabled!' if opts[:verbose]
+        Prompter.say_warning 'WARNING: Safe reindex is disabled!' if opts[:verbose]
       end
       Redis.init
       @indices        = []
