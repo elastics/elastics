@@ -52,6 +52,7 @@ module Elastics
     end
 
     def import_models
+      Prompter.say_title "Import models: #{models.map(&:to_s).inspect}" if options[:verbose]
       Conf.http_client.options[:timeout] = options[:timeout]
       deleted = []
       models.each do |model|

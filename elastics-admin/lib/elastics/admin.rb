@@ -31,6 +31,7 @@ module Elastics
       def dump_to_file(cli=false)
         vars = { :index => cli ? options[:index] : (options[:index] || Elastics::Tasks.new.config_hash.keys),
                  :type  => options[:type] }
+        Prompter.say_title "Dumping indices: #{vars[:index].inspect}" if options[:verbose]
         if options[:verbose]
           total_hits  = Elastics.count(vars)['count'].to_i
           total_count = 0
@@ -80,7 +81,7 @@ module Elastics
           line_count = 0
           file.lines { line_count += 1 }
           file.rewind
-          Prompter.say_notice "\nLoading from #{path}...\n"
+          Prompter.say_title "Loading: #{path}"
           pbar = ProgBar.new(line_count / 2, options[:batch_size])
         end
         file.lines do |line|
