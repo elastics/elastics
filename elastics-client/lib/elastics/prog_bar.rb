@@ -33,28 +33,31 @@ module Elastics
     attr_reader :pbar, :total_count
 
     def initialize(total_count, batch_size=nil, prefix_message=nil)
-      bar_style = [:green, :reversed, :bold]
       @successful_count = 0
       @failed_count     = 0
-      format            = Dye.dye(' processing... ', 'processing... ', bar_style) +
-                          Dye.dye('%b%i',            '|%b%i|',         bar_style) +
-                          Dye.dye(' %p%% %E ',       ' %p%% %E',       bar_style)
-      @pbar             = ::ProgressBar.create(:total         => total_count,
-                                               :progress_mark => Dye.dye(' ', '|', bar_style),
-                                               :format        => format )
+      # we use the title to pass the sgr start style codes
+      start_style   = Dye.color? ? "#{Dye.sgr(:clear, :green, :reversed, :bold)} " : ''
+      format        = '%t%c/%C %p%% %E %b'
+      format       += Dye.sgr(:clear) if Dye.color?
+      progress_mark = Dye.color? ? ' ' : '|'
+      @pbar         = ::ProgressBar.create(:title         => start_style,
+                                           :total         => total_count,
+                                           :progress_mark => progress_mark,
+                                           :format        => format )
       @pbar.clear
-      Prompter.say_log '_' * @pbar.send(:length)
+      puts
       message = "#{prefix_message}Processing #{total_count} documents"
-      message << " in batches of #{batch_size}:" unless batch_size.nil?
+      message << " in batches of #{batch_size}" unless batch_size.nil?
       Prompter.say_log message
       @pbar.start
     end
 
     def process_result(result, inc)
       unless result.nil? || result.empty?
-        unless result.failed.size == 0
+        if result.failed.size > 0
           Conf.logger.error "Failed load:\n#{result.failed.to_yaml}"
-          @pbar.progress_mark = Dye.dye(' ', 'F', :reed, :reversed, :bold)
+          @pbar.title         = "#{Dye.sgr(:clear, :red, :reversed, :bold)} " if Dye.color?
+          @pbar.progress_mark = 'F' unless Dye.color?
         end
         @failed_count     += result.failed.size
         @successful_count += result.successful.size
