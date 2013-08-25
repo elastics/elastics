@@ -176,7 +176,8 @@ module Elastics
 
       # deletes the old indices and create the aliases to the new
       @indices.each do |index|
-        Elastics.delete_index :index => index
+        Elastics.delete_index :index => index,
+                              :raise => false # may not exist
         Elastics.put_index_alias :alias => index,
                                  :index => @timestamp + index
       end
