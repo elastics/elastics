@@ -35,15 +35,10 @@ module Elastics
     def initialize(total_count, batch_size=nil, prefix_message=nil)
       @successful_count = 0
       @failed_count     = 0
-      # we use the title to pass the sgr start style codes
-      start_style   = Dye.color? ? "#{Dye.sgr(:clear, :green, :reversed, :bold)} " : ''
-      format        = '%t%c/%C %p%% %E %b'
-      format       += Dye.sgr(:clear) if Dye.color?
-      progress_mark = Dye.color? ? ' ' : '|'
-      @pbar         = ::ProgressBar.create(:title         => start_style,
-                                           :total         => total_count,
-                                           :progress_mark => progress_mark,
-                                           :format        => format )
+      @pbar             = ::ProgressBar.create(:title         => title(:ok),
+                                               :total         => total_count,
+                                               :progress_mark => (Dye.color? ? ' ' : '|'),
+                                               :format        => ('%t%c/%C %p%% %E %b' + dye(:background, '%i', '%i')))
       @pbar.clear
       puts
       message = "#{prefix_message}Processing #{total_count} documents"
@@ -56,7 +51,7 @@ module Elastics
       unless result.nil? || result.empty?
         if result.failed.size > 0
           Conf.logger.error "Failed load:\n#{result.failed.to_yaml}"
-          @pbar.title         = "#{Dye.sgr(:clear, :red, :reversed, :bold)} " if Dye.color?
+          @pbar.title         = title(:failed)
           @pbar.progress_mark = 'F' unless Dye.color?
         end
         @failed_count     += result.failed.size
@@ -75,6 +70,25 @@ module Elastics
       Prompter.say_notice  "Skipped #{@pbar.total - @successful_count - @failed_count}. "
       Prompter.say_warning "Failed #{@failed_count}.", :mute => true
       Prompter.say_warning "See the log for the details about the #{@failed_count} failures." unless @failed_count == 0
+    end
+
+  private
+
+    def title(how)
+      return '' unless Dye.color?
+      Dye.sgr(:clear, color(how), :reversed, :bold) + ' '
+    end
+
+    def dye(how, colored, plain)
+      Dye.dye colored, plain, :reversed, :bold, color(how)
+    end
+
+    def color(how)
+      case how
+      when :background then :blue
+      when :ok         then :green
+      when :failed     then :red
+      end
     end
 
   end
