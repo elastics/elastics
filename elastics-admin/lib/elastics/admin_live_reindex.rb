@@ -168,7 +168,7 @@ module Elastics
         @stop_indexing.call
         Prompter.say_notice 'Indexing stopped.' if opts[:verbose]
       else
-        Prompter.say_warning 'No on_stop_indexing provided!' if opts[:verbose]
+        Prompter.say_notice 'No on_stop_indexing provided.' if opts[:verbose]
       end
 
       # if we have still changes, we can index them all, now that the indexing is stopped
@@ -205,7 +205,7 @@ module Elastics
     end
 
     def index_changes(opts)
-      left_changes_count = Redis.llen(:changes)
+      left_changes_count = Redis.llen(:changes) || 0
       return if left_changes_count == 0
 
       batch_size  = opts[:batch_size] || 100
