@@ -12,6 +12,12 @@ namespace :elastics do
     desc 'Loads a dumpfile into Elasticsearch'
     task(:load => env) { Elastics::Admin::Tasks.new.load_from_file }
 
+    task(:reset_redis_keys) do
+      return unless Elastics::Conf.redis
+      ekeys = Elastics::LiveReindex::Redis::KEYS
+      ekeys.keys.each { |k| Elastics::Conf.redis.del "#{ekeys[k]}-#{ENV['APP_ID']}" }
+    end
+
   end
 
 end
