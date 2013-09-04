@@ -176,6 +176,24 @@ module Elastics
       super
     end
 
+    #  ########## Elastics.suggest ##########
+    #  ------------------
+    #  Elastics::Template
+    #  ---
+    #  suggest:
+    #  - POST
+    #  - /<<index>>/<<type>>/_suggest
+    #
+    #
+    #  Usage:
+    #  Elastics.suggest :index => "elastics_test_index",
+    #                   :type  => nil
+    #
+    def Elastics.suggest(*vars)
+      ## this is a stub, used for reference
+      super
+    end
+
     #  ########## Elastics.percolate ##########
     #  --------------
     #  Elastics::Template
