@@ -67,7 +67,7 @@ The Elastics documentation is very complete and detailed, so starting from the r
 
 ## Branches
 
-The master branch reflects the last published gems. Then you may find a next-version branch (named after the version string), with the commits that will be merged in master just before publishing the next gem versions. The next-version branch may get rebased or force pushed.
+The `master` branch reflects the last published gems. The `dev` branch is the development branch and may get rebased or force-pushed.
 
 ## Credits
 
