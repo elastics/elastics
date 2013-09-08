@@ -52,7 +52,6 @@ require 'elastics/tasks'
 
 module Elastics
 
-  VERSION   = File.read(File.expand_path('../../VERSION', __FILE__)).strip
   LIB_PATHS = [ File.dirname(__FILE__) ]
 
 
