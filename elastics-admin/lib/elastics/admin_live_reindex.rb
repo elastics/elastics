@@ -178,8 +178,8 @@ module Elastics
       @indices.each do |index|
         Elastics.delete_index :index => index,
                               :raise => false # may not exist
-        Elastics.put_index_alias :alias => index,
-                                 :index => @timestamp + index
+        Elastics.post_index_aliases :actions => [{ :add => { :alias => index,
+                                                             :index => @timestamp + index } }]
       end
       # after the execution of this method the user should deploy the new code and then resume the regular app processing
 

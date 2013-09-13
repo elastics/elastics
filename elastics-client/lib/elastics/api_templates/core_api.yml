@@ -76,6 +76,10 @@ update:
 ### Search ###
 # The search api is covered by the templating system
 
+# you must pass the suggest structure as the :data variable
+suggest:
+  - POST
+  - /<<index>>/<<type>>/_suggest
 
 
 #-----------------------------------------------------------------------------#

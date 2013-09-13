@@ -1,6 +1,8 @@
 #! /usr/bin/env ruby
 
 require 'fileutils'
+include FileUtils
+
 gems = %w[ elastics-client
            elastics-admin
            elastics-scopes
@@ -15,26 +17,28 @@ begin
     exit(1)
   end
 
-  version = ''
+  version = File.read('VERSION').strip
 
   gems.each do |gem_name|
-    FileUtils.chdir(gem_name) do
+    cd(gem_name) do
+      cp('../VERSION', './VERSION')
+      cp('../LICENSE', './LICENSE')
       system %(gem build #{gem_name}.gemspec)
-      version = File.read('VERSION').strip
       gemfile = "#{gem_name}-#{version}.gem"
       system %(gem push #{gemfile})
     end
   end
 
-  system %(git tag '#{version}')
+  system %(git tag #{version} && git push --tags)
 
 ensure
 
   gems.each do |gem_name|
-    FileUtils.chdir(gem_name) do
-      version = File.read('VERSION').strip
+    cd(gem_name) do
       gemfile = "#{gem_name}-#{version}.gem"
-      FileUtils.remove_entry_secure gemfile, true
+      remove_entry_secure gemfile, true
+      remove_entry_secure 'VERSION', true
+      remove_entry_secure 'LICENSE', true
     end
   end
 

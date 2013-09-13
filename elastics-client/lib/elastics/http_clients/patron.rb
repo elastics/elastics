@@ -18,7 +18,7 @@ module Elastics
       def session
         Thread.current[:elastics_patron_session] ||= begin
                                                       sess                       = ::Patron::Session.new
-                                                      sess.headers['User-Agent'] = "elastics-#{Elastics::VERSION}"
+                                                      sess.headers['User-Agent'] = "elastics-client"
                                                       sess.base_url              = base_uri
                                                       sess
                                                     end

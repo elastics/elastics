@@ -7,6 +7,18 @@ module Elastics
         @elastics.extend(ClassProxy::ModelSyncer)
         @elastics.extend(ClassProxy::ModelIndexer).init
         def self.elastics; @elastics end
+        case
+        when respond_to?(:find_in_batches)
+          def self.elastics_in_batches(options={}, &block)
+            find_in_batches(options, &block)
+          end
+        when defined?(Mongoid::Document) && include?(Mongoid::Document)
+          def self.elastics_in_batches(options={}, &block)
+            0.step(count, options[:batch_size]) do |offset|
+              block.call limit(options[:batch_size]).skip(offset).to_a
+            end
+          end
+        end
       end
     end
 
@@ -23,5 +35,4 @@ module Elastics
     end
 
   end
-
 end
