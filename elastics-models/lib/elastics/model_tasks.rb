@@ -76,22 +76,9 @@ module Elastics
           Prompter.say_ok "#{index} index created" if options[:verbose]
         end
 
-        if defined?(Mongoid::Document) && model.include?(Mongoid::Document)
-          def model.find_in_batches(options={})
-            0.step(count, options[:batch_size]) do |offset|
-              yield limit(options[:batch_size]).skip(offset).to_a
-            end
-          end
-        end
-
-        unless model.respond_to?(:find_in_batches)
-          Conf.logger.error "Model #{model} does not respond to :find_in_batches. Skipped."
-          next
-        end
-
         pbar = ProgBar.new(model.count, options[:batch_size], "Model #{model}: ") if options[:verbose]
 
-        model.find_in_batches(:batch_size => options[:batch_size]) do |batch|
+        model.elastics_in_batches(:batch_size => options[:batch_size]) do |batch|
           result = Elastics.post_bulk_collection(batch, options[:import_options]) || next
           pbar.process_result(result, batch.size) if options[:verbose]
         end
