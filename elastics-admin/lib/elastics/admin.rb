@@ -29,7 +29,7 @@ module Elastics
       end
 
       def dump_to_file(cli=false)
-        vars = { :index => cli ? options[:index] : (options[:index] || Elastics::Tasks.new.config_hash.keys),
+        vars = { :index => cli ? options[:index] : (options[:index] || Conf.indices.keys),
                  :type  => options[:type] }
         Prompter.say_title "Dumping indices: #{vars[:index].inspect}" if options[:verbose]
         if options[:verbose]
