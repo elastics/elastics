@@ -5,7 +5,8 @@ require 'elastics-admin'
 
 options  = Elastics::Admin::Tasks.new.default_options
 
-version  = File.read(File.expand_path('../../VERSION', __FILE__)).strip
+version_path = %w[../../VERSION ../../../VERSION].detect{|v| File.exist?(File.expand_path(v, __FILE__))}
+version  = File.read(File.expand_path(version_path, __FILE__)).strip
 copy     = "elastics-admin #{version} (c) 2012-2013 by Domizio Demichelis"
 optparse = OptionParser.new do |opts|
 
