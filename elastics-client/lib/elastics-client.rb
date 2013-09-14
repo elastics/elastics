@@ -9,6 +9,7 @@ require 'elastics/logger'
 require 'elastics/errors'
 require 'elastics/utils'
 
+require 'elastics/struct/mergeable'
 require 'elastics/struct/prunable'
 require 'elastics/struct/symbolize'
 require 'elastics/struct/hash'

@@ -2,8 +2,6 @@ require 'elastics-client'
 require 'elastics-scopes'
 require 'active_attr'
 
-require 'elastics/struct/mergeable'
-
 require 'elastics/class_proxy/model_syncer'
 require 'elastics/instance_proxy/model_syncer'
 require 'elastics/model_syncer'
