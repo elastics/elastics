@@ -10,53 +10,18 @@ module Elastics
     end
 
     def default_options
-      @default_options ||= { :force          => false,
-                             :index          => Conf.variables[:index],
-                             :config_file    => Conf.config_file }
+      @default_options ||= { :force => false,
+                             :index => Conf.indices.keys }
     end
 
     def create_indices
-      indices.each do |index|
-        delete_index(index) if options[:force]
-        raise ExistingIndexError, "#{index.inspect} already exists. Please use FORCE=1 if you want to delete it first." \
-              if exist?(index)
-        create(index)
-      end
+      Conf.indices.delete_indices(options[:index]) if options[:force]
+      Conf.indices.create_indices(options[:index])
     end
 
     def delete_indices
-      indices.each { |index| delete_index(index) }
-    end
-
-    def config_hash
-      @config_hash ||= ( hash = YAML.load(Utils.erb_process(config_path))
-                         Utils.delete_allcaps_keys(hash) )
-    end
-
-  private
-
-    def indices
-      i = options[:index] || config_hash.keys
-      i.is_a?(Array) ? i : [i]
-    end
-
-    def exist?(index)
-      Elastics.exist?(:index => index)
-    end
-
-    def config_path
-      @config_path ||= options[:config_file] || Conf.config_file
-    end
-
-    def delete_index(index)
-      Elastics.delete_index(:index => index) if exist?(index)
-    end
-
-    def create(index)
-      config_hash[index] = {} unless config_hash.has_key?(index)
-      Elastics.POST "/#{index}", config_hash[index]
+      Conf.indices.delete_indices(options[:index])
     end
 
   end
-
 end
