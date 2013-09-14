@@ -42,6 +42,7 @@ require 'elastics/templates'
 
 require 'elastics/http_clients/base'
 require 'elastics/http_clients/loader'
+require 'elastics/indices'
 require 'elastics/configuration'
 require 'elastics/utility_methods'
 
