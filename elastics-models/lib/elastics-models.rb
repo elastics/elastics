@@ -26,13 +26,22 @@ require 'elastics/result/document_loader'
 require 'elastics/result/search_loader'
 require 'elastics/result/active_model'
 
+require 'elastics/models_indices'
 require 'elastics/model_tasks'
 
 Elastics::LIB_PATHS << File.dirname(__FILE__)
 
 # get_docs calls super so we make sure the result is extended by Scope first
-Elastics::Conf.result_extenders  |= [ Elastics::Result::DocumentLoader,
-                                     Elastics::Result::SearchLoader,
-                                     Elastics::Result::ActiveModel ]
+Elastics::Conf.result_extenders      |= [ Elastics::Result::DocumentLoader,
+                                          Elastics::Result::SearchLoader,
+                                          Elastics::Result::ActiveModel ]
 Elastics::Conf.elastics_models        = []
 Elastics::Conf.elastics_active_models = []
+
+Elastics::Conf.instance_eval do
+
+  def indices
+    @indices ||= Elastics::ModelsIndices.new(config_file)
+  end
+
+end
