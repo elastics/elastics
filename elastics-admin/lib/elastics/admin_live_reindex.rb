@@ -70,7 +70,7 @@ module Elastics
       yield self if block_given?
 
       opts[:verbose] = true unless opts.has_key?(:verbose)
-      opts[:index] ||= opts.delete(:indices) || config_hash.keys
+      opts[:index] ||= opts.delete(:indices) || Conf.indices.keys
 
       # we override the on_reindex eventually set
       on_reindex do
@@ -107,10 +107,7 @@ module Elastics
             if @ensure_indices && !@ensure_indices.include?(base)
       prefixed = @prefix + base
       unless @indices.include?(base)
-        unless Elastics.exist?(:index => prefixed)
-          config_hash[base] = {} unless config_hash.has_key?(base)
-          Elastics.POST "/#{prefixed}", config_hash[base]
-        end
+        Conf.indices.create_index(base, prefixed) unless Elastics.exist?(:index => prefixed)
         @indices |= [base]
       end
       prefixed
@@ -122,10 +119,6 @@ module Elastics
     end
 
     private
-
-    def config_hash
-      @config_hash ||= ModelTasks.new.config_hash
-    end
 
     def perform(opts={})
       Prompter.say_title 'Live-Reindex' if opts[:verbose]

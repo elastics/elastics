@@ -1,6 +1,6 @@
 require 'elastics-client'
 
-env   = defined?(Rails) ? :environment : []
+env = defined?(Rails) ? :environment : []
 
 namespace :elastics do
 

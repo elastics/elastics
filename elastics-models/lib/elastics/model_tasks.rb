@@ -1,22 +1,4 @@
-require 'elastics/tasks'
-
 module Elastics
-
-  class Tasks
-    # patches the Elastics::Tasks#config_hash so it evaluates also the default mapping for models
-    # it modifies also the index:create task
-    alias_method :original_config_hash, :config_hash
-    def config_hash
-      @config_hash ||= begin
-                         default = {}.extend Struct::Mergeable
-                         (Conf.elastics_models + Conf.elastics_active_models).each do |m|
-                           m = eval"::#{m}" if m.is_a?(String)
-                           default.deep_merge! m.elastics.default_mapping
-                         end
-                         default.deep_merge(original_config_hash)
-                       end
-    end
-  end
 
   class ModelTasks < Elastics::Tasks
 
@@ -29,15 +11,6 @@ module Elastics
       options[:batch_size] = options[:batch_size].to_i   if options[:batch_size]
       options[:models]     = options[:models].split(',') if options[:models]
 
-      if options[:import_options]
-        import_options = {}
-        options[:import_options].split('&').each do |pair|
-          k, v  = pair.split('=')
-          import_options[k.to_sym] = v
-        end
-        options[:import_options] = import_options
-      end
-
       @options = default_options.merge(options).merge(overrides)
     end
 
@@ -45,9 +18,7 @@ module Elastics
       @default_options ||= { :force          => false,
                              :timeout        => 60,
                              :batch_size     => 500,
-                             :import_options => { },
                              :models         => Conf.elastics_models,
-                             :config_file    => Conf.config_file,
                              :verbose        => true }
     end
 
@@ -64,22 +35,22 @@ module Elastics
         # block never called during live-reindex, since it doesn't exist
         if options[:force]
           unless deleted.include?(index)
-            delete_index(index)
+            Elastics.delete_index(:index => index)
             deleted << index
             Prompter.say_warning "#{index} index deleted" if options[:verbose]
           end
         end
 
         # block never called during live-reindex, since prefix_index creates it
-        unless exist?(index)
-          create(index)
+        unless Elastics.exist?(:index => index)
+          Conf.indices.create_index(index)
           Prompter.say_ok "#{index} index created" if options[:verbose]
         end
 
         pbar = ProgBar.new(model.count, options[:batch_size], "Model #{model}: ") if options[:verbose]
 
         model.elastics_in_batches(:batch_size => options[:batch_size]) do |batch|
-          result = Elastics.post_bulk_collection(batch, options[:import_options]) || next
+          result = Elastics.post_bulk_collection(batch) || next
           pbar.process_result(result, batch.size) if options[:verbose]
         end
 
@@ -91,7 +62,7 @@ module Elastics
 
     def models
       @models ||= begin
-                    models = options[:models] || Conf.elastics_models
+                    models = options[:models]
                     raise ArgumentError, 'no class defined. Please use MODELS=ClassA,ClassB ' +
                                          'or set the Elastics::Configuration.elastics_models properly' \
                                          if models.nil? || models.empty?
