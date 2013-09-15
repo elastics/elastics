@@ -20,6 +20,11 @@ module Elastics
     def configure
       yield self
     end
+
+    def indices
+      @indices ||= Indices.new(config_file)
+    end
+    
     # force color in console (used with jruby)
     def ansi=(bool)
       Dye.color = bool

@@ -428,10 +428,11 @@ module Elastics
     #  post_index_aliases:
     #  - POST
     #  - /_aliases
+    #  - actions: <<actions>>
     #
     #
     #  Usage:
-    #  Elastics.post_index_aliases
+    #  Elastics.post_index_aliases :actions => actions
     #
     def Elastics.post_index_aliases(*vars)
       ## this is a stub, used for reference

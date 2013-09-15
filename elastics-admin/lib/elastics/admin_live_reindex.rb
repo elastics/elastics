@@ -70,7 +70,7 @@ module Elastics
       yield self if block_given?
 
       opts[:verbose] = true unless opts.has_key?(:verbose)
-      opts[:index] ||= opts.delete(:indices) || config_hash.keys
+      opts[:index] ||= opts.delete(:indices) || Conf.indices.keys
 
       # we override the on_reindex eventually set
       on_reindex do
@@ -105,12 +105,9 @@ module Elastics
       # raise if base is not included in @ensure_indices
       raise ExtraIndexError, "The index #{base} is missing from the :ensure_indices option. Reindexing aborted." \
             if @ensure_indices && !@ensure_indices.include?(base)
-      prefixed = @timestamp + base
+      prefixed = @prefix + base
       unless @indices.include?(base)
-        unless Elastics.exist?(:index => prefixed)
-          config_hash[base] = {} unless config_hash.has_key?(base)
-          Elastics.POST "/#{prefixed}", config_hash[base]
-        end
+        Conf.indices.create_index(base, prefixed) unless Elastics.exist?(:index => prefixed)
         @indices |= [base]
       end
       prefixed
@@ -123,10 +120,6 @@ module Elastics
 
     private
 
-    def config_hash
-      @config_hash ||= ModelTasks.new.config_hash
-    end
-
     def perform(opts={})
       Prompter.say_title 'Live-Reindex' if opts[:verbose]
       if opts[:safe_reindex] == false
@@ -135,7 +128,7 @@ module Elastics
       end
       Redis.init
       @indices        = []
-      @timestamp      = Time.now.strftime('%Y%m%d%H%M%S_')
+      @prefix         = Time.now.strftime('%Y%m%d%H%M%S_')
       @ensure_indices = nil
 
       unless opts[:on_stop_indexing] == false || Conf.on_stop_indexing == false
@@ -179,7 +172,7 @@ module Elastics
         Elastics.delete_index :index => index,
                               :raise => false # may not exist
         Elastics.post_index_aliases :actions => [{ :add => { :alias => index,
-                                                             :index => @timestamp + index } }]
+                                                             :index => @prefix + index } }]
       end
       # after the execution of this method the user should deploy the new code and then resume the regular app processing
 
@@ -187,7 +180,7 @@ module Elastics
       unless opts[:safe_reindex] == false
         class_eval <<-ruby, __FILE__, __LINE__
           def perform(*)
-            raise MultipleReindexError, "Multiple live-reindex attempted! You cannot use any reindexing method multiple times in the same session or you may corrupt your index/indices! The previous reindexing in this session successfully reindexed and swapped the new index/indices: #{@indices.map{|i| @timestamp + i}.join(', ')}. You must deploy now, and run the other reindexing in single successive deploys ASAP. Notice that if the code-changes that you are about to deploy rely on the successive reindexings that have been aborted, your app may fail. If you are working in development mode you must restart the session now. The next time you can silence this error by passing :safe_reindex => false"
+            raise MultipleReindexError, "Multiple live-reindex attempted! You cannot use any reindexing method multiple times in the same session or you may corrupt your index/indices! The previous reindexing in this session successfully reindexed and swapped the new index/indices: #{@indices.map{|i| @prefix + i}.join(', ')}. You must deploy now, and run the other reindexing in single successive deploys ASAP. Notice that if the code-changes that you are about to deploy rely on the successive reindexings that have been aborted, your app may fail. If you are working in development mode you must restart the session now. The next time you can silence this error by passing :safe_reindex => false"
           end
         ruby
       end
@@ -196,7 +189,7 @@ module Elastics
       # delete all the created indices
       @indices ||=[]
       @indices.each do |index|
-        Elastics.delete_index :index => @timestamp + index
+        Elastics.delete_index :index => @prefix + index
       end
       raise
 
