@@ -32,11 +32,8 @@ module Elastics
       end
 
       def init
-        begin
-          require 'redis'
-        rescue LoadError
-          raise MissingRedisError, 'The live-reindex feature rely on redis. Please, install redis and the "redis" gem.'
-        end
+        raise MissingRedisError, 'The live-reindex feature rely on redis. Please, install redis and the "redis" gem.' \
+              unless Conf.redis.class.to_s == 'Redis'
         raise MissingAppIdError, 'You must set the Elastics::Configuration.app_id, and be sure you deploy it before live-reindexing.' \
               if Conf.app_id.nil? || Conf.app_id.empty?
         raise LiveReindexInProgressError, %(It looks like the live-reindex of "#{Conf.app_id}" is in progress (PID #{get(:pid)}). If you are sure that there is no live-reindex in progress, please run the "elastics:admin:reset_redis_keys APP_ID=#{Conf.app_id}" rake task and retry.) \
