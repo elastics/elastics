@@ -35,16 +35,14 @@ module Elastics
     def initialize(total_count, batch_size=nil, prefix_message=nil)
       @successful_count = 0
       @failed_count     = 0
-      @pbar             = ::ProgressBar.create(:title         => title(:ok),
-                                               :total         => total_count,
-                                               :progress_mark => (Dye.color? ? ' ' : '|'),
-                                               :format        => ('%t%c/%C %p%% %E %b' + dye(:background, '%i', '%i')))
-      @pbar.clear
       puts
       message = "#{prefix_message}Processing #{total_count} documents"
       message << " in batches of #{batch_size}" unless batch_size.nil?
       Prompter.say_log message
-      @pbar.start
+      @pbar             = ::ProgressBar.create(:title         => title(:ok),
+                                               :total         => total_count,
+                                               :progress_mark => (Dye.color? ? ' ' : '|'),
+                                               :format        => ('%t%c/%C %p%% %E %b' + dye(:background, '%i', '%i')))
     end
 
     def process_result(result, inc)
