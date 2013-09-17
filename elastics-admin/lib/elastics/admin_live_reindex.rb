@@ -159,6 +159,21 @@ module Elastics
       # try to empty the changes for 10 times before stopping the indexing
       10.times{ index_changes(opts) }
 
+      # optimizing indices
+      if Conf.optimize_indexing
+        @indices.each do |index|
+          prefixed = @prefix + index
+          Prompter.say_notice "Optimizing index #{prefixed}..." if opts[:verbose]
+          # reset the refresh_interval
+          Elastics.put_index_settings(:index =>  prefixed,
+                                      :data  => {:index => {:refresh_interval => (@refresh_intervals[index] || '1s')}})
+          # optimize the index
+          Elastics.optimize_index(:index  => prefixed,
+                                  :params => {:max_num_segments => 5})
+        end
+        index_changes(opts)
+      end
+
       # at this point the changes list should be empty or contain the minimum number of changes we could achieve live
       # the @stop_indexing should ensure to stop/suspend all the actions that would produce changes in the indices being reindexed
       if @stop_indexing
@@ -175,15 +190,6 @@ module Elastics
       # deletes the old indices and create the aliases to the new
       @indices.each do |index|
         prefixed = @prefix + index
-        if Conf.optimize_indexing
-          Prompter.say_notice "Optimizing index #{prefixed}..." if opts[:verbose]
-          # reset the refresh_interval
-          Elastics.put_index_settings(:index =>  prefixed,
-                                      :data  => {:index => {:refresh_interval => (@refresh_intervals[index] || '1s')}})
-          # optimize the index
-          Elastics.optimize_index(:index  => prefixed,
-                                  :params => {:max_num_segments => 5})
-        end
         Prompter.say_notice "Swapping to index #{prefixed}..." if opts[:verbose]
         Elastics.delete_index :index => index,
                               :raise => false # may not exist
