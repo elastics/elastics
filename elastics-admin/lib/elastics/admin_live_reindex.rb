@@ -32,11 +32,8 @@ module Elastics
       end
 
       def init
-        begin
-          require 'redis'
-        rescue LoadError
-          raise MissingRedisError, 'The live-reindex feature rely on redis. Please, install redis and the "redis" gem.'
-        end
+        raise MissingRedisError, 'The live-reindex feature rely on redis. Please, install redis and the "redis" gem.' \
+              unless Conf.redis.class.to_s == 'Redis'
         raise MissingAppIdError, 'You must set the Elastics::Configuration.app_id, and be sure you deploy it before live-reindexing.' \
               if Conf.app_id.nil? || Conf.app_id.empty?
         raise LiveReindexInProgressError, %(It looks like the live-reindex of "#{Conf.app_id}" is in progress (PID #{get(:pid)}). If you are sure that there is no live-reindex in progress, please run the "elastics:admin:reset_redis_keys APP_ID=#{Conf.app_id}" rake task and retry.) \
@@ -107,7 +104,14 @@ module Elastics
             if @ensure_indices && !@ensure_indices.include?(base)
       prefixed = @prefix + base
       unless @indices.include?(base)
-        Conf.indices.create_index(base, prefixed) unless Elastics.exist?(:index => prefixed)
+        unless Elastics.exist?(:index => prefixed)
+          Conf.indices.create_index(base, prefixed)
+          if Conf.optimize_indexing
+            @refresh_intervals[index] = Elastics.get_index_settings(:index => prefixed)[prefixed]['settings']['index.refresh_interval']
+            Elastics.put_index_settings(:index => prefixed,
+                                        :data  => {:index => {:refresh_interval => '-1'}})
+          end
+        end
         @indices |= [base]
       end
       prefixed
@@ -127,9 +131,10 @@ module Elastics
         Prompter.say_warning 'WARNING: Safe reindex is disabled!' if opts[:verbose]
       end
       Redis.init
-      @indices        = []
-      @prefix         = Time.now.strftime('%Y%m%d%H%M%S_')
-      @ensure_indices = nil
+      @indices           = []
+      @refresh_intervals = {} if Conf.optimize_indexing
+      @prefix            = Time.now.strftime('%Y%m%d%H%M%S_')
+      @ensure_indices    = nil
 
       unless opts[:on_stop_indexing] == false || Conf.on_stop_indexing == false
         @stop_indexing ||= Conf.on_stop_indexing || raise(MissingStopIndexingProcError, 'The on_stop_indexing block is not set.')
@@ -169,10 +174,21 @@ module Elastics
 
       # deletes the old indices and create the aliases to the new
       @indices.each do |index|
+        prefixed = @prefix + index
+        if Conf.optimize_indexing
+          Prompter.say_notice "Optimizing index #{prefixed}..." if opts[:verbose]
+          # reset the refresh_interval
+          Elastics.put_index_settings(:index =>  prefixed,
+                                      :data  => {:index => {:refresh_interval => (@refresh_intervals[index] || '1s')}})
+          # optimize the index
+          Elastics.optimize_index(:index  => prefixed,
+                                  :params => {:max_num_segments => 5})
+        end
+        Prompter.say_notice "Swapping to index #{prefixed}..." if opts[:verbose]
         Elastics.delete_index :index => index,
                               :raise => false # may not exist
         Elastics.post_index_aliases :actions => [{ :add => { :alias => index,
-                                                             :index => @prefix + index } }]
+                                                             :index => prefixed } }]
       end
       # after the execution of this method the user should deploy the new code and then resume the regular app processing
 

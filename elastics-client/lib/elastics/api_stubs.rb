@@ -678,6 +678,23 @@ module Elastics
       super
     end
 
+    #  ########## Elastics.put_index_settings ##########
+    #  ------------------
+    #  Elastics::Template
+    #  ---
+    #  put_index_settings:
+    #  - PUT
+    #  - /<<index>>/_settings
+    #
+    #
+    #  Usage:
+    #  Elastics.put_index_settings :index => "elastics_test_index"
+    #
+    def Elastics.put_index_settings(*vars)
+      ## this is a stub, used for reference
+      super
+    end
+
     #  ########## Elastics.get_index_mapping ##########
     #  --------------
     #  Elastics::Template
