@@ -12,3 +12,5 @@ if redis_installed
   require 'redis'
   Elastics::Conf.redis = $redis || ::Redis.current
 end
+
+Elastics::Conf.optimize_indexing = true
