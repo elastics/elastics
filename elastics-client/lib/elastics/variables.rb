@@ -45,6 +45,8 @@ module Elastics
     def fetch_nested(key)
       unnest(key).inject(self, :fetch)
     rescue NoMethodError, KeyError
+      # return the milliseconds for :now if it is not set explicitly
+      return (Time.now.to_f * 1000).to_i if key == :now
       raise MissingVariableError, "the required #{key.inspect} variable is missing."
     end
 
