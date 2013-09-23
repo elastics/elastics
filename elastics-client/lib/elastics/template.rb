@@ -63,15 +63,28 @@ module Elastics
     # in case of a syntax error it will remove all the problematic characters and retry with a cleaned query_string
     # http://lucene.apache.org/core/old_versioned_docs/versions/3_5_0/queryparsersyntax.html
     def try_clean_and_retry(vars)
-     response_vars = request(vars)
-     if !Prunable::VALUES.include?(vars[:cleanable_query]) && Conf.http_client.raise_proc.call(response_vars[3])
-       e = HttpError.new(response_vars[3], caller_line)
-       e.to_hash['error'] =~ /^SearchPhaseExecutionException/
-       (vars[:cleanable_query].is_a?(String) ? vars[:cleanable_query] : vars[:cleanable_query][:query]).tr!('"&|!(){}[]~^:+-\\', '')
-       request vars
-     else
-       response_vars
-     end
+      response_vars = request(vars)
+      if !Prunable::VALUES.include?(vars[:cleanable_query].is_a?(Hash) ?
+                                        vars[:cleanable_query][:query] :
+                                        vars[:cleanable_query]) && Conf.http_client.raise_proc.call(response_vars[3])
+        e = HttpError.new(response_vars[3], caller_line)
+        e.to_hash['error'] =~ /^SearchPhaseExecutionException/
+        # remove problematic characters
+        (vars[:cleanable_query].is_a?(Hash) ? vars[:cleanable_query][:query] : vars[:cleanable_query]).tr!('"&|!(){}[]~^:+-\\', '')
+        # if after the cleanup is prunable, then we remove it now so #interpolate could use the eventual default
+        if Prunable::VALUES.include?(vars[:cleanable_query].is_a?(Hash) ?
+                                      vars[:cleanable_query][:query] :
+                                      vars[:cleanable_query])
+          if vars[:cleanable_query].is_a?(Hash)
+            vars[:cleanable_query].delete(:query)
+          else
+            vars.delete(:cleanable_query)
+          end
+        end
+        request vars
+      else
+        response_vars
+      end
     end
 
     def request(vars)
