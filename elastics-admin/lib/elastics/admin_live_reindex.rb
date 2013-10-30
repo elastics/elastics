@@ -133,6 +133,15 @@ module Elastics
       index.sub(/^\d{14}_/, '')
     end
 
+    def get_timestamp_from_index(index)
+      index =~ /^(\d{14})_/
+      timestr = $1
+      return unless timestr
+      timestr
+      timearr = timestr.scan /.{1,2}/
+      Time.mktime *timearr.unshift([timearr.shift,timearr.shift].join)
+    end
+
     private
 
     def perform(opts={})
