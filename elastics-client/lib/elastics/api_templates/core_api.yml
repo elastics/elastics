@@ -148,7 +148,7 @@ delete_by_query:
 
 #-----------------------------------------------------------------------------#
 ### More Like This ###
-# http://www.elasticsearch.org/guide/reference/api/more-like-this.html
+# http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-more-like-this.html
 
 # You can pass the search API (facets, from/to and so on) as :data variable
 more_like_this: &mlt

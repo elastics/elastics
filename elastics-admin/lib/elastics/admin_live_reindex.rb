@@ -36,9 +36,20 @@ module Elastics
               unless Conf.redis.class.to_s == 'Redis'
         raise MissingAppIdError, 'You must set the Elastics::Configuration.app_id, and be sure you deploy it before live-reindexing.' \
               if Conf.app_id.nil? || Conf.app_id.empty?
-        raise LiveReindexInProgressError, %(It looks like the live-reindex of "#{Conf.app_id}" is in progress (PID #{get(:pid)}). If you are sure that there is no live-reindex in progress, please run the "elastics:admin:reset_redis_keys APP_ID=#{Conf.app_id}" rake task and retry.) \
-              if get(:pid)
-        reset_keys # just in case
+
+        if get(:pid) && (pid = get(:pid).to_i)
+          message = begin
+                      Process.kill(0, pid)
+                      %(The live-reindex of "#{Conf.app_id}" is in progress (PID #{pid}).)
+                    rescue Errno::ESRCH
+                      # no process running (will reset_keys and continue)
+                    rescue Exception
+                      %(It looks like the live-reindex of "#{Conf.app_id}" is in progress (PID #{pid}). If you are sure that there is no live-reindex in progress, please run the "elastics:admin:reset_redis_keys APP_ID=#{Conf.app_id}" rake task and retry.)
+                    end
+          raise LiveReindexInProgressError, message if message
+        end
+
+        reset_keys
         set(:pid, $$)
       end
 
