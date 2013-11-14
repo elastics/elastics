@@ -41,7 +41,7 @@ module Elastics
 
       # You can start with a non restricted Elastics::Scope object
       def scoped
-        @scoped ||= Scope[:context => elastics.context]
+        @scoped ||= Scope[:context => elastics.context, :self_context => self]
       end
 
 

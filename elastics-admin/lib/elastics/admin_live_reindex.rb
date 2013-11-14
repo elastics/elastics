@@ -116,11 +116,11 @@ module Elastics
       prefixed = @prefix + base
       unless @indices.include?(base)
         unless Elastics.exist?(:index => prefixed)
-          Conf.indices.create_index(base, prefixed)
+          Conf.indices.create_index(base, prefixed, :raise => false) # it might trigger an error if 2 threads create the index at the same time
           if Conf.optimize_indexing
-            @refresh_intervals[index] = Elastics.get_index_settings(:index => prefixed)[prefixed]['settings']['index.refresh_interval']
+            @refresh_intervals[index] ||= Elastics.get_index_settings(:index => prefixed)[prefixed]['settings']['index.refresh_interval']
             Elastics.put_index_settings(:index => prefixed,
-                                        :data  => {:index => {:refresh_interval => '-1'}})
+                                        :data  => {:index => {:refresh_interval => '-1'}}) unless @refresh_intervals[index] == '-1'
           end
         end
         @indices |= [base]
