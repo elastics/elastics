@@ -34,5 +34,9 @@ module Elastics
       true
     end
 
+    def elastics_action
+      'index'
+    end
+
   end
 end

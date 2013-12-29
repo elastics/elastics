@@ -105,6 +105,7 @@ module Elastics
     def bulk_string_from_elastics(document, options)
       elastics = document.elastics
       return '' unless document.elastics_indexable?
+      options[:action] ||= document.elastics_action
       meta = { '_index' => elastics.index,
                '_type'  => elastics.type,
                '_id'    => elastics.id }
