@@ -39,6 +39,10 @@ module Elastics
       true
     end
 
+    def elastics_action
+      'index'
+    end
+
     def method_missing(meth, *args, &block)
       raw_document.respond_to?(meth) ? raw_document.send(meth) : super
     end
