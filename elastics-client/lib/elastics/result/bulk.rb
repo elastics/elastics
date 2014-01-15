@@ -8,11 +8,12 @@ module Elastics
       end
 
       def failed
-        self['items'].reject{|i| i['index']['ok']}
+        self['items'].reject{|i| i.first.last['ok'] }
       end
 
+
       def successful
-        self['items'].select{|i| i['index']['ok']}
+        self['items'].select{|i| i.first.last['ok']}
       end
 
     end
