@@ -145,6 +145,7 @@ module Elastics
     private
 
     def perform(opts={})
+      started_at = Time.now
       Prompter.say_title 'Live-Reindex' if opts[:verbose]
       if opts[:safe_reindex] == false
         Conf.logger.warn 'Safe reindex is disabled!'
@@ -237,6 +238,7 @@ module Elastics
 
     ensure
       Redis.reset_keys
+      Prompter.say_notice "Elapsed Time: #{fduration(Time.now - started_at)}."
     end
 
     def index_changes(opts)
@@ -301,6 +303,33 @@ module Elastics
         bulk_string << Elastics.build_bulk_string(doc, :action => act)
       end
       bulk_string
+    end
+
+  private
+
+    def fduration(seconds)
+      seconds   = seconds.round
+      days      = (seconds / 86400)
+      hours     = (seconds / 3600) % 24
+      mins      = (seconds / 60) % 60
+      secs      = seconds % 60
+      pluralize = lambda do |count, word|
+                    case
+                    when count == 1 then "1 #{word}"
+                    when count > 1  then "#{count} #{word}s"
+                    end
+                  end
+      parts = []
+      parts << pluralize.call(days,  'day')
+      parts << pluralize.call(hours, 'hour')
+      parts << pluralize.call(mins,  'minute')
+      parts << pluralize.call(secs,  'second')
+      last  = parts.pop
+
+      first = parts.compact.join(', ')
+      first = nil if first == ''
+
+      [first, last].compact.join(' and ')
     end
 
   end
