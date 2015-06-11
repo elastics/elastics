@@ -31,7 +31,7 @@ partial
             doc << block.split("\n").map{|l| '#  ' + l}.join("\n")
             doc << <<-meth.gsub(/^ {14}/m,'')
 
-def #{meth_call}(*vars)
+def self.#{name}(*vars)
   ## this is a stub, used for reference
   super
 end
