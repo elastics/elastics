@@ -1,0 +1,27 @@
+# These methods are available as Elastics.<method>(*vars)
+# you can get the updated full reference and usage example of these methods
+# by just doing in the console:
+# Elastics.doc
+
+
+
+#-----------------------------------------------------------------------------#
+### API additions ###
+
+# not a real API method, but handy
+match_all:
+  - GET
+  - /<<index>>/<<type>>/_search
+  - query:
+      match_all: {}
+
+
+
+#-----------------------------------------------------------------------------#
+# get a document without using the get API (which doesn't support fields '*')
+search_by_id:
+  - GET
+  - /<<index>>/<<type>>/_search
+  - query:
+      term:
+        _id: <<id>>

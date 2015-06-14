@@ -60,9 +60,17 @@ module Elastics
   include ApiStubs
 
   include Templates
-  elastics.load_source File.expand_path('../elastics/api_templates/core_api.yml'   , __FILE__)
+  elastics.load_source File.expand_path('../elastics/api_templates/document_api.yml'   , __FILE__)
+  elastics.load_source File.expand_path('../elastics/api_templates/search_api.yml'   , __FILE__)
   elastics.load_source File.expand_path('../elastics/api_templates/indices_api.yml', __FILE__)
+  # elastics.load_source File.expand_path('../elastics/api_templates/cat_api.yml'   , __FILE__)
   elastics.load_source File.expand_path('../elastics/api_templates/cluster_api.yml', __FILE__)
+  elastics.load_source File.expand_path('../elastics/api_templates/elastics_additions.yml'   , __FILE__)
+
+  # implements the cat API (https://www.elastic.co/guide/en/elasticsearch/reference/current/cat.html)
+  def cat(path)
+    GET path
+  end
 
   extend self
   extend UtilityMethods

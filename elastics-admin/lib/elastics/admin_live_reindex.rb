@@ -115,7 +115,7 @@ module Elastics
             if @ensure_indices && !@ensure_indices.include?(base)
       prefixed = @prefix + base
       unless @indices.include?(base)
-        unless Elastics.exist?(:index => prefixed)
+        unless Elastics.indices_exists(:index => prefixed)
           Conf.indices.create_index(base, prefixed, :raise => false) # it might trigger an error if 2 threads create the index at the same time
           if Conf.optimize_indexing
             @refresh_intervals[index] ||= Elastics.get_index_settings(:index => prefixed)[prefixed]['settings']['index.refresh_interval']

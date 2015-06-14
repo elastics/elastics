@@ -1,0 +1,120 @@
+# These methods are available as Elastics.<method>(*vars)
+# you can get the updated full reference and usage example of these methods
+# by just doing in the console:
+# Elastics.doc
+
+
+
+#-----------------------------------------------------------------------------#
+### Index ###
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html
+
+# You must pass the :data variable
+store: &store
+  - PUT
+  - /<<index>>/<<type>>/<<id>>
+
+# alias for symmetry with post_store
+put_store: *store
+
+# id is assigned by ES; you must pass :data
+post_store:
+  - POST
+  - /<<index>>/<<type>>
+
+
+
+#-----------------------------------------------------------------------------#
+### Get ###
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-get.html
+
+get:
+  - GET
+  - /<<index>>/<<type>>/<<id>>
+
+get_source:
+  - GET
+  - /<<index>>/<<type>>/<<id>>/_source
+
+
+
+#-----------------------------------------------------------------------------#
+### Delete ###
+#https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete.html
+
+delete: &delete
+  - DELETE
+  - /<<index>>/<<type>>/<<id>>
+
+remove: *delete
+
+
+
+#-----------------------------------------------------------------------------#
+### Update ###
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update.html
+
+# you must pass script or doc and the other options as the :data variable
+update:
+  - POST
+  - /<<index>>/<<type>>/<<id>>/_update
+
+
+
+#-----------------------------------------------------------------------------#
+### Multi Get ###
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-multi-get.html
+
+# you must pass the :ids array
+multi_get_ids: &multi_get_ids
+  - GET
+  - /<<index>>/<<type>>/_mget
+  - ids: << ids >>
+
+# legacy alias
+multi_get: *multi_get_ids
+
+# you must pass the :docs array
+multi_get_docs:
+  - GET
+  - /<<index= _all >>/<<type= ~ >>/_mget
+  - docs: << docs >>
+
+
+
+
+#-----------------------------------------------------------------------------#
+### Bulk ###
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html
+
+post_bulk_string: &bulk
+  - POST
+  - /_bulk
+  - << bulk_string >>
+
+# Deprecated alias for backward compatibility
+bulk: *bulk
+
+
+
+
+#-----------------------------------------------------------------------------#
+### Termvectors ###
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-termvectors.html
+
+# you must pass the options as the :data variable
+termvector:
+  - POST
+  - /<<index>>/<<type>>/<<id>>/_termvector
+
+
+
+#-----------------------------------------------------------------------------#
+### Multi Termvectors ###
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-multi-termvectors.html
+
+# you must pass the docs array as the :docs variable or use the :data variable for the simplified request
+multi_termvectors:
+  - POST
+  - /<<index>>/<<type>>/_mtermvectors
+  - docs: <<docs= ~ >>

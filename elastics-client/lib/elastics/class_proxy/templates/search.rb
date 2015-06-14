@@ -8,7 +8,7 @@ module Elastics
           send :define_template, Template::Search, name, args, source_vars
         end
 
-        # http://www.elasticsearch.org/guide/reference/api/multi-search.html
+        # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html
         # requests can be an array of arrays: [[:template1, variable_hash1], [template2, variable_hash2]]
         # or a hash {:template1 => variable_hash1, template2 => variable_hash2}
         # The variables are an hash of variables that will be used to render the msearch template
@@ -34,7 +34,7 @@ module Elastics
           end
         end
 
-        # implements search_type=scan (http://www.elasticsearch.org/guide/reference/api/search/search-type.html)
+        # implements search_type=scan (https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-search-type.html#scan)
         def scan_search(template, *vars, &block)
           user_raw_result = vars.any?{|v| v[:raw_result]}
           scroll      = '5m'
@@ -60,11 +60,14 @@ module Elastics
           end
         end
 
-        # implements search_type=count (http://www.elasticsearch.org/guide/reference/api/search/search-type.html)
+        # implements search_type=count (https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-search-type.html#count)
         def count_search(template, *vars)
           template = template.is_a?(Elastics::Template) ? template : templates[template]
           template.render Vars.new({:params => {:search_type => 'count'}, :raw_result => true}, *vars)
         end
+
+        end
+
 
       end
     end

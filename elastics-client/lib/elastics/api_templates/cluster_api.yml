@@ -1,4 +1,4 @@
-# These methods are available as Elastics.<method>(variable_hash)
+# These methods are available as Elastics.<method>(*vars)
 # you can get the updated full reference and usage example of these methods
 # by just doing in the console:
 # Elastics.doc
@@ -7,23 +7,56 @@
 
 #-----------------------------------------------------------------------------#
 ### Health ###
-# http://www.elasticsearch.org/guide/reference/api/admin-cluster-health/
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html
 
 # you can pass the params as the :params variable
 cluster_health:
   - GET
-  - /_cluster/health/<<index>>
+  - /_cluster/health/<<index= _all >>
 
 
 
 #-----------------------------------------------------------------------------#
 ### State ###
-# http://www.elasticsearch.org/guide/reference/api/admin-cluster-state/
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-state.html
 
-# you can pass the params as the :params variable
+# you can pass the metrics as the :metrics variable
 cluster_state:
   - GET
-  - /_cluster/state
+  - /_cluster/state/<<metrics= _all >>/<<index= _all >>
+
+
+
+#-----------------------------------------------------------------------------#
+### Stats ###
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-stats.html
+
+# you can pass the params as the :params variable
+cluster_stats:
+  - GET
+  - /_cluster/stats
+
+
+
+#-----------------------------------------------------------------------------#
+### Pending Cluster Tasks ###
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-pending.html
+
+# you can pass the params as the :params variable
+cluster_pending_tasks:
+  - GET
+  - /_cluster/pending_tasks
+
+
+
+#-----------------------------------------------------------------------------#
+### Cluster Reroute ###
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-reroute.html
+
+# you must pass the data structure as the :data variable
+cluster_reroute:
+  - POST
+  - /_cluster/reroute
 
 
 
@@ -43,52 +76,33 @@ get_cluster_settings:
 
 
 #-----------------------------------------------------------------------------#
+### Nodes Stats ###
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html
+
+# you can pass the params as the :params variable
+# you must pass the settings structure as the :data variable
+cluster_nodes_stats:
+  - GET
+  - /_nodes/<<nodes= ~ >>/stats/<<stats= ~ >>
+
+
+
+#-----------------------------------------------------------------------------#
 ### Nodes Info ###
-# http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-info/
-# http://www.elasticsearch.org/guide/reference/api/
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-info.html
 
 # uses the _nodes shortcut
 cluster_nodes_info:
   - GET
-  - /_nodes/<<nodes= ~ >>/<<endpoint= ~ >>
-
-
-
-#-----------------------------------------------------------------------------#
-### Nodes Stats ###
-# http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-stats/
-
-cluster_nodes_stats:
-  - GET
-  - /_nodes/<<nodes= ~ >>/stats/<<endpoint= ~ >>
-
-
-
-#-----------------------------------------------------------------------------#
-### Nodes Shutdown ###
-# http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-shutdown/
-
-cluster_nodes_shutdown:
-  - POST
-  - /_cluster/nodes/<<nodes= ~ >>/_shutdown
+  - /_nodes/<<nodes= ~ >>/<<info= ~ >>
 
 
 
 #-----------------------------------------------------------------------------#
 ### Nodes Hot Threads ###
-# http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-hot-threads/
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-hot-threads.html
 
 cluster_nodes_hot_threads:
   - GET
   - /_nodes/<<nodes= ~ >>/hot_threads
 
-
-
-#-----------------------------------------------------------------------------#
-### Cluster Reroute ###
-# http://www.elasticsearch.org/guide/reference/api/admin-cluster-reroute.html
-
-# you must pass the data structure as the :data variable
-cluster_reroute:
-  - POST
-  - /_cluster/reroute
