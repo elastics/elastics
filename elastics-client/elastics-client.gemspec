@@ -1,6 +1,9 @@
 require 'date'
-version_path = %w[../VERSION ../../VERSION].detect{|v| File.exist?(File.expand_path(v, __FILE__))}
-version      = File.read(File.expand_path(version_path, __FILE__)).strip
+version_path = %w[VERSION ../VERSION].detect{|v| File.exist?(v)}
+version      = File.read(version_path).strip
+extra_files  = []
+extra_files << 'VERSION' if File.exist?('VERSION')
+extra_files << 'LICENSE' if File.exist?('LICENSE')
 
 Gem::Specification.new do |s|
   s.name                      = 'elastics-client'
@@ -11,7 +14,7 @@ Elasticsearch API Methods, Templating System, Cascading Variables Management, Re
   s.authors                   = ['Domizio Demichelis']
   s.email                     = 'dd.nexus@gmail.com'
   s.require_paths             = %w[lib]
-  s.files                     = `git ls-files -z`.split("\0") + %w[VERSION LICENSE]
+  s.files                     = `git ls-files -z`.split("\0") + extra_files
   s.version                   = version
   s.date                      = Date.today.to_s
   s.required_rubygems_version = '>= 1.3.6'
