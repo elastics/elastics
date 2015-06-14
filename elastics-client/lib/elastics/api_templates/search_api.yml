@@ -32,6 +32,7 @@ search_shards:
 #-----------------------------------------------------------------------------#
 ### Count ###
 # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html
+# NOTICE: Also implemented as <YourClass>.<your_template_method>_count
 
 # you must pass the query to validate as the :data variable
 # you can pass the parameters as the :params variable
@@ -45,6 +46,7 @@ count:
 #-----------------------------------------------------------------------------#
 ### Search Exists ###
 # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-exists.html
+# NOTICE: Also implemented as <YourClass>.<your_template_method>_exist?
 
 # you must pass the query to validate as the :data variable
 # you can pass the parameters as the :params variable
@@ -57,6 +59,7 @@ search_exists:
 #-----------------------------------------------------------------------------#
 ### Validate ###
 # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-validate.html
+# NOTICE: Also implemented as <YourClass>.<your_template_method>_valid?
 
 # you must pass the query to validate as the :data variable
 # you can pass the parameters as the :params variable
@@ -69,6 +72,7 @@ validate:
 #-----------------------------------------------------------------------------#
 ### Explain ###
 # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-explain.html
+# NOTICE: Also implemented as <YourClass>.<your_template_method>_explain
 
 # you must pass the query to explain as the :data variable
 # you can pass the parameters as the :params variable
