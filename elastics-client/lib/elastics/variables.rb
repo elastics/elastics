@@ -21,7 +21,7 @@ module Elastics
     end
 
     # returns Prunable::Value if the value is in VALUES (called from stringified)
-    def get_prunable(key)
+    def fetch_value(key)
       val = fetch_nested(key)
       return val if self[:no_pruning].include?(key)
       Prunable::VALUES.include?(val) ? Prunable::Value : val

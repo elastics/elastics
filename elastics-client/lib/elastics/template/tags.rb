@@ -26,7 +26,7 @@ module Elastics
           match =~ TAG_REGEXP
           t = Tag.new($1, $2)
           push t unless find{|i| i.name == t.name}
-          (match !~ /^"/) ? "\#{vars.get_prunable(:'#{t.name}')}" : "vars.get_prunable(:'#{t.name}')"
+          (match !~ /^"/) ? "\#{vars.fetch_value(:'#{t.name}')}" : "vars.fetch_value(:'#{t.name}')"
         end
       end
 
