@@ -4,13 +4,18 @@ module Elastics
       module Doc
 
         def doc(*names)
-          names = templates.keys if names.empty?
-          doc = "\n"
+          names           = templates.keys if names.empty?
+          grouped_methods = context.methods.group_by{|m| context.method(m)}
+          get_aliases     = lambda{|name|grouped_methods[context.method(name)][1..-1]}
+          doc             = "\n"
           names.each do |name|
-            next unless templates.include?(name)
-            block = ''
-            temp = templates[name]
+            next unless context.respond_to?(name)
+            name      = context.method(name).original_name unless templates.include?(name)
+            temp      = templates[name]
             meth_call = [context, name].join('.')
+            aliases   = get_aliases.call(name)
+            aliased   = "\n# also aliased by: #{aliases.map(&:inspect).join(', ')}" unless aliases.empty?
+            block     = ''
             block << <<-meth_call
 ########## #{meth_call} ##########
 #{'-' * temp.class.to_s.length}
@@ -34,7 +39,8 @@ partial
 def self.#{name}(*vars)
   ## this is a stub, used for reference
   super
-end
+end#{ aliased }
+
 
 meth
           end
@@ -42,6 +48,7 @@ meth
         end
 
         def usage(name)
+          name      = context.method(name).original_name unless templates.include?(name)
           meth_call = [context, name].join('.')
           Prompter.say_log build_usage(meth_call, templates[name])
         end
@@ -57,7 +64,7 @@ meth
           return meth_call if all_tags.size == 0
           lines = all_tags.map do |t|
                     comments = 'partial' if t.to_s[0] == '_'
-                    line = ['', t.inspect]
+                    line     = ['', t.inspect]
                     line + if variables.has_key?(t)
                              ["#{variables[t].inspect},", comments_to_s(comments)]
                            else

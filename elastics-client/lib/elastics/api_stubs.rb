@@ -21,6 +21,8 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+    # also aliased by: :put_store
+
 
     #  ########## Elastics.post_store ##########
     #  ------------------
@@ -39,6 +41,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.get ##########
     #  ------------------
@@ -59,6 +62,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.get_source ##########
     #  ------------------
     #  Elastics::Template
@@ -78,6 +82,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.delete ##########
     #  ------------------
     #  Elastics::Template
@@ -96,6 +101,8 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+    # also aliased by: :remove
+
 
     #  ########## Elastics.update ##########
     #  ------------------
@@ -116,6 +123,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.multi_get_ids ##########
     #  ------------------
     #  Elastics::Template
@@ -135,6 +143,8 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+    # also aliased by: :multi_get
+
 
     #  ########## Elastics.multi_get_docs ##########
     #  ------------------
@@ -156,6 +166,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.post_bulk_string ##########
     #  ------------------
     #  Elastics::Template
@@ -173,6 +184,8 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+    # also aliased by: :bulk
+
 
     #  ########## Elastics.termvector ##########
     #  ------------------
@@ -192,6 +205,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.multi_termvectors ##########
     #  ------------------
@@ -213,6 +227,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.search_shards ##########
     #  ------------------
     #  Elastics::Template
@@ -231,6 +246,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.count ##########
     #  ------------------
     #  Elastics::Template
@@ -248,6 +264,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.search_exists ##########
     #  ------------------
@@ -268,6 +285,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.validate ##########
     #  ------------------
     #  Elastics::Template
@@ -286,6 +304,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.explain ##########
     #  ------------------
@@ -306,6 +325,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.percolate ##########
     #  ------------------
     #  Elastics::Template
@@ -323,6 +343,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.percolate_count ##########
     #  ------------------
@@ -342,6 +363,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.put_percolator ##########
     #  ------------------
     #  Elastics::Template
@@ -359,6 +381,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.delete_percolator ##########
     #  ------------------
@@ -378,6 +401,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.more_like_this ##########
     #  ------------------
     #  Elastics::Template
@@ -396,6 +420,8 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+    # also aliased by: :mlt
+
 
     #  ########## Elastics.put_index ##########
     #  ------------------
@@ -418,6 +444,8 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+    # also aliased by: :create_index
+
 
     #  ########## Elastics.post_index ##########
     #  ------------------
@@ -441,6 +469,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.delete_index ##########
     #  ------------------
     #  Elastics::Template
@@ -457,6 +486,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.get_index ##########
     #  ------------------
@@ -476,6 +506,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.indices_exists ##########
     #  ------------------
     #  Elastics::Template
@@ -492,6 +523,8 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+    # also aliased by: :index_exists, :exist?
+
 
     #  ########## Elastics.close_index ##########
     #  ------------------
@@ -510,6 +543,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.open_index ##########
     #  ------------------
     #  Elastics::Template
@@ -526,6 +560,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.put_index_mapping ##########
     #  ------------------
@@ -547,6 +582,8 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+    # also aliased by: :put_mapping
+
 
     #  ########## Elastics.get_index_mapping ##########
     #  ------------------
@@ -565,6 +602,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.get_field_mapping ##########
     #  ------------------
@@ -585,6 +623,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.types_exists ##########
     #  ------------------
     #  Elastics::Template
@@ -602,6 +641,8 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+    # also aliased by: :type_exists
+
 
     #  ########## Elastics.delete_index_mapping ##########
     #  ------------------
@@ -621,6 +662,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.post_index_aliases ##########
     #  ------------------
     #  Elastics::Template
@@ -639,6 +681,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.get_index_aliases ##########
     #  ------------------
     #  Elastics::Template
@@ -655,6 +698,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.put_index_alias ##########
     #  ------------------
@@ -674,6 +718,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.delete_index_alias ##########
     #  ------------------
     #  Elastics::Template
@@ -691,6 +736,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.get_index_alias ##########
     #  ------------------
@@ -710,6 +756,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.update_index_settings ##########
     #  ------------------
     #  Elastics::Template
@@ -726,6 +773,8 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+    # also aliased by: :put_index_settings
+
 
     #  ########## Elastics.get_index_settings ##########
     #  ------------------
@@ -744,6 +793,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.get_settings ##########
     #  ------------------
     #  Elastics::Template
@@ -760,6 +810,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.analyze_index ##########
     #  ------------------
@@ -778,6 +829,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.put_index_template ##########
     #  ------------------
     #  Elastics::Template
@@ -794,6 +846,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.delete_index_template ##########
     #  ------------------
@@ -812,6 +865,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.get_index_template ##########
     #  ------------------
     #  Elastics::Template
@@ -829,6 +883,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.index_template_exists ##########
     #  ------------------
     #  Elastics::Template
@@ -845,6 +900,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.put_index_warmer ##########
     #  ------------------
@@ -865,6 +921,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.delete_index_warmer ##########
     #  ------------------
     #  Elastics::Template
@@ -882,6 +939,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.get_index_warmer ##########
     #  ------------------
@@ -901,6 +959,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.index_status ##########
     #  ------------------
     #  Elastics::Template
@@ -917,6 +976,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.index_stats ##########
     #  ------------------
@@ -936,6 +996,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.index_segments ##########
     #  ------------------
     #  Elastics::Template
@@ -952,6 +1013,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.index_recovery ##########
     #  ------------------
@@ -970,6 +1032,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.index_clearcache ##########
     #  ------------------
     #  Elastics::Template
@@ -986,6 +1049,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.flush_index ##########
     #  ------------------
@@ -1004,6 +1068,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.synced_flush_index ##########
     #  ------------------
     #  Elastics::Template
@@ -1020,6 +1085,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.refresh_index ##########
     #  ------------------
@@ -1038,6 +1104,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.optimize_index ##########
     #  ------------------
     #  Elastics::Template
@@ -1054,6 +1121,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.upgrade_index ##########
     #  ------------------
@@ -1072,6 +1140,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.cluster_health ##########
     #  ------------------
     #  Elastics::Template
@@ -1088,6 +1157,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.cluster_state ##########
     #  ------------------
@@ -1107,6 +1177,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.cluster_stats ##########
     #  ------------------
     #  Elastics::Template
@@ -1123,6 +1194,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.cluster_pending_tasks ##########
     #  ------------------
@@ -1141,6 +1213,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.cluster_reroute ##########
     #  ------------------
     #  Elastics::Template
@@ -1157,6 +1230,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.put_cluster_settings ##########
     #  ------------------
@@ -1175,6 +1249,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.get_cluster_settings ##########
     #  ------------------
     #  Elastics::Template
@@ -1191,6 +1266,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.cluster_nodes_stats ##########
     #  ------------------
@@ -1210,6 +1286,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.cluster_nodes_info ##########
     #  ------------------
     #  Elastics::Template
@@ -1228,6 +1305,7 @@ module Elastics
       super
     end
 
+
     #  ########## Elastics.cluster_nodes_hot_threads ##########
     #  ------------------
     #  Elastics::Template
@@ -1244,6 +1322,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.match_all ##########
     #  ------------------
@@ -1264,6 +1343,7 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
+
 
     #  ########## Elastics.search_by_id ##########
     #  ------------------
