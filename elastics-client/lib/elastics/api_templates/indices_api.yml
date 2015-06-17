@@ -17,9 +17,6 @@ put_index: &create
       number_of_shards: <<number_of_shards= 5 >>
       number_of_replicas: <<number_of_replicas= 1 >>
 
-# aliased
-create_index: *create
-
 post_index:
   - POST
   - /<<index>>
@@ -57,9 +54,6 @@ indices_exists: &indices_exists
   - HEAD
   - /<<index>>
 
-# aliased
-index_exists: *indices_exists
-
 
 
 #-----------------------------------------------------------------------------#
@@ -85,9 +79,6 @@ put_index_mapping: &put_index_mapping
   - /<<index>>/_mapping/<<type>>
   - <<type>>:
       properties: <<properties>>
-
-# alias
-put_mapping: *put_index_mapping
 
 
 
@@ -118,9 +109,6 @@ get_field_mapping:
 types_exists: &types_exists
   - HEAD
   - /<<index>>/<<type>>
-
-# alias
-type_exists: *types_exists
 
 
 
@@ -173,10 +161,6 @@ get_index_alias:
 update_index_settings: &update_index_settings
   - PUT
   - /<<index= _all >>/_settings
-
-# alias
-# you should pass the settings structure as the :data variable
-put_index_settings: *update_index_settings
 
 
 

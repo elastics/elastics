@@ -75,7 +75,9 @@ module Elastics
   extend self
   extend UtilityMethods
 
-  elastics.wrap :post_bulk_string, :bulk do |*vars|
+  ### wrapped methods ###
+
+  elastics.wrap :post_bulk_string do |*vars|
     vars = Vars.new(*vars)
     return if vars[:bulk_string].nil? || vars[:bulk_string].empty?
     super vars
@@ -93,7 +95,7 @@ module Elastics
   end
 
   # support for live-reindex
-  elastics.wrap :store, :put_store, :post_store do |*vars|
+  elastics.wrap :store, :post_store do |*vars|
     vars         = Vars.new(*vars)
     vars[:index] = LiveReindex.prefix_index(vars[:index]) if LiveReindex.should_prefix_index?
     result = super(vars)
@@ -105,7 +107,7 @@ module Elastics
   end
 
   # support for live-reindex
-  elastics.wrap :delete, :remove do |*vars|
+  elastics.wrap :delete do |*vars|
     vars         = Vars.new(*vars)
     vars[:index] = LiveReindex.prefix_index(vars[:index]) if LiveReindex.should_prefix_index?
     if LiveReindex.should_track_change?
@@ -114,5 +116,24 @@ module Elastics
     end
     super(vars)
   end
+
+    ### alias methods ###
+
+  class << self
+    alias_method :put_store,          :store                 # for symmetry with post_store
+    alias_method :remove,             :delete
+    alias_method :multi_get,          :multi_get_ids         # deprecated (backward compatibility)
+    alias_method :bulk,               :post_bulk_string      # deprecated (backward compatibility)
+
+    alias_method :create_index,       :put_index
+    alias_method :index_exists,       :indices_exists
+    alias_method :exist?,             :indices_exists        # deprecated (backward compatibility)
+    alias_method :put_mapping,        :put_index_mapping
+    alias_method :type_exists,        :types_exists
+    alias_method :put_index_settings, :update_index_settings
+
+    alias_method :mlt,                :more_like_this
+  end
+
 
 end

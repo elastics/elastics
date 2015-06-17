@@ -116,9 +116,3 @@ delete_percolator:
 more_like_this: &mlt
   - GET
   - /<<index>>/<<type>>/<<id>>/_mlt
-
-# aliased
-mlt: *mlt
-
-
-
