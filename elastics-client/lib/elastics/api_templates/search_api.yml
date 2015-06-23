@@ -1,0 +1,118 @@
+# These methods are available as Elastics.<method>(*vars)
+# you can get the updated full reference and usage example of these methods
+# by just doing in the console:
+# Elastics.doc
+
+
+
+#-----------------------------------------------------------------------------#
+### Search ###
+# The search api is covered by the templating system
+
+
+
+#-----------------------------------------------------------------------------#
+### Search Shards ###
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/search-shards.html
+
+# you can pass the parameters as the :params variable
+search_shards:
+  - GET
+  - /<<index= _all >>/<<type= ~ >>/_search_shards
+
+
+
+#-----------------------------------------------------------------------------#
+### Multi Search ###
+# the Multi Search api is covered by the <YourClass>.multi_search method
+# added by the Elastics::Templates module
+
+
+
+#-----------------------------------------------------------------------------#
+### Count ###
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html
+# NOTICE: Also implemented as <YourClass>.<your_template_method>_count
+
+# you must pass the query to validate as the :data variable
+# you can pass the parameters as the :params variable
+count:
+  - GET
+  - /<<index= _all >>/<<type= ~ >>/_count
+  # pass a :data structure if you need
+
+
+
+#-----------------------------------------------------------------------------#
+### Search Exists ###
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/search-exists.html
+# NOTICE: Also implemented as <YourClass>.<your_template_method>_exist?
+
+# you must pass the query to validate as the :data variable
+# you can pass the parameters as the :params variable
+search_exists:
+  - GET
+  - /<<index= _all >>/<<type= ~ >>/<<id= ~ >>/_search/exists
+
+
+
+#-----------------------------------------------------------------------------#
+### Validate ###
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/search-validate.html
+# NOTICE: Also implemented as <YourClass>.<your_template_method>_valid?
+
+# you must pass the query to validate as the :data variable
+# you can pass the parameters as the :params variable
+validate:
+  - GET
+  - /<<index= _all >>/<<type= ~ >>/<<id= ~ >>/_validate/query
+
+
+
+#-----------------------------------------------------------------------------#
+### Explain ###
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/search-explain.html
+# NOTICE: Also implemented as <YourClass>.<your_template_method>_explain
+
+# you must pass the query to explain as the :data variable
+# you can pass the parameters as the :params variable
+explain:
+  - GET
+  - /<<index= _all >>/<<type= ~ >>/<<id= ~ >>/_explain
+
+
+
+#-----------------------------------------------------------------------------#
+### Percolator ###
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/search-percolate.html
+
+
+# You must pass the the document (and additional queries) as :data variable
+percolate:
+  - GET
+  - /<<index>>/<<type>>/_percolate
+
+# You must pass the the document (and additional queries) as :data variable
+percolate_count:
+  - GET
+  - /<<index>>/<<type>>/_percolate/count
+
+# You must pass the the query (and additional fields) as :data variable
+put_percolator:
+  - PUT
+  - /<<index>>/.percolator/<<id>>
+
+delete_percolator:
+  - DELETE
+  - /<<index>>/.percolator/<<id>>
+
+
+
+#-----------------------------------------------------------------------------#
+### More Like This ###
+# http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-more-like-this.html
+
+# You can pass the search API (facets, from/to and so on) as :data variable
+more_like_this: &mlt
+  - GET
+  - /<<index>>/<<type>>/<<id>>/_mlt

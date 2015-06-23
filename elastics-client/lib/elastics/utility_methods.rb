@@ -36,6 +36,10 @@ module Elastics
       elastics.doc(*args)
     end
 
+    def usage(*args)
+      elastics.usage(*args)
+    end
+
     def scan_search(*args, &block)
       elastics.scan_search(*args, &block)
     end

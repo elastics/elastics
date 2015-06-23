@@ -5,9 +5,7 @@ module Elastics
                                                         Result::MultiGet,
                                                         Result::Bulk ],
                                  :logger           => Logger.new(STDERR),
-                                 :variables        => Vars.new( :index      => nil,
-                                                                :type       => nil,
-                                                                :params     => {},
+                                 :variables        => Vars.new( :params     => {},
                                                                 :no_pruning => [] ),
                                  :config_file      => './config/elastics.yml',
                                  :elastics_dir     => './elastics',
@@ -24,7 +22,7 @@ module Elastics
     def indices
       @indices ||= Indices.new(config_file)
     end
-    
+
     # force color in console (used with jruby)
     def ansi=(bool)
       Dye.color = bool

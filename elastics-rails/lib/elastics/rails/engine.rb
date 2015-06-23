@@ -6,7 +6,7 @@ module Elastics
         config.elastics = Conf
         config.elastics.variables[:index] = [self.class.name.split('::').first.underscore, ::Rails.env].join('_')
         config.elastics.config_file       = ::Rails.root.join('config', 'elastics.yml').to_s
-        config.elastics.elastics_dir       = ::Rails.root.join('app', 'elastics').to_s
+        config.elastics.elastics_dir      = ::Rails.root.join('app', 'elastics').to_s
         config.elastics.logger            = Logger.new(STDOUT)
         config.elastics.logger.level      = ::Logger::DEBUG if ::Rails.env.development?
         config.elastics.result_extenders |= [ Elastics::Result::RailsHelper ]
