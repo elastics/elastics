@@ -2,7 +2,7 @@ module Elastics
   module InstanceProxy
     class ModelIndexer < ModelSyncer
 
-      # delegates :index, :is_child?, :is_parent? to class_elastics
+      # delegates :is_child?, :is_parent? to class_elastics
       Utils.define_delegation :to  => :class_elastics,
                               :in  => self,
                               :by  => :module_eval,
@@ -76,7 +76,7 @@ module Elastics
         @routing ||= case
                      when instance.respond_to?(:elastics_routing) then instance.elastics_routing
                      when is_child?                               then parent_instance.elastics.routing
-                     when is_parent?                              then create_routing
+                     when is_parent?                              then id
                      end
       end
       attr_writer :routing
@@ -91,8 +91,8 @@ module Elastics
       attr_writer :parent
 
       def metainfo
-        meta = Vars.new( :index => index, :type => type, :id => id )
-        params = {}
+        meta             = Vars.new( :index => index, :type => type, :id => id )
+        params           = {}
         params[:routing] = routing if routing
         params[:parent]  = parent  if parent
         meta.merge!(:params => params) unless params.empty?
@@ -101,23 +101,6 @@ module Elastics
 
       def sync_self
         instance.destroyed? ? remove : store
-      end
-
-      private
-
-      BASE62_DIGITS = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a
-
-      def create_routing
-        string    = [index, type, id].join
-        remainder = Digest::MD5.hexdigest(string).to_i(16)
-        result    = []
-        max_power = ( Math.log(remainder) / Math.log(62) ).floor
-        max_power.downto(0) do |power|
-          digit, remainder = remainder.divmod(62**power)
-          result << digit
-        end
-        result << remainder if remainder > 0
-        result.map{|digit| BASE62_DIGITS[digit]}.join
       end
 
     end
