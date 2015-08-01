@@ -69,7 +69,7 @@ multi_get_ids: &multi_get_ids
 # you must pass the :docs array
 multi_get_docs:
   - GET
-  - /<<index= _all >>/<<type= ~ >>/_mget
+  - /<<index>>/<<type>>/_mget
   - docs: << docs >>
 
 

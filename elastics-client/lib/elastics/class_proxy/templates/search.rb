@@ -78,22 +78,22 @@ module Elastics
 
           # implements https://www.elastic.co/guide/en/elasticsearch/reference/current/search-exists.html
           when /exists?\??$/
-            result = render.call '/<<index= _all >>/<<type= ~ >>/<<id= ~ >>/_search/exists'
+            result = render.call '/<<index>>/<<type>>/<<id= ~ >>/_search/exists'
             result['exists']
 
           # implements https://www.elastic.co/guide/en/elasticsearch/reference/current/search-validate.html
           when /(_valid\??|validate)$/
-            result = render.call '/<<index= _all >>/<<type= ~ >>/<<id= ~ >>/_validate/query'
+            result = render.call '/<<index>>/<<type>>/<<id= ~ >>/_validate/query'
             result['valid']
 
           # implements the count API (https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html)
           when /_count$/
-            result = render.call '/<<index= _all >>/<<type= ~ >>/_count'
+            result = render.call '/<<index>>/<<type>>/_count'
             result['count']
 
           # implements https://www.elastic.co/guide/en/elasticsearch/reference/current/search-explain.html
           when /_explain$/
-            render.call '/<<index= _all >>/<<type= ~ >>/<<id= ~ >>/_explain'
+            render.call '/<<index>>/<<type>>/<<id= ~ >>/_explain'
 
           end
 

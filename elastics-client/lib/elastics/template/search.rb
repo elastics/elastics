@@ -3,7 +3,7 @@ module Elastics
     class Search < Template
 
       def initialize(data, vars=nil)
-        super('GET', '/<<index= _all >>/<<type= ~ >>/_search', data, vars)
+        super('GET', '/<<index>>/<<type>>/_search', data, vars)
       end
 
       def to_a(*vars)

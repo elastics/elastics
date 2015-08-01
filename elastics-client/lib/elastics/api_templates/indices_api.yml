@@ -88,7 +88,7 @@ put_index_mapping: &put_index_mapping
 
 get_index_mapping:
   - GET
-  - /<<index= _all >>/_mapping/<<type= ~ >>
+  - /<<index>>/_mapping/<<type>>
 
 
 
@@ -149,7 +149,7 @@ delete_index_alias:
 
 get_index_alias:
   - GET
-  - /<<index= _all >>/_alias/<<alias= '*' >>
+  - /<<index>>/_alias/<<alias= '*' >>
 
 
 
@@ -160,7 +160,7 @@ get_index_alias:
 # you can pass the settings structure as the :data variable
 update_index_settings: &update_index_settings
   - PUT
-  - /<<index= _all >>/_settings
+  - /<<index>>/_settings
 
 
 
@@ -185,7 +185,7 @@ get_settings: *get_index_settings
 # you can pass the parameters as the :params variable
 analyze_index:
   - GET
-  - /<<index= _all >>/_analyze
+  - /<<index>>/_analyze
 
 
 
@@ -219,7 +219,7 @@ index_template_exists:
 # you must pass the warmer structure as the :data variable
 put_index_warmer:
   - PUT
-  - /<<index= _all >>/<<type= ~ >>/_warmer/<<warmer>>
+  - /<<index>>/<<type>>/_warmer/<<warmer>>
 
 delete_index_warmer:
   - DELETE
@@ -237,7 +237,7 @@ get_index_warmer:
 
 index_status:
   - GET
-  - /<<index= _all >>/_status
+  - /<<index>>/_status
 
 
 
@@ -247,7 +247,7 @@ index_status:
 
 index_stats:
   - GET
-  - /<<index= _all >>/_stats/<<stats= ~ >>
+  - /<<index>>/_stats/<<stats= ~ >>
 
 
 
@@ -257,7 +257,7 @@ index_stats:
 
 index_segments:
   - GET
-  - /<<index= _all >>/_segments
+  - /<<index>>/_segments
 
 
 
@@ -267,7 +267,7 @@ index_segments:
 
 index_recovery:
   - GET
-  - /<<index= _all >>/_recovery
+  - /<<index>>/_recovery
 
 
 
@@ -277,7 +277,7 @@ index_recovery:
 
 index_clearcache:
   - POST
-  - /<<index= _all >>/_cache/clear
+  - /<<index>>/_cache/clear
 
 
 
@@ -289,12 +289,12 @@ index_clearcache:
 # you can pass the parameters as the :params variable
 flush_index:
   - POST
-  - /<<index= _all >>/_flush
+  - /<<index>>/_flush
 
 # you can pass the parameters as the :params variable
 synced_flush_index:
   - POST
-  - /<<index= _all >>/_flush/synced
+  - /<<index>>/_flush/synced
 
 
 
@@ -304,7 +304,7 @@ synced_flush_index:
 
 refresh_index:
   - POST
-  - /<<index= _all >>/_refresh
+  - /<<index>>/_refresh
 
 
 
@@ -315,7 +315,7 @@ refresh_index:
 # you can pass the parameters as the :params variable
 optimize_index:
   - POST
-  - /<<index= _all >>/_optimize
+  - /<<index>>/_optimize
 
 
 

@@ -18,7 +18,7 @@
 # you can pass the parameters as the :params variable
 search_shards:
   - GET
-  - /<<index= _all >>/<<type= ~ >>/_search_shards
+  - /<<index>>/<<type>>/_search_shards
 
 
 
@@ -38,7 +38,7 @@ search_shards:
 # you can pass the parameters as the :params variable
 count:
   - GET
-  - /<<index= _all >>/<<type= ~ >>/_count
+  - /<<index>>/<<type>>/_count
   # pass a :data structure if you need
 
 
@@ -52,7 +52,7 @@ count:
 # you can pass the parameters as the :params variable
 search_exists:
   - GET
-  - /<<index= _all >>/<<type= ~ >>/<<id= ~ >>/_search/exists
+  - /<<index>>/<<type>>/<<id= ~ >>/_search/exists
 
 
 
@@ -65,7 +65,7 @@ search_exists:
 # you can pass the parameters as the :params variable
 validate:
   - GET
-  - /<<index= _all >>/<<type= ~ >>/<<id= ~ >>/_validate/query
+  - /<<index>>/<<type>>/<<id= ~ >>/_validate/query
 
 
 
@@ -78,7 +78,7 @@ validate:
 # you can pass the parameters as the :params variable
 explain:
   - GET
-  - /<<index= _all >>/<<type= ~ >>/<<id= ~ >>/_explain
+  - /<<index>>/<<type>>/<<id= ~ >>/_explain
 
 
 

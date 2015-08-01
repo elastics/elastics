@@ -12,7 +12,7 @@
 # you can pass the params as the :params variable
 cluster_health:
   - GET
-  - /_cluster/health/<<index= _all >>
+  - /_cluster/health/<<index>>
 
 
 
@@ -23,7 +23,7 @@ cluster_health:
 # you can pass the metrics as the :metrics variable
 cluster_state:
   - GET
-  - /_cluster/state/<<metrics= _all >>/<<index= _all >>
+  - /_cluster/state/<<metrics= _all >>/<<index>>
 
 
 
