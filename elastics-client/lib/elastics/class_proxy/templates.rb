@@ -16,12 +16,13 @@ module Elastics
       def load_source_for(klass, source, source_vars)
         if source.nil? || source !~ /\n/m
           paths = [ "#{Conf.elastics_dir}/#{source}.yml",
+                    "#{Conf.elastics_dir}/#{Utils.class_name_to_path(context.name)}.yml",
                     "#{Conf.elastics_dir}/#{Utils.class_name_to_type(context.name)}.yml",
                     source.to_s ]
           source = paths.find {|p| File.exist?(p)}
         end
-        raise ArgumentError, "expected a string, got #{source.inspect}" \
-            unless source.is_a?(String)
+        raise ArgumentError, "Unable to load the source: expected a string, got #{source.inspect}" \
+              unless source.is_a?(String)
         @sources << [klass, source, source_vars]
         do_load_source(klass, source, source_vars)
         # fixes the legacy empty stubs, which should call super instead
