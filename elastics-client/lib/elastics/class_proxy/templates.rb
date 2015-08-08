@@ -15,11 +15,10 @@ module Elastics
       # accepts a path to a file or YAML string
       def load_source_for(klass, source, source_vars)
         if source.nil? || source !~ /\n/m
-          paths = [ "#{Conf.elastics_dir}/#{source}.yml",
-                    "#{Conf.elastics_dir}/#{Utils.class_name_to_path(context.name)}.yml",
-                    "#{Conf.elastics_dir}/#{Utils.class_name_to_type(context.name)}.yml",
-                    source.to_s ]
-          source = paths.find {|p| File.exist?(p)}
+          base_names = [source, Utils.class_name_to_path(context.name), Utils.class_name_to_type(context.name)]
+          paths      = base_names.map{|bn| ["#{Conf.elastics_dir}/#{bn}.yml", "#{Conf.elastics_dir}/#{bn}.yml.erb"]}.flatten
+          paths     << source.to_s
+          source     = paths.find {|p| File.exist?(p)}
         end
         raise ArgumentError, "Unable to load the source: expected a string, got #{source.inspect}" \
               unless source.is_a?(String)
