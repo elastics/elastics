@@ -2,12 +2,12 @@ module Elastics
   module UtilityMethods
 
     def search(data, vars={})
-      Template::Search.new(data).setup(Elastics.elastics).render(vars)
+      Template::Search.new(data, vars).setup(Elastics.elastics).render(vars)
     end
 
     # like Elastics.search, but it will use the Elastics::Template::SlimSearch instead
     def slim_search(data, vars={})
-      Template::SlimSearch.new(data).setup(Elastics.elastics).render(vars)
+      Template::SlimSearch.new(data, vars).setup(Elastics.elastics).render(vars)
     end
 
     %w[HEAD GET PUT POST DELETE].each do |m|
@@ -53,7 +53,7 @@ module Elastics
 
     def dump_all(*vars, &block)
       refresh_index(*vars)
-      scan_all({:params => {:fields => '*,_source'}}, *vars) do |batch|
+      scan_all({:params => {:_source => '*'}}, *vars) do |batch|
         batch.map!{|document| document.delete('_score'); document}
         block.call(batch)
       end
@@ -62,7 +62,7 @@ module Elastics
     # refresh and pull the full document from the index
     def dump_one(*vars)
       refresh_index(*vars)
-      document = search_by_id({:params => {:fields => '*,_source'}}, *vars)
+      document = search_by_id({:params => {:_source => '*'}}, *vars)
       document.delete('_score')
       document
     end
