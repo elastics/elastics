@@ -51,7 +51,7 @@ module Elastics
           @highlight  = doc['highlight']
           # load the elastics proxy before freezing
           elastics
-          self.freeze if raw_result.variables[:params][:fields] || doc['fields']
+          self.freeze if raw_result.variables[:params][:fields] || doc['fields'] || raw_result.variables[:params][:_source]
         end
         object
       end

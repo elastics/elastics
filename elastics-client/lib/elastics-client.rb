@@ -83,7 +83,7 @@ module Elastics
     super vars
   end
 
-  # get a document without using the get API (which doesn't support fields '*')
+  # get a document without using the get API and without raising any error if missing
   elastics.wrap :search_by_id do |*vars|
     vars   = Vars.new(*vars)
     result = super(vars)

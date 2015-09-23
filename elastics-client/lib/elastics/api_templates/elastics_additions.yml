@@ -13,12 +13,13 @@ match_all:
   - GET
   - /<<index>>/<<type>>/_search
   - query:
-      match_all: {}
+      match_all:
+        {}
 
 
 
 #-----------------------------------------------------------------------------#
-# get a document without using the get API (which doesn't support fields '*')
+# get a document without using the get API and without raising any error if missing
 search_by_id:
   - GET
   - /<<index>>/<<type>>/_search

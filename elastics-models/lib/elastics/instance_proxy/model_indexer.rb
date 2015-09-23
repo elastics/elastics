@@ -32,10 +32,10 @@ module Elastics
         Elastics.get(metainfo, *vars)
       end
 
-      # like get, but it returns all the fields after a refresh
+      # like get, but it returns all the source fields after a refresh
       def full_get(*vars)
         return unless instance.elastics_indexable?
-        Elastics.search_by_id(metainfo, {:refresh => true, :params => {:fields => '*,_source'}}, *vars)
+        Elastics.search_by_id(metainfo, {:refresh => true, :params => {:_source => '*'}}, *vars)
       end
 
       def parent_instance

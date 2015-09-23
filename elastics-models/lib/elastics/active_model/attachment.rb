@@ -26,7 +26,7 @@ module Elastics
                 }
         props.extend(Struct::Mergeable).deep_merge! args.first if args.first.is_a?(Hash)
 
-        scope :"#{name}_scope", fields("#{name}.title",
+        scope :"#{name}_scope", source("#{name}.title",
                                        "#{name}.author",
                                        "#{name}.name",
                                        "#{name}.content_type",
