@@ -28,6 +28,7 @@ require 'elastics/template/common'
 require 'elastics/template/partial'
 require 'elastics/template/logger'
 require 'elastics/template'
+require 'elastics/template/api'
 require 'elastics/template/search'
 require 'elastics/template/slim_search'
 require 'elastics/template/tags'
@@ -60,22 +61,25 @@ module Elastics
   include ApiStubs
 
   include Templates
-  elastics.load_source File.expand_path('../elastics/api_templates/document_api.yml'   , __FILE__)
-  elastics.load_source File.expand_path('../elastics/api_templates/search_api.yml'   , __FILE__)
-  elastics.load_source File.expand_path('../elastics/api_templates/indices_api.yml', __FILE__)
-  # elastics.load_source File.expand_path('../elastics/api_templates/cat_api.yml'   , __FILE__)
-  elastics.load_source File.expand_path('../elastics/api_templates/cluster_api.yml', __FILE__)
-  elastics.load_source File.expand_path('../elastics/api_templates/elastics_additions.yml'   , __FILE__)
-
-  # implements the cat API (https://www.elastic.co/guide/en/elasticsearch/reference/current/cat.html)
-  def cat(path)
-    GET path
-  end
+  elastics.load_api_source File.expand_path('../elastics/api_templates/document_api.yml'   , __FILE__)
+  elastics.load_api_source File.expand_path('../elastics/api_templates/search_api.yml'   , __FILE__)
+  elastics.load_api_source File.expand_path('../elastics/api_templates/indices_api.yml', __FILE__)
+  elastics.load_api_source File.expand_path('../elastics/api_templates/cat_api.yml'   , __FILE__)
+  elastics.load_api_source File.expand_path('../elastics/api_templates/cluster_api.yml', __FILE__)
+  elastics.load_api_source File.expand_path('../elastics/api_templates/elastics_additions.yml'   , __FILE__)
 
   extend self
   extend UtilityMethods
 
   ### wrapped methods ###
+
+  elastics.wrap :cat do |*vars|
+    if vars.first.is_a?(String)
+      super :path => vars.first
+    else
+      super *vars
+    end
+  end
 
   elastics.wrap :post_bulk_string do |*vars|
     vars = Vars.new(*vars)

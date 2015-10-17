@@ -13,12 +13,15 @@
 
 #-----------------------------------------------------------------------------#
 ### Search Shards ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/search-shards.html
 
-# you can pass the parameters as the :params variable
 search_shards:
   - GET
   - /<<index>>/<<type>>/_search_shards
+  -
+  - REFERENCES:
+      api_name: Search Shards
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-shards.html
+      notice: "You can pass the parameters as the :params variable."
 
 
 
@@ -31,88 +34,104 @@ search_shards:
 
 #-----------------------------------------------------------------------------#
 ### Count ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html
-# NOTICE: Also implemented as <YourClass>.<your_template_method>_count
 
-# you must pass the query to validate as the :data variable
-# you can pass the parameters as the :params variable
 count:
   - GET
   - /<<index>>/<<type>>/_count
-  # pass a :data structure if you need
+  -
+  - REFERENCES:
+      api_name: Search Shards
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html
+      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable. IMPORTANT: This functionality is also implemented as <YourClass>.<your_template_method>_count."
 
 
 
 #-----------------------------------------------------------------------------#
 ### Search Exists ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/search-exists.html
-# NOTICE: Also implemented as <YourClass>.<your_template_method>_exist?
 
-# you must pass the query to validate as the :data variable
-# you can pass the parameters as the :params variable
 search_exists:
   - GET
   - /<<index>>/<<type>>/<<id= ~ >>/_search/exists
+  -
+  - REFERENCES:
+      api_name: Search Exists
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-exists.html
+      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable. IMPORTANT: This functionality is also implemented as <YourClass>.<your_template_method>_exist?."
 
 
 
 #-----------------------------------------------------------------------------#
 ### Validate ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/search-validate.html
-# NOTICE: Also implemented as <YourClass>.<your_template_method>_valid?
 
-# you must pass the query to validate as the :data variable
-# you can pass the parameters as the :params variable
 validate:
   - GET
   - /<<index>>/<<type>>/<<id= ~ >>/_validate/query
+  -
+  - REFERENCES:
+      api_name: Validate
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-validate.html
+      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable. IMPORTANT: Also implemented as <YourClass>.<your_template_method>_valid?."
 
 
 
 #-----------------------------------------------------------------------------#
 ### Explain ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/search-explain.html
-# NOTICE: Also implemented as <YourClass>.<your_template_method>_explain
 
-# you must pass the query to explain as the :data variable
-# you can pass the parameters as the :params variable
 explain:
   - GET
   - /<<index>>/<<type>>/<<id= ~ >>/_explain
+  -
+  - REFERENCES:
+      api_name: Validate
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-explain.html
+      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable. IMPORTANT: Also implemented as <YourClass>.<your_template_method>_explain."
 
 
 
 #-----------------------------------------------------------------------------#
 ### Percolator ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/search-percolate.html
-
-
-# You must pass the the document (and additional queries) as :data variable
-percolate:
-  - GET
-  - /<<index>>/<<type>>/_percolate
-
-# You must pass the the document (and additional queries) as :data variable
-percolate_count:
-  - GET
-  - /<<index>>/<<type>>/_percolate/count
-
-# You must pass the the query (and additional fields) as :data variable
-put_percolator:
-  - PUT
-  - /<<index>>/.percolator/<<id>>
 
 delete_percolator:
   - DELETE
   - /<<index>>/.percolator/<<id>>
+  -
+  - REFERENCES: &percolator
+      api_name: Percolator
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-percolate.html
+
+percolate:
+  - GET
+  - /<<index>>/<<type>>/_percolate
+  -
+  - &percolator_ref
+    REFERENCES:
+      <<: *percolator
+      notice: "You must pass the the document (and additional queries) as :data variable."
+
+percolate_count:
+  - GET
+  - /<<index>>/<<type>>/_percolate/count
+  -
+  - *percolator_ref
+
+put_percolator:
+  - PUT
+  - /<<index>>/.percolator/<<id>>
+  -
+  - *percolator_ref
 
 
 
 #-----------------------------------------------------------------------------#
 ### More Like This ###
-# http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-more-like-this.html
 
-# You can pass the search API (facets, from/to and so on) as :data variable
-more_like_this: &mlt
+more_like_this:
   - GET
   - /<<index>>/<<type>>/<<id>>/_mlt
+  -
+  - REFERENCES:
+      api_name: More Like This
+      api_url: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-more-like-this.html
+      notice: "You can pass the search API as :data variable."
+      aliases:
+        - :mlt

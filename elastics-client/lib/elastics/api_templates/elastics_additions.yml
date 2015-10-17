@@ -8,21 +8,23 @@
 #-----------------------------------------------------------------------------#
 ### API additions ###
 
-# not a real API method, but handy
 match_all:
   - GET
   - /<<index>>/<<type>>/_search
   - query:
       match_all:
         {}
-
+  - REFERENCES:
+      notice: "Not a real API method, but handy."
 
 
 #-----------------------------------------------------------------------------#
-# get a document without using the get API and without raising any error if missing
+
 search_by_id:
   - GET
   - /<<index>>/<<type>>/_search
   - query:
       term:
         _id: <<id>>
+  - REFERENCES:
+      notice: "Get a document without using the get API and without raising any error if it is missing."

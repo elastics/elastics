@@ -96,9 +96,7 @@ module Elastics
             render.call '/<<index>>/<<type>>/<<id= ~ >>/_explain'
 
           end
-
         end
-
 
       end
     end

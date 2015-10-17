@@ -7,15 +7,20 @@
 
 #-----------------------------------------------------------------------------#
 ### Create Index ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html
 
-# you can also pass the complete data structure as :data variable, so pasing settings, mappings, warmers, aliases, ...
-put_index: &create
+put_index:
   - PUT
   - /<<index>>
   - settings:
       number_of_shards: <<number_of_shards= 5 >>
       number_of_replicas: <<number_of_replicas= 1 >>
+  - &create_index
+    REFERENCES:
+      api_name: Create Index
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html
+      notice: "You can also pass the complete data structure as :data variable, so passing settings, mappings, warmers, aliases, ..."
+      aliases:
+        - :create_index
 
 post_index:
   - POST
@@ -23,307 +28,422 @@ post_index:
   - settings:
       number_of_shards: <<number_of_shards= 5 >>
       number_of_replicas: <<number_of_replicas= 1 >>
+  - *create_index
 
 
 
 #-----------------------------------------------------------------------------#
 ### Delete Index ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-delete-index.html
 
 delete_index:
   - DELETE
   - /<<index>>
+  -
+  - REFERENCES:
+      api_name: Delete Index
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-delete-index.html
 
 
 
 #-----------------------------------------------------------------------------#
 ### Get Index ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-index.html
 
 get_index:
   - GET
   - /<<index>>/<<features= ~ >>
+  -
+  - REFERENCES:
+      api_name: Get Index
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-index.html
 
 
 
 #-----------------------------------------------------------------------------#
 ### Indices Exists ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-exists.html
 
-indices_exists: &indices_exists
+indices_exists:
   - HEAD
   - /<<index>>
+  -
+  - REFERENCES:
+      api_name: Indices Exists
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-exists.html
+      aliases:
+        - :index_exists
+        - :exist?
 
 
 
 #-----------------------------------------------------------------------------#
 ### Open/Close Index ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-open-close.html
 
 close_index:
   - POST
   - /<<index>>/_close
+  -
+  - &open_close_index
+    REFERENCES:
+      api_name: Open/Close Index
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-open-close.html
 
 open_index:
   - POST
   - /<<index>>/_open
+  -
+  - *open_close_index
 
 
 
 #-----------------------------------------------------------------------------#
 ### Put Mappings ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-put-mapping.html
 
-put_index_mapping: &put_index_mapping
+put_index_mapping:
   - PUT
   - /<<index>>/_mapping/<<type>>
   - <<type>>:
       properties: <<properties>>
+  - REFERENCES:
+      api_name: Put Mappings
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-put-mapping.html
+      aliases:
+        - :put_mappings
 
 
 
 #-----------------------------------------------------------------------------#
 ### Get Mappings ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-mapping.html
 
 get_index_mapping:
   - GET
   - /<<index>>/_mapping/<<type>>
+  -
+  - REFERENCES:
+      api_name: Get Mappings
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-mapping.html
 
 
 
 #-----------------------------------------------------------------------------#
 ### Get Field Mappings ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html
 
 get_field_mapping:
   - GET
   - /<<index>>/_mapping/<<type>>/field/<<field>>
+  -
+  - REFERENCES:
+      api_name: Get Field Mappings
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html
 
 
 
 #-----------------------------------------------------------------------------#
 ### Types Exists ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-types-exists.html
 
 types_exists: &types_exists
   - HEAD
   - /<<index>>/<<type>>
+  -
+  - REFERENCES:
+      api_name: Types Exists
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-types-exists.html
+      aliases:
+        - :type_exists
 
 
 
 #-----------------------------------------------------------------------------#
 ### Delete Mappings ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-delete-mapping.html
 
 delete_index_mapping: &delete_index_mapping
   - DELETE
   - /<<index>>/<<type>>
+  -
+  - REFERENCES:
+      api_name: Delete Mappings
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-delete-mapping.html
 
 
 
 #-----------------------------------------------------------------------------#
 ### Index Aliases ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html
 
-# this is the generic interface allowing all options
-# you can pass the :actions array or the aliases API structure as :data variable
-post_index_aliases:
-  - POST
-  - /_aliases
-  - actions: <<actions>>
+# generic index aliases
 
 get_index_aliases:
   - GET
   - /<<index>>/_aliases
+  -
+  - REFERENCES: &index_aliases
+      api_name: Index Aliases
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html
 
-# this is the single index alias
-# you can pass other options as :data variable
-put_index_alias:
-  - PUT
-  - /<<index>>/_alias/<<alias>>
+post_index_aliases:
+  - POST
+  - /_aliases
+  - actions: <<actions>>
+  - REFERENCES:
+      <<: *index_aliases
+      notice: "This is the generic interface allowing all the options. You can pass the :actions array or the aliases API structure as the :data variable."
+
+
+# single index alias
 
 delete_index_alias:
   - DELETE
   - /<<index>>/_alias/<<alias>>
+  -
+  - REFERENCES: *index_aliases
 
 get_index_alias:
   - GET
   - /<<index>>/_alias/<<alias= '*' >>
+  -
+  - REFERENCES: *index_aliases
+
+put_index_alias:
+  - PUT
+  - /<<index>>/_alias/<<alias>>
+  -
+  - REFERENCES:
+      <<: *index_aliases
+      notice: "This is the single index alias. You can pass other options as the :data variable."
 
 
 
 #-----------------------------------------------------------------------------#
 ### Update Indices Settings ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-update-settings.html
 
-# you can pass the settings structure as the :data variable
-update_index_settings: &update_index_settings
+update_index_settings:
   - PUT
   - /<<index>>/_settings
+  -
+  - REFERENCES:
+      api_name: Update Indices Settings
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-update-settings.html
+      notice: "You can pass the settings structure as the :data variable."
+      aliases:
+       - :put_index_settings
 
 
 
 #-----------------------------------------------------------------------------#
 ### Get Indices Settings ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-settings.html
 
-get_index_settings: &get_index_settings
+get_index_settings:
   - GET
   - /<<index>>/_settings
+  -
+  - REFERENCES:
+      api_name: Get Indices Settings
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-settings.html
+      aliases:
+        - :get_settings
 
-# alias
-get_settings: *get_index_settings
 
 
 
 #-----------------------------------------------------------------------------#
 ### Analyze ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-analyze.html
 
-# you can pass the text to analyze as the :data variable (or the param :text)
-# you can pass the parameters as the :params variable
 analyze_index:
   - GET
   - /<<index>>/_analyze
+  -
+  - REFERENCES:
+      api_name: Analyze
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-analyze.html
+      notice: "You can pass the text to analyze as the :data variable (or the param :text). You can pass the parameters as the :params variable."
 
 
 
 #-----------------------------------------------------------------------------#
 ### Index Templates ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html
-
-# you must pass the template structure as the :data variable
-put_index_template:
-  - PUT
-  - /_template/<<template>>
 
 delete_index_template:
   - DELETE
   - /_template/<<template>>
+  -
+  - REFERENCES: &index_template
+      api_name: Index Templates
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html
 
 get_index_template:
   - GET
   - /_template/<<template= ~ >>
+  -
+  - REFERENCES: *index_template
 
 index_template_exists:
   - HEAD
   - /_template/<<template>>
+  -
+  - REFERENCES: *index_template
+
+put_index_template:
+  - PUT
+  - /_template/<<template>>
+  -
+  - REFERENCES:
+      <<: *index_template
+      notice: "You must pass the template structure as the :data variable."
 
 
 
 #-----------------------------------------------------------------------------#
 ### Warmers ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-warmers.html
-
-# you must pass the warmer structure as the :data variable
-put_index_warmer:
-  - PUT
-  - /<<index>>/<<type>>/_warmer/<<warmer>>
 
 delete_index_warmer:
   - DELETE
   - /<<index>>/_warmer/<<warmer>>
+  -
+  - REFERENCES: &warmers
+      api_name: Warmers
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-warmers.html
+
+put_index_warmer:
+  - PUT
+  - /<<index>>/<<type>>/_warmer/<<warmer>>
+  -
+  - REFERENCES:
+      <<: *warmers
+      notice: "You must pass the warmer structure as the :data variable."
 
 get_index_warmer:
   - GET
   - /<<index>>/_warmer/<<warmer= ~ >>
+  -
+  - REFERENCES: *warmers
 
 
 
 #-----------------------------------------------------------------------------#
 ### Status ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-status.html
 
 index_status:
   - GET
   - /<<index>>/_status
+  -
+  - REFERENCES:
+      api_name: Status
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-status.html
 
 
 
 #-----------------------------------------------------------------------------#
 ### Stats ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-stats.html
 
 index_stats:
   - GET
   - /<<index>>/_stats/<<stats= ~ >>
+  -
+  - REFERENCES:
+      api_name: Stats
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-stats.html
 
 
 
 #-----------------------------------------------------------------------------#
 ### Segments ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-segments.html
 
 index_segments:
   - GET
   - /<<index>>/_segments
+  -
+  - REFERENCES:
+      api_name: Segments
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-segments.html
 
 
 
 #-----------------------------------------------------------------------------#
 ### Recovery ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-recovery.html
 
 index_recovery:
   - GET
   - /<<index>>/_recovery
+  -
+  - REFERENCES:
+      api_name: Recovery
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-recovery.html
 
 
 
 #-----------------------------------------------------------------------------#
 ### Clear Cache ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-clearcache.html
 
 index_clearcache:
   - POST
   - /<<index>>/_cache/clear
+  -
+  - REFERENCES:
+      api_name: Recovery
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-clearcache.html
 
 
 
 #-----------------------------------------------------------------------------#
 ### Flush ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-flush.html
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-synced-flush.html
 
-# you can pass the parameters as the :params variable
 flush_index:
   - POST
   - /<<index>>/_flush
+  -
+  - REFERENCES:
+      api_name: Flush
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-flush.html
+      notice: "You can pass the parameters as the :params variable."
 
-# you can pass the parameters as the :params variable
+
+
+#-----------------------------------------------------------------------------#
+### Synced Flush ###
+
 synced_flush_index:
   - POST
   - /<<index>>/_flush/synced
+  -
+  - REFERENCES:
+      api_name: Synced Flush
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-synced-flush.html
+      notice: "You can pass the parameters as the :params variable."
 
 
 
 #-----------------------------------------------------------------------------#
 ### Refresh ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-refresh.html
 
 refresh_index:
   - POST
   - /<<index>>/_refresh
+  -
+  - REFERENCES:
+      api_name: Refresh
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-refresh.html
 
 
 
 #-----------------------------------------------------------------------------#
 ### Optimize ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-optimize.html
 
-# you can pass the parameters as the :params variable
 optimize_index:
   - POST
   - /<<index>>/_optimize
+  -
+  - REFERENCES:
+      api_name: Optimize
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-optimize.html
+      notice: "You can pass the parameters as the :params variable."
 
 
 
 #-----------------------------------------------------------------------------#
 ### Upgrade ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-optimize.html
 
-# you can pass the parameters as the :params variable
 upgrade_index:
   - POST
   - /<<index>>/_upgrade
+  -
+  - REFERENCES:
+      api_name: Upgrade
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-upgrade.html
+      notice: "You can pass the parameters as the :params variable."

@@ -1,3 +1,13 @@
-# This file is just a placeholder added for symmetry
-# The cat API (https://www.elastic.co/guide/en/elasticsearch/reference/current/cat.html)
-# is implemented by a single method Elastics.cat(path)
+# These methods are available as Elastics.<method>(*vars)
+# you can get the updated full reference and usage example of these methods
+# by just doing in the console:
+# Elastics.doc
+
+cat:
+  - GET
+  -
+  -
+  - REFERENCES:
+      api_name: Cat API
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/cat.html
+      notice: "You must pass the :path variable or you can pass it as a simple string argument: Elastics.cat('/path')"

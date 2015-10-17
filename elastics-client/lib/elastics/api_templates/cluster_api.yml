@@ -7,102 +7,131 @@
 
 #-----------------------------------------------------------------------------#
 ### Health ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html
 
-# you can pass the params as the :params variable
 cluster_health:
   - GET
   - /_cluster/health/<<index>>
+  -
+  - REFERENCES:
+      api_name: Health
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html
+      notice: "You can pass the params as the :params variable."
 
 
 
 #-----------------------------------------------------------------------------#
 ### State ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-state.html
 
-# you can pass the metrics as the :metrics variable
 cluster_state:
   - GET
   - /_cluster/state/<<metrics= _all >>/<<index>>
+  -
+  - REFERENCES:
+      api_name: State
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-state.html
+      notice: "You can pass the metrics as the :metrics variable."
 
 
 
 #-----------------------------------------------------------------------------#
 ### Stats ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-stats.html
 
-# you can pass the params as the :params variable
 cluster_stats:
   - GET
   - /_cluster/stats
+  -
+  - REFERENCES:
+      api_name: Stats
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-stats.html
+      notice: "You can pass the params as the :params variable."
 
 
 
 #-----------------------------------------------------------------------------#
 ### Pending Cluster Tasks ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-pending.html
 
-# you can pass the params as the :params variable
 cluster_pending_tasks:
   - GET
   - /_cluster/pending_tasks
+  -
+  - REFERENCES:
+      api_name: Pending Cluster Tasks
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-pending.html
+      notice: "You can pass the params as the :params variable."
 
 
 
 #-----------------------------------------------------------------------------#
 ### Cluster Reroute ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-reroute.html
 
-# you must pass the data structure as the :data variable
 cluster_reroute:
   - POST
   - /_cluster/reroute
+  -
+  - REFERENCES:
+      api_name: Cluster Reroute
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-reroute.html
+      notice: "You must pass the data structure as the :data variable."
 
 
 
 #-----------------------------------------------------------------------------#
-### Update Settings ###
-# http://www.elasticsearch.org/guide/reference/api/admin-cluster-update-settings/
-
-# you must pass the settings structure as the :data variable
-put_cluster_settings:
-  - PUT
-  - /_cluster/settings
+### Cluster Update Settings ###
 
 get_cluster_settings:
   - GET
   - /_cluster/settings
+  -
+  - REFERENCES: &cluster_settings
+      api_name: Cluster Update Settings
+      api_url: http://www.elasticsearch.org/guide/reference/api/admin-cluster-update-settings
+
+put_cluster_settings:
+  - PUT
+  - /_cluster/settings
+  -
+  - REFERENCES:
+      <<: *cluster_settings
+      notice: "You must pass the data structure as the :data variable."
 
 
 
 #-----------------------------------------------------------------------------#
 ### Nodes Stats ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html
 
-# you can pass the params as the :params variable
-# you must pass the settings structure as the :data variable
 cluster_nodes_stats:
   - GET
   - /_nodes/<<nodes= ~ >>/stats/<<stats= ~ >>
+  -
+  - REFERENCES:
+      api_name: Nodes Stats
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html
+      notice: "You can pass the params as the :params variable. You must pass the data structure as the :data variable."
 
 
 
 #-----------------------------------------------------------------------------#
 ### Nodes Info ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-info.html
 
-# uses the _nodes shortcut
 cluster_nodes_info:
   - GET
   - /_nodes/<<nodes= ~ >>/<<info= ~ >>
+  -
+  - REFERENCES:
+      api_name: Nodes Info
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-info.html
+      notice: "This template uses the _nodes shortcut."
+
 
 
 
 #-----------------------------------------------------------------------------#
 ### Nodes Hot Threads ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-hot-threads.html
 
 cluster_nodes_hot_threads:
   - GET
   - /_nodes/<<nodes= ~ >>/hot_threads
-
+  -
+  - REFERENCES:
+      api_name: Nodes Hot Threads
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-hot-threads.html

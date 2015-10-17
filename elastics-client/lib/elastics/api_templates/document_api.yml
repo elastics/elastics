@@ -6,102 +6,141 @@
 
 
 #-----------------------------------------------------------------------------#
-### Index ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html
+### Index API ###
 
-# You must pass the :data variable
-store: &store
+store:
   - PUT
   - /<<index>>/<<type>>/<<id>>
+  -
+  - REFERENCES: &index
+      api_name: Index API
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html
+      notice: "You must pass the :data variable."
+      aliases:
+        - :put_store
 
-# id is assigned by ES; you must pass :data
 post_store:
   - POST
   - /<<index>>/<<type>>
+  -
+  - REFERENCES:
+      <<: *index
+      notice: "The id is assigned by elasticsearch; you must pass the :data variable."
 
 
 
 #-----------------------------------------------------------------------------#
-### Get ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-get.html
+### Get API ###
 
 get:
   - GET
   - /<<index>>/<<type>>/<<id>>
+  -
+  - &get
+    REFERENCES:
+      api_name: Get API
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-get.html
 
 get_source:
   - GET
   - /<<index>>/<<type>>/<<id>>/_source
+  -
+  - *get
 
 
 
 #-----------------------------------------------------------------------------#
 ### Delete ###
-#https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete.html
 
 delete: &delete
   - DELETE
   - /<<index>>/<<type>>/<<id>>
+  -
+  - REFERENCES:
+      api_name: Delete API
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete.html
+      notice: "You must pass the :data variable."
+      aliases:
+        - :remove
 
 
 
 #-----------------------------------------------------------------------------#
-### Update ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update.html
+### Update API ###
 
-# you must pass script or doc and the other options as the :data variable
 update:
   - POST
   - /<<index>>/<<type>>/<<id>>/_update
+  -
+  - REFERENCES:
+      api_name: Update API
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update.html
+      notice: "You must pass script or doc and the other options as the :data variable."
 
 
 
 #-----------------------------------------------------------------------------#
-### Multi Get ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-multi-get.html
+### Multi Get API ###
 
-# you must pass the :ids array
-multi_get_ids: &multi_get_ids
+multi_get_ids:
   - GET
   - /<<index>>/<<type>>/_mget
   - ids: << ids >>
+  - REFERENCES: &multi_get
+      api_name: Multi Get API
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-multi-get.html
+      notice: "You must pass the :ids array."
+      aliases:
+        - :multi_get
 
-# you must pass the :docs array
 multi_get_docs:
   - GET
   - /<<index>>/<<type>>/_mget
   - docs: << docs >>
+  - REFERENCES:
+      <<: *multi_get
+      notice: "You must pass the :docs array."
 
 
 
 #-----------------------------------------------------------------------------#
-### Bulk ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html
+### Bulk API ###
 
-post_bulk_string: &bulk
+post_bulk_string:
   - POST
   - /_bulk
   - << bulk_string >>
+  - REFERENCES:
+      api_name: Bulk API
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html
+      notice: "You must pass the :docs array."
+      aliases:
+        - :bulk
 
 
 
 #-----------------------------------------------------------------------------#
-### Termvectors ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-termvectors.html
+### Term Vectors ###
 
-# you must pass the options as the :data variable
 termvector:
   - POST
   - /<<index>>/<<type>>/<<id>>/_termvector
+  -
+  - REFERENCES:
+      api_name: Term Vectors
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-termvectors.html
+      notice: "You must pass the options as the :data variable."
 
 
 
 #-----------------------------------------------------------------------------#
-### Multi Termvectors ###
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-multi-termvectors.html
+### Multi Termvectors API ###
 
-# you must pass the docs array as the :docs variable or use the :data variable for the simplified request
 multi_termvectors:
   - POST
   - /<<index>>/<<type>>/_mtermvectors
   - docs: <<docs= ~ >>
+  - REFERENCES:
+      api_name: Multi Termvectors API
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-multi-termvectors.html
+      notice: "You must pass the docs array as the :docs variable or use the :data variable for the simplified request."

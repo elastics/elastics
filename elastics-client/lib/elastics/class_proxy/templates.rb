@@ -30,6 +30,11 @@ module Elastics
         end
       end
 
+      # loads a API Template source
+      def load_api_source(source=nil, source_vars=nil)
+        load_source_for(Elastics::Template::Api, source, source_vars)
+      end
+
       # loads a Generic Template source
       def load_source(source=nil, source_vars=nil)
         load_source_for(Template, source, source_vars)
