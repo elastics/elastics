@@ -69,8 +69,8 @@ module Elastics
 
         def method_missing(meth, *vars, &block)
           meth.to_s =~ /(\w+)_(exists?\??|valid\??|validate|count|explain)$/
-          template_method = $1.to_sym
-          return super unless respond_to?(template_method)
+          template_method = $1 && $1.to_sym
+          return super unless template_method && respond_to?(template_method)
 
           render = lambda {|path| templates[template_method].render(Vars.new({:path => path, :raw_result => true}, *vars))}
 
