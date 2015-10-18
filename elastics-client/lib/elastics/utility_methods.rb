@@ -36,6 +36,10 @@ module Elastics
       elastics.doc(*args)
     end
 
+    def find(pattern)
+      elastics.find(pattern)
+    end
+
     def usage(*args)
       elastics.usage(*args)
     end

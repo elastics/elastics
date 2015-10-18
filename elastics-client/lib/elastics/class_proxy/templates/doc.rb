@@ -145,6 +145,13 @@ module Elastics
           Prompter.say_log "\n#{Output.new(name, self).render_usage}\n"
         end
 
+
+        def find(pattern)
+          pattern = /#{pattern}/ unless pattern.is_a?(Regexp)
+          methods = templates.keys.select{ |key| key =~ pattern }
+          Prompter.say_log methods.to_yaml
+        end
+
       end
     end
   end
