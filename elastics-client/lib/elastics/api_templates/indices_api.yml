@@ -16,6 +16,7 @@ put_index:
       number_of_replicas: <<number_of_replicas= 1 >>
   - &create_index
     REFERENCES:
+      group: indices_api
       api_name: Create Index
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html
       notice: "You can also pass the complete data structure as :data variable, so passing settings, mappings, warmers, aliases, ..."
@@ -40,6 +41,7 @@ delete_index:
   - /<<index>>
   -
   - REFERENCES:
+      group: indices_api
       api_name: Delete Index
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-delete-index.html
 
@@ -53,6 +55,7 @@ get_index:
   - /<<index>>/<<features= ~ >>
   -
   - REFERENCES:
+      group: indices_api
       api_name: Get Index
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-index.html
 
@@ -66,6 +69,7 @@ indices_exists:
   - /<<index>>
   -
   - REFERENCES:
+      group: indices_api
       api_name: Indices Exists
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-exists.html
       aliases:
@@ -83,6 +87,7 @@ close_index:
   -
   - &open_close_index
     REFERENCES:
+      group: indices_api
       api_name: Open/Close Index
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-open-close.html
 
@@ -103,6 +108,7 @@ put_index_mapping:
   - <<type>>:
       properties: <<properties>>
   - REFERENCES:
+      group: indices_api
       api_name: Put Mappings
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-put-mapping.html
       aliases:
@@ -118,6 +124,7 @@ get_index_mapping:
   - /<<index>>/_mapping/<<type>>
   -
   - REFERENCES:
+      group: indices_api
       api_name: Get Mappings
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-mapping.html
 
@@ -131,6 +138,7 @@ get_field_mapping:
   - /<<index>>/_mapping/<<type>>/field/<<field>>
   -
   - REFERENCES:
+      group: indices_api
       api_name: Get Field Mappings
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html
 
@@ -144,6 +152,7 @@ types_exists: &types_exists
   - /<<index>>/<<type>>
   -
   - REFERENCES:
+      group: indices_api
       api_name: Types Exists
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-types-exists.html
       aliases:
@@ -159,6 +168,7 @@ delete_index_mapping: &delete_index_mapping
   - /<<index>>/<<type>>
   -
   - REFERENCES:
+      group: indices_api
       api_name: Delete Mappings
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-delete-mapping.html
 
@@ -174,6 +184,7 @@ get_index_aliases:
   - /<<index>>/_aliases
   -
   - REFERENCES: &index_aliases
+      group: indices_api
       api_name: Index Aliases
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html
 
@@ -218,6 +229,7 @@ update_index_settings:
   - /<<index>>/_settings
   -
   - REFERENCES:
+      group: indices_api
       api_name: Update Indices Settings
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-update-settings.html
       notice: "You can pass the settings structure as the :data variable."
@@ -234,6 +246,7 @@ get_index_settings:
   - /<<index>>/_settings
   -
   - REFERENCES:
+      group: indices_api
       api_name: Get Indices Settings
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-settings.html
       aliases:
@@ -250,6 +263,7 @@ analyze_index:
   - /<<index>>/_analyze
   -
   - REFERENCES:
+      group: indices_api
       api_name: Analyze
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-analyze.html
       notice: "You can pass the text to analyze as the :data variable (or the param :text). You can pass the parameters as the :params variable."
@@ -264,6 +278,7 @@ delete_index_template:
   - /_template/<<template>>
   -
   - REFERENCES: &index_template
+      group: indices_api
       api_name: Index Templates
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html
 
@@ -297,6 +312,7 @@ delete_index_warmer:
   - /<<index>>/_warmer/<<warmer>>
   -
   - REFERENCES: &warmers
+      group: indices_api
       api_name: Warmers
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-warmers.html
 
@@ -324,6 +340,7 @@ index_status:
   - /<<index>>/_status
   -
   - REFERENCES:
+      group: indices_api
       api_name: Status
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-status.html
 
@@ -337,6 +354,7 @@ index_stats:
   - /<<index>>/_stats/<<stats= ~ >>
   -
   - REFERENCES:
+      group: indices_api
       api_name: Stats
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-stats.html
 
@@ -350,6 +368,7 @@ index_segments:
   - /<<index>>/_segments
   -
   - REFERENCES:
+      group: indices_api
       api_name: Segments
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-segments.html
 
@@ -363,6 +382,7 @@ index_recovery:
   - /<<index>>/_recovery
   -
   - REFERENCES:
+      group: indices_api
       api_name: Recovery
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-recovery.html
 
@@ -376,6 +396,7 @@ index_clearcache:
   - /<<index>>/_cache/clear
   -
   - REFERENCES:
+      group: indices_api
       api_name: Recovery
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-clearcache.html
 
@@ -389,6 +410,7 @@ flush_index:
   - /<<index>>/_flush
   -
   - REFERENCES:
+      group: indices_api
       api_name: Flush
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-flush.html
       notice: "You can pass the parameters as the :params variable."
@@ -403,6 +425,7 @@ synced_flush_index:
   - /<<index>>/_flush/synced
   -
   - REFERENCES:
+      group: indices_api
       api_name: Synced Flush
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-synced-flush.html
       notice: "You can pass the parameters as the :params variable."
@@ -417,6 +440,7 @@ refresh_index:
   - /<<index>>/_refresh
   -
   - REFERENCES:
+      group: indices_api
       api_name: Refresh
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-refresh.html
 
@@ -430,6 +454,7 @@ optimize_index:
   - /<<index>>/_optimize
   -
   - REFERENCES:
+      group: indices_api
       api_name: Optimize
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-optimize.html
       notice: "You can pass the parameters as the :params variable."
@@ -444,6 +469,7 @@ upgrade_index:
   - /<<index>>/_upgrade
   -
   - REFERENCES:
+      group: indices_api
       api_name: Upgrade
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-upgrade.html
       notice: "You can pass the parameters as the :params variable."

@@ -8,6 +8,7 @@ cat:
   -
   -
   - REFERENCES:
+      group: cat_api
       api_name: Cat API
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/cat.html
       notice: "You must pass the :path variable or you can pass it as a simple string argument: Elastics.cat('/path')"

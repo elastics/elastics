@@ -19,6 +19,7 @@ search_shards:
   - /<<index>>/<<type>>/_search_shards
   -
   - REFERENCES:
+      group: search_api
       api_name: Search Shards
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-shards.html
       notice: "You can pass the parameters as the :params variable."
@@ -40,9 +41,10 @@ count:
   - /<<index>>/<<type>>/_count
   -
   - REFERENCES:
+      group: search_api
       api_name: Search Shards
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html
-      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable. IMPORTANT: This functionality is also implemented as <YourClass>.<your_template_method>_count."
+      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable. IMPORTANT: This functionality is also implemented as [YourClass].[your_template_method]_count."
 
 
 
@@ -54,9 +56,10 @@ search_exists:
   - /<<index>>/<<type>>/<<id= ~ >>/_search/exists
   -
   - REFERENCES:
+      group: search_api
       api_name: Search Exists
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-exists.html
-      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable. IMPORTANT: This functionality is also implemented as <YourClass>.<your_template_method>_exist?."
+      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable. IMPORTANT: This functionality is also implemented as [YourClass].[your_template_method]_exist?."
 
 
 
@@ -68,9 +71,10 @@ validate:
   - /<<index>>/<<type>>/<<id= ~ >>/_validate/query
   -
   - REFERENCES:
+      group: search_api
       api_name: Validate
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-validate.html
-      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable. IMPORTANT: Also implemented as <YourClass>.<your_template_method>_valid?."
+      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable. IMPORTANT: Also implemented as [YourClass].[your_template_method]_valid?."
 
 
 
@@ -82,9 +86,10 @@ explain:
   - /<<index>>/<<type>>/<<id= ~ >>/_explain
   -
   - REFERENCES:
+      group: search_api
       api_name: Validate
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-explain.html
-      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable. IMPORTANT: Also implemented as <YourClass>.<your_template_method>_explain."
+      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable. IMPORTANT: Also implemented as [YourClass].[your_template_method]_explain."
 
 
 
@@ -96,6 +101,7 @@ delete_percolator:
   - /<<index>>/.percolator/<<id>>
   -
   - REFERENCES: &percolator
+      group: search_api
       api_name: Percolator
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-percolate.html
 
@@ -130,6 +136,7 @@ more_like_this:
   - /<<index>>/<<type>>/<<id>>/_mlt
   -
   - REFERENCES:
+      group: search_api
       api_name: More Like This
       api_url: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-more-like-this.html
       notice: "You can pass the search API as :data variable."

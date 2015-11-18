@@ -13,6 +13,7 @@ cluster_health:
   - /_cluster/health/<<index>>
   -
   - REFERENCES:
+      group: cluster_api
       api_name: Health
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html
       notice: "You can pass the params as the :params variable."
@@ -27,6 +28,7 @@ cluster_state:
   - /_cluster/state/<<metrics= _all >>/<<index>>
   -
   - REFERENCES:
+      group: cluster_api
       api_name: State
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-state.html
       notice: "You can pass the metrics as the :metrics variable."
@@ -41,6 +43,7 @@ cluster_stats:
   - /_cluster/stats
   -
   - REFERENCES:
+      group: cluster_api
       api_name: Stats
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-stats.html
       notice: "You can pass the params as the :params variable."
@@ -55,6 +58,7 @@ cluster_pending_tasks:
   - /_cluster/pending_tasks
   -
   - REFERENCES:
+      group: cluster_api
       api_name: Pending Cluster Tasks
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-pending.html
       notice: "You can pass the params as the :params variable."
@@ -69,6 +73,7 @@ cluster_reroute:
   - /_cluster/reroute
   -
   - REFERENCES:
+      group: cluster_api
       api_name: Cluster Reroute
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-reroute.html
       notice: "You must pass the data structure as the :data variable."
@@ -91,6 +96,7 @@ put_cluster_settings:
   - /_cluster/settings
   -
   - REFERENCES:
+      group: cluster_api
       <<: *cluster_settings
       notice: "You must pass the data structure as the :data variable."
 
@@ -104,6 +110,7 @@ cluster_nodes_stats:
   - /_nodes/<<nodes= ~ >>/stats/<<stats= ~ >>
   -
   - REFERENCES:
+      group: cluster_api
       api_name: Nodes Stats
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html
       notice: "You can pass the params as the :params variable. You must pass the data structure as the :data variable."
@@ -118,6 +125,7 @@ cluster_nodes_info:
   - /_nodes/<<nodes= ~ >>/<<info= ~ >>
   -
   - REFERENCES:
+      group: cluster_api
       api_name: Nodes Info
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-info.html
       notice: "This template uses the _nodes shortcut."
@@ -133,5 +141,6 @@ cluster_nodes_hot_threads:
   - /_nodes/<<nodes= ~ >>/hot_threads
   -
   - REFERENCES:
+      group: cluster_api
       api_name: Nodes Hot Threads
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-hot-threads.html

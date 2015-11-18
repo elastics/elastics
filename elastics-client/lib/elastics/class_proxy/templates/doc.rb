@@ -71,7 +71,7 @@ module Elastics
 
           def render_sources
             @sources.map do |source|
-              <<-output.gsub(/^ {12}/m,'')
+              <<-output.gsub(/^ {14}/m,'')
               #{'-' * source[:class].name.length}
               #{source[:class]}
               #{source[:source]}
