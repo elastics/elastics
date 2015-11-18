@@ -6,8 +6,8 @@ module Elastics
 
       def initialize(method, path, data=nil, *vars)
         super
-        @references = @instance_vars.delete(:REFERENCES) || {}
-        @aliases    = @references['aliases'] || []
+        @references          = @instance_vars.delete(:REFERENCES) || {}
+        @aliases             = @references['aliases'] || []
       end
 
     end

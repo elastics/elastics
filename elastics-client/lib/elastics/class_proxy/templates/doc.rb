@@ -6,6 +6,8 @@ module Elastics
         class Output
 
 
+          attr_reader :template, :method_call
+
           def initialize(name, proxy)
             @name, @template = proxy.templates.find do |n, t|
                                  t.is_a?(Elastics::Template::Api) && t.aliases.include?(name)
@@ -69,7 +71,7 @@ module Elastics
 
           def render_sources
             @sources.map do |source|
-              <<-output.gsub(/^ {14}/m,'')
+              <<-output.gsub(/^ {12}/m,'')
               #{'-' * source[:class].name.length}
               #{source[:class]}
               #{source[:source]}
@@ -107,7 +109,7 @@ module Elastics
           end
 
 
-          def render_code
+          def render_stub
             aliased  = if @template.is_a?(Elastics::Template::Api) && @template.references['aliases']
                          "\n# also aliased by: #{@template.aliases.map(&:inspect).join(', ')}"
                        end
@@ -123,7 +125,7 @@ module Elastics
           def render
             output = (@template.is_a?(Elastics::Template::Api) ? render_api : render_custom)
             output = output.split("\n").map{ |l| '#  ' + l }.join("\n")
-            output << "\n#{render_code}\n\n"
+            output << "\n#{render_stub}\n\n"
             output
           end
 

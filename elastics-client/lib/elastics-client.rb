@@ -61,12 +61,12 @@ module Elastics
   include ApiStubs
 
   include Templates
-  elastics.load_api_source File.expand_path('../elastics/api_templates/document_api.yml'   , __FILE__)
-  elastics.load_api_source File.expand_path('../elastics/api_templates/search_api.yml'   , __FILE__)
-  elastics.load_api_source File.expand_path('../elastics/api_templates/indices_api.yml', __FILE__)
-  elastics.load_api_source File.expand_path('../elastics/api_templates/cat_api.yml'   , __FILE__)
-  elastics.load_api_source File.expand_path('../elastics/api_templates/cluster_api.yml', __FILE__)
-  elastics.load_api_source File.expand_path('../elastics/api_templates/elastics_additions.yml'   , __FILE__)
+  elastics.load_api_source File.expand_path('../elastics/api_templates/document_api.yml'       , __FILE__)
+  elastics.load_api_source File.expand_path('../elastics/api_templates/search_api.yml'         , __FILE__)
+  elastics.load_api_source File.expand_path('../elastics/api_templates/indices_api.yml'        , __FILE__)
+  elastics.load_api_source File.expand_path('../elastics/api_templates/cat_api.yml'            , __FILE__)
+  elastics.load_api_source File.expand_path('../elastics/api_templates/cluster_api.yml'        , __FILE__)
+  elastics.load_api_source File.expand_path('../elastics/api_templates/elastics_additions.yml' , __FILE__)
 
   extend self
   extend UtilityMethods

@@ -65,16 +65,18 @@ module Elastics
     def try_clean_and_retry(vars)
       response_vars = request(vars)
       if !Prunable::VALUES.include?(vars[:cleanable_query].is_a?(Hash) ?
-                                        vars[:cleanable_query][:query] :
-                                        vars[:cleanable_query]) && Conf.http_client.raise_proc.call(response_vars[3])
+                                    vars[:cleanable_query][:query] :
+                                    vars[:cleanable_query]) && Conf.http_client.raise_proc.call(response_vars[3])
         e = HttpError.new(response_vars[3], caller_line)
         e.to_hash['error'] =~ /^SearchPhaseExecutionException/
-        # remove problematic characters
-        (vars[:cleanable_query].is_a?(Hash) ? vars[:cleanable_query][:query] : vars[:cleanable_query]).tr!('"&|!(){}[]~^:+-\\', '')
-        # if after the cleanup is prunable, then we remove it now so #interpolate could use the eventual default
+        # remove problematic characters in place
+        (vars[:cleanable_query].is_a?(Hash) ?
+         vars[:cleanable_query][:query] :
+         vars[:cleanable_query]).tr!('"&|!(){}[]~^:+-\\', '')
+        # if after the cleanup it is prunable, then we remove it now so #interpolate could use the eventual default
         if Prunable::VALUES.include?(vars[:cleanable_query].is_a?(Hash) ?
-                                      vars[:cleanable_query][:query] :
-                                      vars[:cleanable_query])
+                                     vars[:cleanable_query][:query] :
+                                     vars[:cleanable_query])
           if vars[:cleanable_query].is_a?(Hash)
             vars[:cleanable_query].delete(:query)
           else
