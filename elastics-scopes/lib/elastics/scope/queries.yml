@@ -15,7 +15,6 @@ ANCHORS:
     script_fields:
       <<script_fields= ~ >>
     sort: <<sort= ~ >>
-    facets: <<facets= ~ >>
     highlight: <<highlight= ~ >>
     filter: <<_boolean_wrapper= :_and >>
 
