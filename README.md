@@ -15,7 +15,6 @@ It is composed by 6 gems: you can use them together or separately, depending on 
 - `elastics-models`
 - `elastics-scopes`
 - `elastics-admin`
-- `elastics-legacy` (helps migrating from Flex)
 
 
 ## Quick Start
