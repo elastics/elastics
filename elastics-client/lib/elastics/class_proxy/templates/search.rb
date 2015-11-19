@@ -57,10 +57,10 @@ module Elastics
           end
         end
 
-        # implements search_type=count (https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-search-type.html#count)
+        # in the default use of query_then_search setting the size=0 will cause the same
         def count_search(template, *vars)
           template = template.is_a?(Elastics::Template) ? template : templates[template]
-          template.render Vars.new({:params => {:search_type => 'count'}, :raw_result => true}, *vars)
+          template.render Vars.new({:params => {:size => 0}, :raw_result => true}, *vars)
         end
 
       end
