@@ -44,7 +44,7 @@ count:
       group: search_api
       api_name: Search Shards
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html
-      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable. IMPORTANT: This functionality is also implemented as [YourClass].[your_template_method]_count."
+      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable."
 
 
 
