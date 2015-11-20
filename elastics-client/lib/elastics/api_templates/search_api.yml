@@ -59,7 +59,7 @@ search_exists:
       group: search_api
       api_name: Search Exists
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-exists.html
-      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable. IMPORTANT: This functionality is also implemented as [YourClass].[your_template_method]_exist?."
+      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable."
 
 
 
@@ -74,7 +74,7 @@ validate:
       group: search_api
       api_name: Validate
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-validate.html
-      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable. IMPORTANT: Also implemented as [YourClass].[your_template_method]_valid?."
+      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable."
 
 
 
@@ -89,7 +89,7 @@ explain:
       group: search_api
       api_name: Validate
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-explain.html
-      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable. IMPORTANT: Also implemented as [YourClass].[your_template_method]_explain."
+      notice: "You must pass the query to explain as the :data variable. You can pass the parameters as the :params variable."
 
 
 
