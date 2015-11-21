@@ -14,24 +14,25 @@ module Elastics
         def method_missing(meth, *args, &block)
           meth.to_s =~ RE
           attribute = $1
-          if attribute
-            opts = {:fragment_separator => ' ... '}.merge(args.first||{})
-            if self['highlight']
-              key, high = self['highlight'].find { |k,v| k.gsub('.','_') == attribute }
-              high = Array.wrap(high) if high
-            end
-            if high.blank?
-              respond_to?(attribute.to_sym) ? send(attribute.to_sym) : ''
-            else
-              high.join(opts[:fragment_separator]).html_safe
-            end
+          attribute ? higlighted(attribute, args.first || {}) : super
+        end
+
+        # TODO: add the doc for this method
+        def higlighted(attribute, opts={})
+          opts = { :fragment_separator => ' ... ' }.merge(opts)
+          if self['highlight']
+            # works also with nested attributes
+            key, high = self['highlight'].find { |k, v| k.gsub('.', '_') == attribute }
+            high      = Array.wrap(high) if high
+          end
+          if high.blank?
+            respond_to?(attribute.to_sym) ? send(attribute.to_sym) : ''
           else
-            super
+            high.join(opts[:fragment_separator]).html_safe
           end
         end
 
       end
-
 
       # extend if result is a Search or MultiGet
       def self.should_extend?(result)

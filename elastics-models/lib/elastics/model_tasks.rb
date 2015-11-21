@@ -42,7 +42,7 @@ module Elastics
         end
 
         # block never called during live-reindex, since prefix_index creates it
-        unless Elastics.exist?(:index => index)
+        unless Elastics.indices_exists(:index => index)
           Conf.indices.create_index(index)
           Prompter.say_ok "#{index} index created" if options[:verbose]
         end

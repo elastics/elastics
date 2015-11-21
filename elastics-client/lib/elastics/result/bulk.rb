@@ -8,12 +8,11 @@ module Elastics
       end
 
       def failed
-        self['items'].reject{|i| i.first.last['ok'] }
+        self['items'].reject{|i| i['index']['status'].between?(200,226) }
       end
 
-
       def successful
-        self['items'].select{|i| i.first.last['ok']}
+        self['items'].select{|i| i['index']['status'].between?(200,226) }
       end
 
     end

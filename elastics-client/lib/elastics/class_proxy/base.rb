@@ -5,8 +5,10 @@ module Elastics
       attr_accessor :variables
 
       def initialize(context, vars={})
-        @variables = Vars.new({:context => context,
-                               :index   => Conf.variables[:index]}.merge(vars))
+        v = {:context => context}
+        # support for elastics-rails index default
+        v[:index]  = Conf.variables[:index] if Conf.variables.has_key?(:index)
+        @variables = Vars.new(v, vars)
       end
 
       def init; end

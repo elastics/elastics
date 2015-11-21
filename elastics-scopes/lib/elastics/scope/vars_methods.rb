@@ -25,6 +25,11 @@ module Elastics
         deep_merge :params => {:fields => array_value(value)}
       end
 
+      def source(*value)
+        deep_merge :params => {:_source => array_value(value)}
+      end
+      alias_method :_source, :source
+
       # limits the size of the retrieved hits
       def size(value)
         deep_merge :params => {:size => value}

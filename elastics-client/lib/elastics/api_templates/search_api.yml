@@ -1,0 +1,144 @@
+# These methods are available as Elastics.<method>(*vars)
+# you can get the updated full reference and usage example of these methods
+# by just doing in the console:
+# Elastics.doc
+
+
+
+#-----------------------------------------------------------------------------#
+### Search ###
+# The search api is covered by the templating system
+
+
+
+#-----------------------------------------------------------------------------#
+### Search Shards ###
+
+search_shards:
+  - GET
+  - /<<index>>/<<type>>/_search_shards
+  -
+  - REFERENCES:
+      group: search_api
+      api_name: Search Shards
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-shards.html
+      notice: "You can pass the parameters as the :params variable."
+
+
+
+#-----------------------------------------------------------------------------#
+### Multi Search ###
+# the Multi Search api is covered by the <YourClass>.multi_search method
+# added by the Elastics::Templates module
+
+
+
+#-----------------------------------------------------------------------------#
+### Count ###
+
+count:
+  - GET
+  - /<<index>>/<<type>>/_count
+  -
+  - REFERENCES:
+      group: search_api
+      api_name: Search Shards
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html
+      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable."
+
+
+
+#-----------------------------------------------------------------------------#
+### Search Exists ###
+
+search_exists:
+  - GET
+  - /<<index>>/<<type>>/<<id= ~ >>/_search/exists
+  -
+  - REFERENCES:
+      group: search_api
+      api_name: Search Exists
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-exists.html
+      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable."
+
+
+
+#-----------------------------------------------------------------------------#
+### Validate ###
+
+validate:
+  - GET
+  - /<<index>>/<<type>>/<<id= ~ >>/_validate/query
+  -
+  - REFERENCES:
+      group: search_api
+      api_name: Validate
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-validate.html
+      notice: "You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable."
+
+
+
+#-----------------------------------------------------------------------------#
+### Explain ###
+
+explain:
+  - GET
+  - /<<index>>/<<type>>/<<id= ~ >>/_explain
+  -
+  - REFERENCES:
+      group: search_api
+      api_name: Validate
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-explain.html
+      notice: "You must pass the query to explain as the :data variable. You can pass the parameters as the :params variable."
+
+
+
+#-----------------------------------------------------------------------------#
+### Percolator ###
+
+delete_percolator:
+  - DELETE
+  - /<<index>>/.percolator/<<id>>
+  -
+  - REFERENCES: &percolator
+      group: search_api
+      api_name: Percolator
+      api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-percolate.html
+
+percolate:
+  - GET
+  - /<<index>>/<<type>>/_percolate
+  -
+  - &percolator_ref
+    REFERENCES:
+      <<: *percolator
+      notice: "You must pass the the document (and additional queries) as :data variable."
+
+percolate_count:
+  - GET
+  - /<<index>>/<<type>>/_percolate/count
+  -
+  - *percolator_ref
+
+put_percolator:
+  - PUT
+  - /<<index>>/.percolator/<<id>>
+  -
+  - *percolator_ref
+
+
+
+#-----------------------------------------------------------------------------#
+### More Like This ###
+
+more_like_this:
+  - GET
+  - /<<index>>/<<type>>/<<id>>/_mlt
+  -
+  - REFERENCES:
+      group: search_api
+      api_name: More Like This
+      api_url: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-more-like-this.html
+      notice: "You can pass the search API as :data variable."
+      aliases:
+        - :mlt

@@ -51,7 +51,7 @@ module Elastics
 
           pbar = ProgBar.new(model.count, nil, "Model #{model}: ") if opts[:verbose]
 
-          model.find_in_batches({:raw_result => true, :params => {:fields => '*,_source'}}, opts) do |result|
+          model.find_in_batches({:raw_result => true, :params => {:_source => '*'}}, opts) do |result|
             batch  = result['hits']['hits']
             result = process_and_post_batch(batch)
             pbar.process_result(result, batch.size) if opts[:verbose]

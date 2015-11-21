@@ -1,14 +1,15 @@
 module Elastics
 
-  class ArgumentError          < ArgumentError; end
-  class SourceError            < StandardError; end
-  class MissingPartialError    < StandardError; end
-  class DocumentMappingError   < StandardError; end
-  class MissingIndexEntryError < StandardError; end
-  class ExistingIndexError     < StandardError; end
-  class MissingHttpClientError < StandardError; end
-  class MissingParentError     < StandardError; end
-  class MissingVariableError   < StandardError; end
+  class ArgumentError              < ArgumentError; end
+  class SourceError                < StandardError; end
+  class MissingTemplateMethodError < StandardError; end
+  class MissingPartialError        < StandardError; end
+  class DocumentMappingError       < StandardError; end
+  class MissingIndexEntryError     < StandardError; end
+  class ExistingIndexError         < StandardError; end
+  class MissingHttpClientError     < StandardError; end
+  class MissingParentError         < StandardError; end
+  class MissingVariableError       < StandardError; end
 
   class HttpError < StandardError
 

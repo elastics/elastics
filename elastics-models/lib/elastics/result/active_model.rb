@@ -9,13 +9,13 @@ module Elastics
         result.variables[:context] && result.variables[:context].include?(Elastics::ActiveModel)
       end
 
-      def get_docs
+      def get_docs(should_freeze=false)
         # super is from elastics-scopes
-        docs = super
+        docs = super()
         return docs if variables[:raw_result]
         raw_result = self
         if docs.is_a?(Array)
-          res = docs.map {|doc| build_object(doc)}
+          res = docs.map {|doc| build_object(doc,should_freeze)}
           res.extend(Struct::Paginable).setup(raw_result['hits']['total'], variables)
           class << res; self end.class_eval do
             define_method(:raw_result){ raw_result }
@@ -25,13 +25,13 @@ module Elastics
           end
           res
         else
-          build_object docs
+          build_object docs, should_freeze
         end
       end
 
     private
 
-      def build_object(doc)
+      def build_object(doc, should_freeze)
         attrs      = (doc['_source']||{}).merge(doc['fields']||{})
         object     = variables[:context].new attrs
         raw_result = self
@@ -51,7 +51,7 @@ module Elastics
           @highlight  = doc['highlight']
           # load the elastics proxy before freezing
           elastics
-          self.freeze if raw_result.variables[:params][:fields] || doc['fields']
+          self.freeze if should_freeze
         end
         object
       end
