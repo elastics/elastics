@@ -28,7 +28,7 @@ ________________________________________________________________________________
 
 New Documentation:  http://elastics.github.io/elastics
 
-Upgrading Tutorial: http://elastics.github.io/elastics/doc/7-Tutorials/2-Migrate-from-0.x.html
+Upgrading Tutorial: http://elastics.github.io/elastics/doc/7-tutorials/2-Migrate-from-0.x.html
 
 ________________________________________________________________________________
 EOM
