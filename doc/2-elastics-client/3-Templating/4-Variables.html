@@ -3,10 +3,8 @@
   <head>
     <link href='/elastics/assets/global-74df1a51e3d7075c146b619ddfd07904.css' rel='stylesheet' type='text/css' />
 <script src='/elastics/assets/global-aacc71e3a462796a62993fb5a8b696a3.js' type='text/javascript'></script>
-
-    <title>
-      Elastics - elastics-client - Variables
-    </title>
+<title>Elastics - elastics-client - Variables</title>
+    <meta charset="UTF-8" />
     <script type="text/javascript">
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -47,31 +45,35 @@
       <div class="breadcrumb nocontent">
         <span><a href="/elastics/doc">Elastics</a></span> &gt; <span><a href="/elastics/doc/2-elastics-client">elastics-client</a></span> &gt; <span><a href="/elastics/doc/2-elastics-client/3-Templating">Templating</a></span> &gt; <span>Variables</span>
       </div>
-      <h1 id='variables'>Variables</h1>
+      <h1 id="variables">Variables</h1>
 
 <p>When you call a generated method (originated by a template), you can pass a list of hashes of variables that will be interpolated into the templates.</p>
 
 <blockquote>
-<p><strong>Notice</strong>: We will use just one hash in the following examples, but you can actually pass a list of hashes that will be deep merged into one single hash (see <a href='/elastics/doc/2-elastics-client/3-Templating/4-Variables.html#7_single_call_level'>Single Call Level</a>).</p>
+  <p><strong>Notice</strong>: We will use just one hash in the following examples, but you can actually pass a list of hashes that will be deep merged into one single hash (see <a href="/elastics/doc/2-elastics-client/3-Templating/4-Variables.html#7_single_call_level">Single Call Level</a>).</p>
 </blockquote>
 
 <p>For example:</p>
-<div class='highlight'><pre><code class='yaml'><span class='l-Scalar-Plain'>my_search</span><span class='p-Indicator'>:</span>
-<span class='p-Indicator'>-</span> <span class='l-Scalar-Plain'>query</span><span class='p-Indicator'>:</span>
-    <span class='l-Scalar-Plain'>term</span><span class='p-Indicator'>:</span>
-      <span class='l-Scalar-Plain'>color</span><span class='p-Indicator'>:</span> <span class='l-Scalar-Plain'>&lt;&lt;the_color&gt;&gt;</span>
-</code></pre></div><div class='highlight'><pre><code class='ruby'><span class='no'>MyClass</span><span class='o'>.</span><span class='n'>my_search</span> <span class='ss'>:the_color</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;blue&#39;</span>
-</code></pre></div>
-<p>You know that you can also set a tag default (see <a href='/elastics/doc/2-elastics-client/3-Templating/3-Tags.html'>Tags</a>):</p>
-<div class='highlight'><pre><code class='yaml'><span class='l-Scalar-Plain'>my_search</span><span class='p-Indicator'>:</span>
-<span class='p-Indicator'>-</span> <span class='l-Scalar-Plain'>query</span><span class='p-Indicator'>:</span>
-    <span class='l-Scalar-Plain'>term</span><span class='p-Indicator'>:</span>
-      <span class='l-Scalar-Plain'>color</span><span class='p-Indicator'>:</span> <span class='l-Scalar-Plain'>&lt;&lt;the_color= blue &gt;&gt;</span>
-</code></pre></div><div class='highlight'><pre><code class='ruby'><span class='no'>MyClass</span><span class='o'>.</span><span class='n'>my_search</span>
-</code></pre></div>
+
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="l-Scalar-Plain">my_search</span><span class="p-Indicator">:</span>
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">query</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">term</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">color</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;the_color&gt;&gt;</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">MyClass</span><span class="o">.</span><span class="n">my_search</span> <span class="ss">:the_color</span> <span class="o">=&gt;</span> <span class="s1">&#39;blue&#39;</span></code></pre></div>
+
+<p>You know that you can also set a tag default (see <a href="/elastics/doc/2-elastics-client/3-Templating/3-Tags.html">Tags</a>):</p>
+
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="l-Scalar-Plain">my_search</span><span class="p-Indicator">:</span>
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">query</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">term</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">color</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;the_color= blue &gt;&gt;</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">MyClass</span><span class="o">.</span><span class="n">my_search</span></code></pre></div>
+
 <p>but you can also set a default for all the <code>the_color</code> tags in the source file, or for all the source files used by your class, or for all the requests of your app, etc. by setting them at different levels.</p>
 
-<h2 id='variable_levels'>Variable Levels</h2>
+<h2 id="variable-levels">Variable Levels</h2>
 
 <p>Elastics allows you to set interpolation variables at different levels, affecting different ranges of requests. They act as sort of cascading defaults, so you can minimize the code needed to set the right value, which is somehow similar to what you do with CSSs.</p>
 
@@ -79,77 +81,85 @@
 
 <p>Here they are, from the most general to the most specific:</p>
 
-<h3 id='1_configuration_level'>1. Configuration Level</h3>
+<h3 id="configuration-level">1. Configuration Level</h3>
 
 <p>Variables set at configuration level will set the default for all the requests of your application and can be overridden by all the other levels. You usually set them by merging or deep-merging your values into the <code>Elastics::Variables</code> object contained in <code>Elastics::Configuration.variables</code> so preserving the values already there:</p>
-<div class='highlight'><pre><code class='ruby'><span class='n'>config</span><span class='o'>.</span><span class='n'>variables</span><span class='o'>.</span><span class='n'>deep_merge!</span> <span class='ss'>:the_color</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;green&#39;</span>
-</code></pre></div>
-<p>(see <a href='/elastics/doc/1-elastics/3-Configuration.html'>Configuration</a>)</p>
 
-<h3 id='2_template_class_level'>2. Template Class level</h3>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">config</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">deep_merge!</span> <span class="ss">:the_color</span> <span class="o">=&gt;</span> <span class="s1">&#39;green&#39;</span></code></pre></div>
 
-<p>This is mostly used internally by the <code>Elastics::Template::*</code> subclasses. You might need it if you want to create a custom template class. In that case take a look at the implementation of <a href='https://github.com/ddnexus/elastics/blob/master/lib/elastics/template/slim_search.rb'>elastics/template/slim_search</a>.</p>
-<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>MyTemplateClass</span> <span class='o'>&lt;</span> <span class='ss'>Elastics</span><span class='p'>:</span><span class='ss'>:Template</span>
-  <span class='k'>def</span> <span class='nc'>self</span><span class='o'>.</span><span class='nf'>variables</span>
-    <span class='k'>super</span><span class='o'>.</span><span class='n'>deep_merge</span><span class='p'>(</span><span class='ss'>:the_color</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;blue&#39;</span><span class='p'>)</span>
-  <span class='k'>end</span>
-  <span class='o'>.</span><span class='n'>.</span><span class='o'>.</span>
-<span class='k'>end</span>
-</code></pre></div>
-<h3 id='3_host_class_level_your_class'>3. Host Class level (your class)</h3>
+<p>(see <a href="/elastics/doc/1-elastics/3-Configuration.html">Configuration</a>)</p>
+
+<h3 id="template-class-level">2. Template Class level</h3>
+
+<p>This is mostly used internally by the <code>Elastics::Template::*</code> subclasses. You might need it if you want to create a custom template class. In that case take a look at the implementation of <a href="https://github.com/ddnexus/elastics/blob/master/lib/elastics/template/slim_search.rb">elastics/template/slim_search</a>.</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">MyTemplateClass</span> <span class="o">&lt;</span> <span class="no">Elastics</span><span class="o">::</span><span class="no">Template</span>
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">variables</span>
+    <span class="k">super</span><span class="o">.</span><span class="n">deep_merge</span><span class="p">(</span><span class="ss">:the_color</span> <span class="o">=&gt;</span> <span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+<span class="k">end</span></code></pre></div>
+
+<h3 id="host-class-level-your-class">3. Host Class level (your class)</h3>
 
 <p>When you want to set a default variable for all the requests from your own class (context class) you can simply add the variables to the <code>elastics</code> class proxy of your class:</p>
-<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>MyClass</span>
-  <span class='kp'>include</span> <span class='ss'>Elastics</span><span class='p'>:</span><span class='ss'>:Templates</span>
-  <span class='n'>elastics</span><span class='o'>.</span><span class='n'>variables</span><span class='o'>.</span><span class='n'>deep_merge!</span><span class='p'>(</span><span class='ss'>:the_color</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;red&#39;</span><span class='p'>)</span>
-  <span class='n'>elastics</span><span class='o'>.</span><span class='n'>load_source</span> <span class='ss'>:my_source</span>
-  <span class='o'>.</span><span class='n'>.</span><span class='o'>.</span>
-<span class='k'>end</span>
-</code></pre></div>
-<h3 id='4_source_level'>4. Source Level</h3>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">MyClass</span>
+  <span class="kp">include</span> <span class="no">Elastics</span><span class="o">::</span><span class="no">Templates</span>
+  <span class="n">elastics</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">deep_merge!</span><span class="p">(</span><span class="ss">:the_color</span> <span class="o">=&gt;</span> <span class="s1">&#39;red&#39;</span><span class="p">)</span>
+  <span class="n">elastics</span><span class="o">.</span><span class="n">load_source</span> <span class="ss">:my_source</span>
+  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+<span class="k">end</span></code></pre></div>
+
+<h3 id="source-level">4. Source Level</h3>
 
 <p>When you want to set a default variable for all the requests generated by the same source file you can do so in the loading statement:</p>
-<div class='highlight'><pre><code class='ruby'><span class='n'>elastics</span><span class='o'>.</span><span class='n'>load_source</span> <span class='ss'>:my_source</span><span class='p'>,</span> <span class='ss'>:the_color</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;black&#39;</span>
-</code></pre></div>
-<p>(see <a href='/elastics/doc/2-elastics-client/3-Templating/2-Sources.html'>Template Sources</a>)</p>
 
-<h3 id='5_instance_template_level'>5. Instance Template Level</h3>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">elastics</span><span class="o">.</span><span class="n">load_source</span> <span class="ss">:my_source</span><span class="p">,</span> <span class="ss">:the_color</span> <span class="o">=&gt;</span> <span class="s1">&#39;black&#39;</span></code></pre></div>
+
+<p>(see <a href="/elastics/doc/2-elastics-client/3-Templating/2-Sources.html">Template Sources</a>)</p>
+
+<h3 id="instance-template-level">5. Instance Template Level</h3>
 
 <p>This level is specially useful when you want to set a variable at the template level (i.e. affecting all the requests made with that template), but you cannot use tag defaults because that tag is not explicit in your template. This is usually the case of the tags used in the <code>path</code>, such as <code>:index</code>, <code>:type</code> or (query) <code>:params</code> that are not accessible from Search Templates. In the following template, the second argument is used as template variables. In this case we want to use the <code>car</code> and <code>truck</code> default types when we use that template.</p>
-<div class='highlight'><pre><code class='yaml'><span class='l-Scalar-Plain'>my_search</span><span class='p-Indicator'>:</span>
-<span class='p-Indicator'>-</span> <span class='l-Scalar-Plain'>query</span><span class='p-Indicator'>:</span>
-    <span class='l-Scalar-Plain'>term</span><span class='p-Indicator'>:</span>
-      <span class='l-Scalar-Plain'>color</span><span class='p-Indicator'>:</span> <span class='l-Scalar-Plain'>&lt;&lt;the_color&gt;&gt;</span>
-<span class='p-Indicator'>-</span> <span class='l-Scalar-Plain'>type</span><span class='p-Indicator'>:</span>
-  <span class='p-Indicator'>-</span> <span class='l-Scalar-Plain'>car</span>
-  <span class='p-Indicator'>-</span> <span class='l-Scalar-Plain'>truck</span>
-</code></pre></div>
-<h3 id='6_tag_level'>6. Tag Level</h3>
+
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="l-Scalar-Plain">my_search</span><span class="p-Indicator">:</span>
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">query</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">term</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">color</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;the_color&gt;&gt;</span>
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">car</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">truck</span></code></pre></div>
+
+<h3 id="tag-level">6. Tag Level</h3>
 
 <p>This is a quite specific level: may be overridden only by the call argument below.</p>
-<div class='highlight'><pre><code class='yaml'><span class='p-Indicator'>-</span> <span class='l-Scalar-Plain'>&lt;&lt;the_color= yellow &gt;&gt;</span>
-</code></pre></div>
-<h3 id='7_single_call_level'>7. Single Call Level</h3>
+
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">&lt;&lt;the_color= yellow &gt;&gt;</span></code></pre></div>
+
+<h3 id="single-call-level">7. Single Call Level</h3>
 
 <p>This is the most specific level where you can set a variable, indeed it affects only that single request and overrides any other level that may set <code>:the_color</code>.</p>
-<div class='highlight'><pre><code class='ruby'><span class='no'>MyClass</span><span class='o'>.</span><span class='n'>my_search</span> <span class='ss'>:the_color</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;white&#39;</span>
-</code></pre></div>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">MyClass</span><span class="o">.</span><span class="n">my_search</span> <span class="ss">:the_color</span> <span class="o">=&gt;</span> <span class="s1">&#39;white&#39;</span></code></pre></div>
+
 <p>Besides, all the methods that accept a variable hash, can accept a list of hashes as well. The list will be deep-merged and the resulting hash will be used as the final variable hash passed as the arguments. For example:</p>
 
-<p><div class='highlight'><pre><code class='ruby'><span class='no'>MyClass</span><span class='o'>.</span><span class='n'>my_search</span> <span class='vi'>@default_controller_vars</span><span class='p'>,</span> <span class='n'>params</span><span class='p'>,</span> <span class='ss'>:the_color</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;pink&#39;</span>
-</code></pre></div></p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">MyClass</span><span class="o">.</span><span class="n">my_search</span> <span class="vi">@default_controller_vars</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="ss">:the_color</span> <span class="o">=&gt;</span> <span class="s1">&#39;pink&#39;</span></code></pre></div>
 
 <p>The order is important: in this case we pass 3 hashes: the 3rd hash will override the 2nd, which will override the 1st.</p>
 
-<h2 id='special_variables'>Special Variables</h2>
+<h2 id="special-variables">Special Variables</h2>
 
 <p>Variables are usually created by you: their primary function is supplying the values to replace the tags, but there are a few variables that are special because they have a different function, so you cannot define a tag with their name. They are mostly set and used internally, but you might need to pass it explicitly in some special case.</p>
-<table cellpadding='0' cellspacing='0' class='code-topics'>
+
+<table class="code-topics" cellspacing="0" cellpadding="0">
   <tr>
     <td>
       <code>:context</code>
     </td>
     <td><p>This variable contain the context class, which is usually the class where you included some Elastics module (like <code>Elastics::Templates</code>, <code>Elastics::Scopes</code>, <code>Elastics::ModelIndexer</code>, etc.). It is used by the <code>elastics-scopes</code> gem.</p>
+
     </td>
   </tr>
   <tr>
@@ -158,6 +168,7 @@
     </td>
     <td>
       <p>This variable contain the full path of the request. It is usually set and used internally.</p>
+      
     </td>
   </tr>
   <tr>
@@ -165,6 +176,7 @@
       <code>:data</code>
     </td>
     <td><p>This variable contain the data, i.e. the request body (a ruby structure that express the elasticsearch <code>JSON</code> query). You may need to set it directly in some very special case, but it is mostly used internally.</p>
+
     </td>
   </tr>
   <tr>
@@ -172,6 +184,7 @@
       <code>:params</code>
     </td>
     <td><p>The params are a hash of key/value pairs. Elastics will transform them in the query string part of the path (all what comes after the <code>?</code>), so you will probably use it quite often.</p>
+
     </td>
   </tr>
   <tr>
@@ -179,7 +192,8 @@
       <code>:no_pruning</code>
     </td>
     <td>
-      <p>Skips the automatic pruning for the keys listed here. You can skip arbitrary keys that are expected to containing nil/empty values (see <a href='/elastics/doc/2-elastics-client/3-Templating/5-Interpolation.html#pruning'>Pruning</a>)</p>
+      <p>Skips the automatic pruning for the keys listed here. You can skip arbitrary keys that are expected to containing nil/empty values (see <a href="/elastics/doc/2-elastics-client/3-Templating/5-Interpolation.html#pruning">Pruning</a>)</p>
+      
     </td>
   </tr>
   <tr>
@@ -187,26 +201,31 @@
       <code>:raise</code>
     </td>
     <td><p>Boolean. <code>false</code> will not raise errors coming from elasticsearch.</p>
+
     </td>
   </tr>
   <tr>
     <td>
       <code>:raw_result</code>
     </td>
-    <td><p>Boolean. <code>true</code> will return the raw result as returned by elasticsearch. It is mostly useful to skip the automatic casting provided by the <code>Elastics::ActiveModel</code> module, or skip your own post processing of the result (see <a href='/elastics/doc/2-elastics-client/4-Result-Extenders.html#modelelastics_resultresult'>elastics_result</a>).</p>
+    <td><p>Boolean. <code>true</code> will return the raw result as returned by elasticsearch. It is mostly useful to skip the automatic casting provided by the <code>Elastics::ActiveModel</code> module, or skip your own post processing of the result (see <a href="/elastics/doc/2-elastics-client/4-Result-Extenders.html#modelelastics&lt;em&gt;resultresult">elasticsresult</a>).</p>
+
     </td>
   </tr>
 </table>
-<h2 id='predefined_variables'>Predefined Variables</h2>
+
+<h2 id="predefined-variables">Predefined Variables</h2>
 
 <p>Elastics defines a few tags internally, so it adds some predefined variable to the set. For example, when you use Search Templates, you have more predefined variables:</p>
-<table cellpadding='0' cellspacing='0' class='code-topics' style='width: 100%'>
+
+<table class="code-topics" cellspacing="0" cellpadding="0" style="width: 100%">
   <tr>
     <td>
       <code>:index</code>
     </td>
     <td>
       <p>The index or indices. You can set it as a string or as an Array of strings.</p>
+      
     </td>
   </tr>
   <tr>
@@ -215,6 +234,7 @@
     </td>
     <td>
       <p>The type or types. You can set it as a string or as an Array of strings.</p>
+      
     </td>
   </tr>
   <tr>
@@ -222,36 +242,37 @@
       <code>:page</code>
     </td>
     <td><p>The page number of the pagination. By setting this variable you get automatically set the <code>:from</code> param, consistently with the <code>:size</code> (that is usually defaulted). Very convenient when you get the page number from a pagination link). Default 1.</p>
+
     </td>
   </tr>
   <tr>
     <td>
       <code>:cleanable_query</code>
     </td>
-    <td><p>This variable is used to pass query_string queries and it is treated in a special way by Elastics. For example: if you pass a search field content from a web form directly to a query_string query, you may easily get some nasty error by elasticsearch. Indeed there are a few special characters that can break the Lucene syntax, so they should either be escaped/removed or used in a proper way. If you pass the query_string as the <code>:cleanable_query</code> variable, Elastics tries to search with its content as is first (so allowing your power users to use advanced queries). But if it gets an error from elasticsearch, then it removes the offending characters from the string, and performs a second search with the cleaned string, and finally returns the result.</p>
-
-<blockquote>
-<p>See <a href='http://lucene.apache.org/core/old_versioned_docs/versions/3_5_0/queryparsersyntax.html'>Lucene Query Parser Syntax</a></p>
-</blockquote>
-<div class='highlight'><pre><code class='yaml'><span class='l-Scalar-Plain'>my_template</span><span class='p-Indicator'>:</span>
-  <span class='l-Scalar-Plain'>query</span><span class='p-Indicator'>:</span>
-    <span class='l-Scalar-Plain'>query_string</span><span class='p-Indicator'>:</span>
-      <span class='l-Scalar-Plain'>query</span><span class='p-Indicator'>:</span> <span class='l-Scalar-Plain'>&lt;&lt;cleanable_query= &#39;*&#39; &gt;&gt;</span>
-
-<span class='c1'># or</span>
-<span class='l-Scalar-Plain'>my_other_template</span><span class='p-Indicator'>:</span>
-  <span class='l-Scalar-Plain'>query</span><span class='p-Indicator'>:</span>
-    <span class='l-Scalar-Plain'>query_string</span><span class='p-Indicator'>:</span>
-      <span class='c1'># must wrap in quotes or the &#39;:&#39; would generate a YAML error</span>
-      <span class='s'>&quot;&lt;&lt;cleanable_query=</span><span class='nv'> </span><span class='s'>{query:</span><span class='nv'> </span><span class='s'>&#39;*&#39;}</span><span class='nv'> </span><span class='s'>&gt;&gt;&quot;</span>
-</code></pre></div>
-
-      <p />
+    <td>
+      <p>This variable is used to pass query<em>string queries and it is treated in a special way by Elastics. For example: if you pass a search field content from a web form directly to a query</em>string query, you may easily get some nasty error by elasticsearch. Indeed there are a few special characters that can break the Lucene syntax, so they should either be escaped/removed or used in a proper way. If you pass the query<em>string as the `:cleanable</em>query` variable, Elastics tries to search with its content as is first (so allowing your power users to use advanced queries). But if it gets an error from elasticsearch, then it removes the offending characters from the string, and performs a second search with the cleaned string, and finally returns the result.</p>
       
-<div class='highlight'><pre><code class='ruby'><span class='no'>MyClass</span><span class='o'>.</span><span class='n'>my_template</span><span class='p'>(</span><span class='ss'>:cleanable_query</span> <span class='o'>=&gt;</span> <span class='n'>params</span><span class='o'>[</span><span class='ss'>:q</span><span class='o'>]</span><span class='p'>)</span>
-<span class='no'>MyClass</span><span class='o'>.</span><span class='n'>my_other_template</span><span class='p'>(</span> <span class='ss'>:cleanable_query</span> <span class='o'>=&gt;</span> <span class='p'>{</span> <span class='ss'>:query</span>  <span class='o'>=&gt;</span> <span class='n'>params</span><span class='o'>[</span><span class='ss'>:q</span><span class='o'>]</span><span class='p'>,</span>
-                                                 <span class='ss'>:fields</span> <span class='o'>=&gt;</span> <span class='o'>[</span><span class='s1'>&#39;text&#39;</span><span class='p'>,</span> <span class='s1'>&#39;category&#39;</span><span class='o'>]</span> <span class='p'>}</span> <span class='p'>)</span>
-</code></pre></div>
+      <blockquote>
+      <p>See <a href="http://lucene.apache.org/core/old_versioned_docs/versions/3_5_0/queryparsersyntax.html">Lucene Query Parser Syntax</a></p>
+      </blockquote>
+      
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="l-Scalar-Plain">my_template</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">query</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">query_string</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">query</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;cleanable_query= &#39;*&#39; &gt;&gt;</span>
+
+<span class="c1"># or</span>
+<span class="l-Scalar-Plain">my_other_template</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">query</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">query_string</span><span class="p-Indicator">:</span>
+      <span class="c1"># must wrap in quotes or the &#39;:&#39; would generate a YAML error</span>
+      <span class="s">&quot;&lt;&lt;cleanable_query=</span><span class="nv"> </span><span class="s">{query:</span><span class="nv"> </span><span class="s">&#39;*&#39;}</span><span class="nv"> </span><span class="s">&gt;&gt;&quot;</span></code></pre></div>
+
+      <p></p>
+      
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">MyClass</span><span class="o">.</span><span class="n">my_template</span><span class="p">(</span><span class="ss">:cleanable_query</span> <span class="o">=&gt;</span> <span class="n">params</span><span class="o">[</span><span class="ss">:q</span><span class="o">]</span><span class="p">)</span>
+<span class="no">MyClass</span><span class="o">.</span><span class="n">my_other_template</span><span class="p">(</span> <span class="ss">:cleanable_query</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:query</span>  <span class="o">=&gt;</span> <span class="n">params</span><span class="o">[</span><span class="ss">:q</span><span class="o">]</span><span class="p">,</span>
+                                                 <span class="ss">:fields</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;category&#39;</span><span class="o">]</span> <span class="p">}</span> <span class="p">)</span></code></pre></div>
 
     </td>
   </tr>
@@ -261,26 +282,28 @@
     </td>
     <td>
       <p>The time at the moment of the execution in milliseconds. It is not set as a real key in the variables hash, but if you use it in any template, it will return the value. If you set it as a regular variable, it will work as any other variable.</p>
+      
     </td>
   </tr>
 </table>
+
 <blockquote>
-<p>When you use other API methods (e.g. <code>Elastics.multi_get</code>, <code>Elastics.stats</code>, &#8230;), you may need to set other variables as well (see <a href='/elastics/doc/2-elastics-client/2-API-Methods.html'>API Methods</a>). As usual you can get the variables and an usage example in the console with <code>Elastics.doc</code></p>
+  <p>When you use other API methods (e.g. <code>Elastics.multi_get</code>, <code>Elastics.stats</code>, …), you may need to set other variables as well (see <a href="/elastics/doc/2-elastics-client/2-API-Methods.html">API Methods</a>).
+As usual you can get the variables and an usage example in the console with <code>Elastics.doc</code></p>
 </blockquote>
 
-<h2 id='elastics_variables_structure'>Elastics Variables Structure</h2>
+<h2 id="elastics-variables-structure">Elastics Variables Structure</h2>
 
 <p>When you pass a variable hash (or list of hashes) to any elastics method, elastics will create an internal <code>Elastics::Variables</code> instance, which is a special <code>Hash</code> instance.</p>
 
 <ul>
-<li>The <code>Elastics::Variables</code> objects are aware of the elasticsearch/elastics usage and its special variables</li>
+  <li>The <code>Elastics::Variables</code> objects are aware of the elasticsearch/elastics usage and its special variables</li>
+  <li>They are deep-mergeable and prunable</li>
+  <li>Deep-merging is done both for hashes and arrays in the stucture</li>
+  <li>Their keys are automatically symbolized</li>
+</ul>
 
-<li>They are deep-mergeable and prunable</li>
-
-<li>Deep-merging is done both for hashes and arrays in the stucture</li>
-
-<li>Their keys are automatically symbolized</li>
-</ul><br />
+<br />
       <div class="breadcrumb nocontent">
         <span><a href="/elastics/doc">Elastics</a></span> &gt; <span><a href="/elastics/doc/2-elastics-client">elastics-client</a></span> &gt; <span><a href="/elastics/doc/2-elastics-client/3-Templating">Templating</a></span> &gt; <span>Variables</span>
       </div>

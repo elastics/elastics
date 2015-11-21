@@ -3,10 +3,8 @@
   <head>
     <link href='/elastics/assets/global-74df1a51e3d7075c146b619ddfd07904.css' rel='stylesheet' type='text/css' />
 <script src='/elastics/assets/global-aacc71e3a462796a62993fb5a8b696a3.js' type='text/javascript'></script>
-
-    <title>
-      Elastics - elastics-client - Self Documentation
-    </title>
+<title>Elastics - elastics-client - Self Documentation</title>
+    <meta charset="UTF-8" />
     <script type="text/javascript">
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -47,63 +45,64 @@
       <div class="breadcrumb nocontent">
         <span><a href="/elastics/doc">Elastics</a></span> &gt; <span><a href="/elastics/doc/2-elastics-client">elastics-client</a></span> &gt; <span>Self Documentation</span>
       </div>
-      <h1 id='self_documentation'>Self Documentation</h1>
+      <h1 id="self-documentation">Self Documentation</h1>
 
 <p>Elastics is aware of your templates, partials, the tags they use, whether they are required or have defaults, and can suggest you the usage of the methods it creates for you.</p>
 
 <p>You can get the complete info, with the (erb expanded) templates and partials used by each generated method, plus a commented example of its usage, by just calling <code>doc</code> on the <code>elastics</code> proxy object of your class. For example:</p>
-<div class='highlight'><pre><code class='irb'><span class='gp'>&gt;&gt; </span><span class='no'>MyClass</span><span class='o'>.</span><span class='n'>elastics</span><span class='o'>.</span><span class='n'>doc</span> <span class='ss'>:facet_search</span>
 
-<span class='go'>#  ########## MyClass.facet_search ##########</span>
-<span class='go'>#</span>
-<span class='go'>#  ----------------------</span>
-<span class='go'>#  Elastics::Template::Search</span>
-<span class='go'>#  ---</span>
-<span class='go'>#  facet_search:</span>
-<span class='go'>#    - query:</span>
-<span class='go'>#        bool:</span>
-<span class='go'>#          must:</span>
-<span class='go'>#            - query_string:</span>
-<span class='go'>#                query: &lt;&lt;q= &#39;*&#39; &gt;&gt;</span>
-<span class='go'>#            - &lt;&lt; _facet_terms= ~ &gt;&gt;</span>
-<span class='go'>#      facets:</span>
-<span class='go'>#        keywords:</span>
-<span class='go'>#          terms:</span>
-<span class='go'>#            field: keywords</span>
-<span class='go'>#        foo:</span>
-<span class='go'>#          terms:</span>
-<span class='go'>#            field: foo</span>
-<span class='go'>#        bar:</span>
-<span class='go'>#          terms:</span>
-<span class='go'>#            field: bar</span>
-<span class='go'>#</span>
-<span class='go'>#  -----------------------</span>
-<span class='go'>#  Elastics::Template::Partial</span>
-<span class='go'>#  ---</span>
-<span class='go'>#  _facet_terms:</span>
-<span class='go'>#    term: &lt;&lt;facet_hash&gt;&gt;</span>
-<span class='go'>#</span>
-<span class='go'>#</span>
-<span class='go'>#  Usage:</span>
-<span class='go'>#  MyClass.facet_search :_facet_terms =&gt; nil,         # partial</span>
-<span class='go'>#                       :type         =&gt; type,        # required</span>
-<span class='go'>#                       :index        =&gt; &quot;test&quot;,</span>
-<span class='go'>#                       :q            =&gt; &quot;*&quot;</span>
-<span class='go'>#</span>
-<span class='go'>def MyClass.facet_search(*vars)</span>
-<span class='go'>  # this is a stub, used for reference</span>
-<span class='go'>end</span>
-</code></pre></div>
+<h3 id="doc">doc</h3>
+
+<div class="highlight"><pre><code class="language-irb" data-lang="irb"><span class="gp">&gt;&gt; </span><span class="no">MyClass</span><span class="o">.</span><span class="n">elastics</span><span class="o">.</span><span class="n">doc</span> <span class="ss">:full_search</span>
+
+<span class="go">#  ########## MyClass.full_search ##########</span>
+<span class="go">#</span>
+<span class="go">#  --------------------------</span>
+<span class="go">#  Elastics::Template::Search</span>
+<span class="go">#  ---</span>
+<span class="go">#  full_search:</span>
+<span class="go">#    - query:</span>
+<span class="go">#        bool:</span>
+<span class="go">#          must:</span>
+<span class="go">#            - query_string:</span>
+<span class="go">#                query: &lt;&lt;q= &#39;*&#39; &gt;&gt;</span>
+<span class="go">#            - &lt;&lt; _filter_terms= ~ &gt;&gt;</span>
+<span class="go">#      aggregations:</span>
+<span class="go">#        keywords:</span>
+<span class="go">#          terms:</span>
+<span class="go">#            field: keywords</span>
+<span class="go">#        foo:</span>
+<span class="go">#          terms:</span>
+<span class="go">#            field: foo</span>
+<span class="go">#        bar:</span>
+<span class="go">#          terms:</span>
+<span class="go">#            field: bar</span>
+<span class="go">#</span>
+<span class="go">#  ---------------------------</span>
+<span class="go">#  Elastics::Template::Partial</span>
+<span class="go">#  ---</span>
+<span class="go">#  _filter_terms:</span>
+<span class="go">#    term: &lt;&lt;facet_hash&gt;&gt;</span>
+<span class="go">#</span>
+<span class="go">#</span>
+<span class="go">#  Usage:</span>
+<span class="go">#  MyClass.full_search :_filter_terms =&gt; nil,         # partial</span>
+<span class="go">#                      :type          =&gt; type,        # required</span>
+<span class="go">#                      :index         =&gt; &quot;test&quot;,</span>
+<span class="go">#                      :q             =&gt; &quot;*&quot;</span>
+<span class="go">#</span>
+<span class="go">def MyClass.full_search(*vars)</span>
+<span class="go">  # this is a stub, used for reference</span>
+<span class="go">end</span></code></pre></div>
+
 <p>The info for a method contains the template and partial(s) eventually used, plus an usage example.</p>
 
 <p><strong>IMPORTANT: the usage example is not generic</strong>. It actually shows you a working sample of code, with the variables set with their evaluated default coming from your code or with a stub variable name. Keep an eye on the values of the variables in order to know more about them.</p>
 
 <ul>
-<li>If it is an <strong>explicit value</strong>, that is the default that will be used if you don&#8217;t pass any other value. Remember that a <code>nil</code> default would prune that tag if you don&#8217;t pass any other value.</li>
-
-<li>If it is a <strong>stub variable name</strong>, that means that it is a required tag (with no default), so you must pass the variable or it will raise an error.</li>
-
-<li>The explicit comments are shown in order to make partials and required variables stand out.</li>
+  <li>If it is an <strong>explicit value</strong>, that is the default that will be used if you don’t pass any other value. Remember that a <code>nil</code> default would prune that tag if you don’t pass any other value.</li>
+  <li>If it is a <strong>stub variable name</strong>, that means that it is a required tag (with no default), so you must pass the variable or it will raise an error.</li>
+  <li>The explicit comments are shown in order to make partials and required variables stand out.</li>
 </ul>
 
 <p>That output is suitable for being copied and pasted right in your class, just before the <code>elastics.load_*</code> call that will overrides the stubs. Notice that stubs are very useful in order to make some IDE work properly with autogenerated methods (e.g. RubyMine).</p>
@@ -111,10 +110,47 @@
 <p>You can get the self documetation of all the methods your class defines, by just <strong>not</strong> passing any template name to the <code>doc</code> method.</p>
 
 <blockquote>
-<p><strong>Notice</strong>: you can get the self documentation also for the Elastics API Methods by doing the same with the <code>Elastics</code> module (see <a href='/elastics/doc/2-elastics-client/2-API-Methods.html'>API Methods</a>):</p>
+  <p><strong>Notice</strong>: you can get the self documentation also for the Elastics API Methods by doing the same with the <code>Elastics</code> module (see <a href="/elastics/doc/2-elastics-client/2-API-Methods.html">API Methods</a>):</p>
 </blockquote>
-<div class='highlight'><pre><code class='irb'><span class='gp'>&gt;&gt; </span><span class='no'>Elastics</span><span class='o'>.</span><span class='n'>doc</span>
-</code></pre></div><br />
+
+<div class="highlight"><pre><code class="language-irb" data-lang="irb"><span class="gp">&gt;&gt; </span><span class="no">Elastics</span><span class="o">.</span><span class="n">doc</span></code></pre></div>
+
+<h2 id="documentation-related-methods">Documentation Related Methods</h2>
+
+<p>There are a few other methods that can help when you are looking for documentation:</p>
+
+<h3 id="usage">usage</h3>
+
+<p><code>usage</code> prints just the usage of the method:</p>
+
+<div class="highlight"><pre><code class="language-irb" data-lang="irb"><span class="gp">&gt;&gt; </span><span class="no">MyClass</span><span class="o">.</span><span class="n">elastics</span><span class="o">.</span><span class="n">usage</span> <span class="ss">:full_search</span>
+
+<span class="go">MyClass.full_search :_filter_terms =&gt; nil,         # partial</span>
+<span class="go">                    :type          =&gt; type,        # required</span>
+<span class="go">                    :index         =&gt; &quot;test&quot;,</span>
+<span class="go">                    :q             =&gt; &quot;*&quot;</span></code></pre></div>
+
+<p>### find(pattern_or_String)</p>
+
+<p><code>find</code> prints a list of methods that contains the <code>pattern_or_string</code>:</p>
+
+<div class="highlight"><pre><code class="language-irb" data-lang="irb"><span class="gp">&gt;&gt; </span><span class="no">Elastics</span><span class="o">.</span><span class="n">find</span> <span class="s1">&#39;get&#39;</span>
+<span class="go">---</span>
+<span class="go">- :get</span>
+<span class="go">- :get_source</span>
+<span class="go">- :multi_get_ids</span>
+<span class="go">- :multi_get_docs</span>
+<span class="go">- :get_index</span>
+<span class="go">- :get_index_mapping</span>
+<span class="go">- :get_field_mapping</span>
+<span class="go">- :get_index_aliases</span>
+<span class="go">- :get_index_alias</span>
+<span class="go">- :get_index_settings</span>
+<span class="go">- :get_index_template</span>
+<span class="go">- :get_index_warmer</span>
+<span class="go">- :get_cluster_settings</span></code></pre></div>
+
+<br />
       <div class="breadcrumb nocontent">
         <span><a href="/elastics/doc">Elastics</a></span> &gt; <span><a href="/elastics/doc/2-elastics-client">elastics-client</a></span> &gt; <span>Self Documentation</span>
       </div>

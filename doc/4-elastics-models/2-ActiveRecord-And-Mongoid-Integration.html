@@ -3,10 +3,8 @@
   <head>
     <link href='/elastics/assets/global-74df1a51e3d7075c146b619ddfd07904.css' rel='stylesheet' type='text/css' />
 <script src='/elastics/assets/global-aacc71e3a462796a62993fb5a8b696a3.js' type='text/javascript'></script>
-
-    <title>
-      Elastics - elastics-models - ActiveRecord And Mongoid Integration
-    </title>
+<title>Elastics - elastics-models - ActiveRecord And Mongoid Integration</title>
+    <meta charset="UTF-8" />
     <script type="text/javascript">
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -47,138 +45,147 @@
       <div class="breadcrumb nocontent">
         <span><a href="/elastics/doc">Elastics</a></span> &gt; <span><a href="/elastics/doc/4-elastics-models">elastics-models</a></span> &gt; <span>ActiveRecord And Mongoid Integration</span>
       </div>
-      <h1 id='activerecord_and_mongoid_integration'>ActiveRecord And Mongoid Integration</h1>
+      <h1 id="activerecord-and-mongoid-integration">ActiveRecord And Mongoid Integration</h1>
 
 <p>When the data you have to index is managed by <code>ActiveRecord</code> or <code>Mongoid</code> models, you can keep it transparently synced with the index/indices with just a few declaration at the model level: each time the data will change, the index will be updated in real-time.</p>
 
 <p>Elastics can mirror your DBs to the index/indices to the simple 1 to 1 mapping/syncing with just a couple of lines:</p>
-<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>MyModel</span> <span class='o'>&lt;</span> <span class='ss'>ActiveRecord</span><span class='p'>:</span><span class='ss'>:Base</span>
-  <span class='kp'>include</span> <span class='ss'>Elastics</span><span class='p'>:</span><span class='ss'>:ModelIndexer</span>
-  <span class='n'>elastics</span><span class='o'>.</span><span class='n'>sync</span> <span class='nb'>self</span>
-<span class='k'>end</span>
-</code></pre></div>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">MyModel</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="kp">include</span> <span class="no">Elastics</span><span class="o">::</span><span class="no">ModelIndexer</span>
+  <span class="n">elastics</span><span class="o">.</span><span class="n">sync</span> <span class="nb">self</span>
+<span class="k">end</span></code></pre></div>
+
 <blockquote>
-<p>Notice that we will use <code>ActiveRecord</code> models in these examples, but you can do the same with <code>Mongoid</code> models</p>
+  <p>Notice that we will use <code>ActiveRecord</code> models in these examples, but you can do the same with <code>Mongoid</code> models</p>
 </blockquote>
 
-<p>But most of the times, you need to search just one fraction of the data your app uses, so you don&#8217;t need to index it all, and you may want to make the index simple to query and easy to display by organizing it in the most suitable way to ease and improve the performances of your searches/views.</p>
+<p>But most of the times, you need to search just one fraction of the data your app uses, so you don’t need to index it all, and you may want to make the index simple to query and easy to display by organizing it in the most suitable way to ease and improve the performances of your searches/views.</p>
 
 <p><strong>Elastics allows you to decouple the design of your indices from the structure of your DBs by completely controlling which data get indexed and how and where it gets indexed.</strong></p>
 
-<p>For example you may have a relational structure with a few tables and you may want to index that data into one single elasticsearch type, skipping some record that wouldn&#8217;t be useful in the index, indexing only certain related fields from different tables, eventually add some calculated attributes, and certainly, you want also to get the index updated each time any of your table get changed.</p>
+<p>For example you may have a relational structure with a few tables and you may want to index that data into one single elasticsearch type, skipping some record that wouldn’t be useful in the index, indexing only certain related fields from different tables, eventually add some calculated attributes, and certainly, you want also to get the index updated each time any of your table get changed.</p>
 
 <p>Elastics allows to do so very easily, by adding a few simple declarations at the model level and/or a few methods to your models, provided by the <code>Elastics::ModelSyncer</code> or <code>Elastics::ModelIndexer</code> modules.</p>
 
-<h2 id='indexing'>Indexing</h2>
+<h2 id="indexing">Indexing</h2>
 
 <p>The concept of mapping the DB(s) records/documents to some document in the elasticsearch index is very straightforward. For example:</p>
-<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>Post</span> <span class='o'>&lt;</span> <span class='ss'>ActiveRecord</span><span class='p'>:</span><span class='ss'>:Base</span>
-  <span class='kp'>include</span> <span class='ss'>Elastics</span><span class='p'>:</span><span class='ss'>:ModelIndexer</span>
-  <span class='n'>elastics</span><span class='o'>.</span><span class='n'>index</span> <span class='o'>=</span> <span class='s1'>&#39;forum&#39;</span>
-  <span class='n'>elastics</span><span class='o'>.</span><span class='n'>type</span>  <span class='o'>=</span> <span class='s1'>&#39;post&#39;</span>
-<span class='k'>end</span>
-</code></pre></div>
-<p>In this example we set the elasticsearch <code>index</code> and <code>type</code> explicitly, but we could also omit that and let Elastics use the defaults. For example if your application uses just one index named <code>&#39;forum&#39;</code>, and you set it in the initializer file, you can omit to declare it in all models. Also the default type for the model class <code>Post</code> is <code>&#39;post&#39;</code>, so again you can omit to delare it explicitly (see <a href='/elastics/doc/2-elastics-client/3-Templating/4-Variables.html'>Variables</a> and <a href='/elastics/doc/4-elastics-models/4-Modules/2-Elastics::ModelIndexer.html#class_methods'>Class Methods</a>).</p>
 
-<h3 id='elasticsearch_parentchildren_relations'>elasticsearch Parent/Children Relations</h3>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="kp">include</span> <span class="no">Elastics</span><span class="o">::</span><span class="no">ModelIndexer</span>
+  <span class="n">elastics</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="s1">&#39;forum&#39;</span>
+  <span class="n">elastics</span><span class="o">.</span><span class="n">type</span>  <span class="o">=</span> <span class="s1">&#39;post&#39;</span>
+<span class="k">end</span></code></pre></div>
 
-<p>If our <code>Post</code> <code>belongs_to</code> <code>Thread</code> you may also want to set that same relation in the <code>&#39;forum&#39;</code> index, by using the elasticsearch parent/child feature.</p>
+<p>In this example we set the elasticsearch <code>index</code> and <code>type</code> explicitly, but we could also omit that and let Elastics use the defaults. For example if your application uses just one index named <code>'forum'</code>, and you set it in the initializer file, you can omit to declare it in all models. Also the default type for the model class <code>Post</code> is <code>'post'</code>, so again you can omit to delare it explicitly (see <a href="/elastics/doc/2-elastics-client/3-Templating/4-Variables.html">Variables</a> and <a href="/elastics/doc/4-elastics-models/4-Modules/2-Elastics::ModelIndexer.html#class_methods">Class Methods</a>).</p>
 
-<p>Notice that you don&#8217;t need to use elasticsearch parent/child relations just because you have a DB relation. That is just in case you want to implement that specific elasticsearch feature, so you have to evaluate its implication. However, if you want it, Elastics allows you to implement it in a very simple way, since it will take care of passing the right parent and routing, when indexing and retrieving the document transparently.</p>
-<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>Post</span> <span class='o'>&lt;</span> <span class='ss'>ActiveRecord</span><span class='p'>:</span><span class='ss'>:Base</span>
-  <span class='kp'>include</span> <span class='ss'>Elastics</span><span class='p'>:</span><span class='ss'>:ModelIndexer</span>
-  <span class='n'>belongs_to</span> <span class='ss'>:thread</span>
-  <span class='n'>elastics</span><span class='o'>.</span><span class='n'>parent</span> <span class='ss'>:thread</span><span class='p'>,</span> <span class='s1'>&#39;thread&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;post&#39;</span>
-<span class='k'>end</span>
-</code></pre></div>
-<h4 id='polymorphism'>Polymorphism</h4>
+<h3 id="elasticsearch-parentchildren-relations">elasticsearch Parent/Children Relations</h3>
+
+<p>If our <code>Post</code> <code>belongs_to</code> <code>Thread</code> you may also want to set that same relation in the <code>'forum'</code> index, by using the elasticsearch parent/child feature.</p>
+
+<p>Notice that you don’t need to use elasticsearch parent/child relations just because you have a DB relation. That is just in case you want to implement that specific elasticsearch feature, so you have to evaluate its implication. However, if you want it, Elastics allows you to implement it in a very simple way, since it will take care of passing the right parent and routing, when indexing and retrieving the document transparently.</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="kp">include</span> <span class="no">Elastics</span><span class="o">::</span><span class="no">ModelIndexer</span>
+  <span class="n">belongs_to</span> <span class="ss">:thread</span>
+  <span class="n">elastics</span><span class="o">.</span><span class="n">parent</span> <span class="ss">:thread</span><span class="p">,</span> <span class="s1">&#39;thread&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;post&#39;</span>
+<span class="k">end</span></code></pre></div>
+
+<h4 id="polymorphism">Polymorphism</h4>
 
 <p>If you want to use the parent/child feature of elasticsearch automatically from your models, you can map the relationships, both for simple associated models and for polymorphic associations. For example:</p>
-<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>Blog</span> <span class='o'>&lt;</span> <span class='ss'>ActiveRecord</span><span class='p'>:</span><span class='ss'>:Base</span>
-  <span class='kp'>include</span> <span class='ss'>Elastics</span><span class='p'>:</span><span class='ss'>:ModelIndexer</span>
-  <span class='n'>elastics</span><span class='o'>.</span><span class='n'>sync</span> <span class='nb'>self</span>
-  <span class='n'>has_many</span> <span class='ss'>:comments</span><span class='p'>,</span> <span class='ss'>:as</span> <span class='o'>=&gt;</span> <span class='ss'>:commentable</span>
-<span class='k'>end</span>
 
-<span class='k'>class</span> <span class='nc'>Review</span> <span class='o'>&lt;</span> <span class='ss'>ActiveRecord</span><span class='p'>:</span><span class='ss'>:Base</span>
-  <span class='kp'>include</span> <span class='ss'>Elastics</span><span class='p'>:</span><span class='ss'>:ModelIndexer</span>
-  <span class='n'>elastics</span><span class='o'>.</span><span class='n'>sync</span> <span class='nb'>self</span>
-  <span class='n'>has_many</span> <span class='ss'>:comments</span><span class='p'>,</span> <span class='ss'>:as</span> <span class='o'>=&gt;</span> <span class='ss'>:commentable</span>
-<span class='k'>end</span>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Blog</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="kp">include</span> <span class="no">Elastics</span><span class="o">::</span><span class="no">ModelIndexer</span>
+  <span class="n">elastics</span><span class="o">.</span><span class="n">sync</span> <span class="nb">self</span>
+  <span class="n">has_many</span> <span class="ss">:comments</span><span class="p">,</span> <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:commentable</span>
+<span class="k">end</span>
 
-<span class='k'>class</span> <span class='nc'>Comment</span> <span class='o'>&lt;</span> <span class='ss'>ActiveRecord</span><span class='p'>:</span><span class='ss'>:Base</span>
-  <span class='kp'>include</span> <span class='ss'>Elastics</span><span class='p'>:</span><span class='ss'>:ModelIndexer</span>
-  <span class='n'>belongs_to</span> <span class='ss'>:commentable</span><span class='p'>,</span> <span class='ss'>:polymorphic</span> <span class='o'>=&gt;</span> <span class='kp'>true</span>
-  <span class='n'>elastics</span><span class='o'>.</span><span class='n'>parent</span> <span class='ss'>:commentable</span><span class='p'>,</span> <span class='s1'>&#39;blog&#39;</span>   <span class='o'>=&gt;</span> <span class='s1'>&#39;blog_comment&#39;</span><span class='p'>,</span>
-                            <span class='s1'>&#39;review&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;review_comment&#39;</span>
-  <span class='c1'># indexes the record, and its commentable parent when it changes</span>
-  <span class='n'>elastics</span><span class='o'>.</span><span class='n'>sync</span> <span class='nb'>self</span><span class='p'>,</span> <span class='ss'>:commentable</span>
-<span class='k'>end</span>
-</code></pre></div>
+<span class="k">class</span> <span class="nc">Review</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="kp">include</span> <span class="no">Elastics</span><span class="o">::</span><span class="no">ModelIndexer</span>
+  <span class="n">elastics</span><span class="o">.</span><span class="n">sync</span> <span class="nb">self</span>
+  <span class="n">has_many</span> <span class="ss">:comments</span><span class="p">,</span> <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:commentable</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Comment</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="kp">include</span> <span class="no">Elastics</span><span class="o">::</span><span class="no">ModelIndexer</span>
+  <span class="n">belongs_to</span> <span class="ss">:commentable</span><span class="p">,</span> <span class="ss">:polymorphic</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+  <span class="n">elastics</span><span class="o">.</span><span class="n">parent</span> <span class="ss">:commentable</span><span class="p">,</span> <span class="s1">&#39;blog&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;blog_comment&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;review&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;review_comment&#39;</span>
+  <span class="c1"># indexes the record, and its commentable parent when it changes</span>
+  <span class="n">elastics</span><span class="o">.</span><span class="n">sync</span> <span class="nb">self</span><span class="p">,</span> <span class="ss">:commentable</span>
+<span class="k">end</span></code></pre></div>
+
 <p>The first 2 models have a default type (respectively <code>blog</code> and <code>review</code>). The Comment model has 2 types: <code>blog_comment</code> and <code>review_comment</code>, depending on its parent. In other words a comment to a <code>blog</code> parent will be of type <code>blog_comment</code>, while a comment to a <code>review</code> will be of type <code>review_comment</code>.</p>
 
-<p>When you create a <code>Comment</code> for a review, Elastics will index the comment as a <code>&quot;_type&quot;:&quot;review_comment&quot;</code>, and it will be routed to the right parent&#8217;s shard transparently. You don&#8217;t even have to write any explicit mapping, since Elastics will do it automatically.</p>
+<p>When you create a <code>Comment</code> for a review, Elastics will index the comment as a <code>"_type":"review_comment"</code>, and it will be routed to the right parent’s shard transparently. You don’t even have to write any explicit mapping, since Elastics will do it automatically.</p>
 
 <p>Notice that in order to have the automatic routing and mapping for parent child relationship you must either run the <code>elastics:import FORCE=true</code> task (which will create a new index), or run the <code>elastics:create_indices</code> task.</p>
 
-<h2 id='indexing_records'>Indexing Records</h2>
+<h2 id="indexing-records">Indexing Records</h2>
 
 <p>By default Elastics indexes all the records of the elastics models on import, but you may want to skip the indexing of particular records that may not be useful to index. You have 2 options to do that: you can define a <code>elastics_indexable?</code> instance method, returning <code>true</code> or <code>false</code> based on your own logic, or you can define a <code>self.elastics_in_batches</code> that should return only the records to index, in batches</p>
 
-<h3 id='recordelastics_indexable'>record.elastics_indexable?</h3>
-<div class='highlight'><pre><code class='ruby'><span class='k'>def</span> <span class='nf'>elastics_indexable?</span>
-  <span class='o'>!</span><span class='p'>(</span><span class='n'>title</span><span class='o'>.</span><span class='n'>blank?</span> <span class='o'>||</span> <span class='n'>text</span><span class='o'>.</span><span class='n'>blank?</span><span class='p'>)</span>
-<span class='k'>end</span>
-</code></pre></div>
-<h3 id='modelelastics_in_batches'>Model.elastics_in_batches</h3>
-<div class='highlight'><pre><code class='ruby'><span class='k'>def</span> <span class='nc'>self</span><span class='o'>.</span><span class='nf'>elastics_in_batches</span><span class='p'>(</span><span class='n'>options</span><span class='o'>=</span><span class='p'>{},</span><span class='o'>&amp;</span><span class='n'>block</span><span class='p'>)</span>
-  <span class='n'>some_scope</span><span class='o'>.</span><span class='n'>find_in_batches</span><span class='p'>(</span><span class='n'>options</span><span class='p'>,</span> <span class='o'>&amp;</span><span class='n'>block</span><span class='p'>)</span>
-<span class='k'>end</span>
-</code></pre></div>
-<h2 id='indexing_fields'>Indexing Fields</h2>
+<h3 id="recordelasticsindexable">record.elastics_indexable?</h3>
 
-<p>If you just want to index all the fields, nothing more and nothing less, you don&#8217;t need to do anything, because Elastics does that by default. However you are not tied to index the whole record/document as it is. Indeed you can choose which data in the record gets indexed and which doesn&#8217;t, add calculated attributes (like counts) or embed attributes from other related records, composing the actual <code>_source</code> field that elasticsearch will index.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">elastics_indexable?</span>
+  <span class="o">!</span><span class="p">(</span><span class="n">title</span><span class="o">.</span><span class="n">blank?</span> <span class="o">||</span> <span class="n">text</span><span class="o">.</span><span class="n">blank?</span><span class="p">)</span>
+<span class="k">end</span></code></pre></div>
 
-<h3 id='recordelastics_source'>record.elastics_source</h3>
+<h3 id="modelelasticsinbatches">Model.elastics_in_batches</h3>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">elastics_in_batches</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">{},</span><span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+  <span class="n">some_scope</span><span class="o">.</span><span class="n">find_in_batches</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+<span class="k">end</span></code></pre></div>
+
+<h2 id="indexing-fields">Indexing Fields</h2>
+
+<p>If you just want to index all the fields, nothing more and nothing less, you don’t need to do anything, because Elastics does that by default. However you are not tied to index the whole record/document as it is. Indeed you can choose which data in the record gets indexed and which doesn’t, add calculated attributes (like counts) or embed attributes from other related records, composing the actual <code>_source</code> field that elasticsearch will index.</p>
+
+<h3 id="recordelasticssource">record.elastics_source</h3>
 
 <p>If you want to control the data that goes into the index, the only thing you have to do is defining a <code>elastics_source</code> instance method in your elastics model, producing whatever source you want to index. For example:</p>
-<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>Parent</span> <span class='o'>&lt;</span> <span class='ss'>ActiveRecord</span><span class='p'>:</span><span class='ss'>:Base</span>
-  <span class='kp'>include</span> <span class='ss'>Elastics</span><span class='p'>:</span><span class='ss'>:ModelIndexer</span>
-  <span class='n'>elastics</span><span class='o'>.</span><span class='n'>sync</span> <span class='nb'>self</span>
-  <span class='n'>has_many</span> <span class='ss'>:children</span>
-  <span class='n'>has_many</span> <span class='ss'>:not_indexed_models</span>
 
-  <span class='k'>def</span> <span class='nf'>elastics_source</span>
-    <span class='p'>{</span> <span class='ss'>:title</span>             <span class='o'>=&gt;</span> <span class='n'>title</span><span class='p'>,</span>              <span class='c1'># record field</span>
-      <span class='ss'>:text</span>              <span class='o'>=&gt;</span> <span class='n'>text</span><span class='p'>,</span>               <span class='c1'># record field</span>
-      <span class='ss'>:children_count</span>    <span class='o'>=&gt;</span> <span class='n'>children</span><span class='o'>.</span><span class='n'>count</span><span class='p'>,</span>     <span class='c1'># refers to associated models</span>
-      <span class='ss'>:not_indexed_model</span> <span class='o'>=&gt;</span> <span class='n'>not_indexed_models</span><span class='p'>,</span> <span class='c1'># refers to associated models</span>
-      <span class='ss'>:random_number</span>     <span class='o'>=&gt;</span> <span class='n'>random</span><span class='p'>(</span><span class='mi'>10000</span><span class='p'>)</span>       <span class='c1'># calculated attribute</span>
-    <span class='p'>}</span>
-  <span class='k'>end</span>
-<span class='k'>end</span>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Parent</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="kp">include</span> <span class="no">Elastics</span><span class="o">::</span><span class="no">ModelIndexer</span>
+  <span class="n">elastics</span><span class="o">.</span><span class="n">sync</span> <span class="nb">self</span>
+  <span class="n">has_many</span> <span class="ss">:children</span>
+  <span class="n">has_many</span> <span class="ss">:not_indexed_models</span>
 
-<span class='k'>class</span> <span class='nc'>Child</span> <span class='o'>&lt;</span> <span class='ss'>ActiveRecord</span><span class='p'>:</span><span class='ss'>:Base</span>
-  <span class='n'>belongs_to</span> <span class='ss'>:parent</span>
-  <span class='kp'>include</span> <span class='ss'>Elastics</span><span class='p'>:</span><span class='ss'>:ModelIndexer</span>
-  <span class='n'>elastics</span><span class='o'>.</span><span class='n'>sync</span> <span class='nb'>self</span><span class='p'>,</span> <span class='ss'>:parent</span>
-<span class='k'>end</span>
+  <span class="k">def</span> <span class="nf">elastics_source</span>
+    <span class="p">{</span> <span class="ss">:title</span>             <span class="o">=&gt;</span> <span class="n">title</span><span class="p">,</span>              <span class="c1"># record field</span>
+      <span class="ss">:text</span>              <span class="o">=&gt;</span> <span class="n">text</span><span class="p">,</span>               <span class="c1"># record field</span>
+      <span class="ss">:children_count</span>    <span class="o">=&gt;</span> <span class="n">children</span><span class="o">.</span><span class="n">count</span><span class="p">,</span>     <span class="c1"># refers to associated models</span>
+      <span class="ss">:not_indexed_model</span> <span class="o">=&gt;</span> <span class="n">not_indexed_models</span><span class="p">,</span> <span class="c1"># refers to associated models</span>
+      <span class="ss">:random_number</span>     <span class="o">=&gt;</span> <span class="n">random</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span>       <span class="c1"># calculated attribute</span>
+    <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
 
-<span class='k'>class</span> <span class='nc'>NotIndexedModel</span> <span class='o'>&lt;</span> <span class='ss'>ActiveRecord</span><span class='p'>:</span><span class='ss'>:Base</span>
-  <span class='n'>belongs_to</span> <span class='ss'>:parent</span>
-  <span class='kp'>include</span> <span class='ss'>Elastics</span><span class='p'>:</span><span class='ss'>:ModelSyncer</span>
-  <span class='n'>elastics</span><span class='o'>.</span><span class='n'>sync</span> <span class='ss'>:parent</span>
-<span class='k'>end</span>
-</code></pre></div>
+<span class="k">class</span> <span class="nc">Child</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">belongs_to</span> <span class="ss">:parent</span>
+  <span class="kp">include</span> <span class="no">Elastics</span><span class="o">::</span><span class="no">ModelIndexer</span>
+  <span class="n">elastics</span><span class="o">.</span><span class="n">sync</span> <span class="nb">self</span><span class="p">,</span> <span class="ss">:parent</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">NotIndexedModel</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">belongs_to</span> <span class="ss">:parent</span>
+  <span class="kp">include</span> <span class="no">Elastics</span><span class="o">::</span><span class="no">ModelSyncer</span>
+  <span class="n">elastics</span><span class="o">.</span><span class="n">sync</span> <span class="ss">:parent</span>
+<span class="k">end</span></code></pre></div>
+
 <p>In the <code>elastics_source</code> method of the example, the only attributes coming from the records are <code>title</code> and <code>text</code>, the other attributes are either coming from other records or simply calculated.</p>
 
-<p>Besides each time a <code>Child</code> or a <code>NotIndexedModel</code> changes, the callbacks will reindex the parent document. Notice that the children that are referred or embedded may be synced on their own (like <code>Child</code>) or not (like <code>NotIndexedModel</code>) (see <a href='/elastics/doc/4-elastics-models/4-Modules/1-Elastics::ModelSyncer.html'>Elastics::ModelSyncer</a>).</p>
+<p>Besides each time a <code>Child</code> or a <code>NotIndexedModel</code> changes, the callbacks will reindex the parent document. Notice that the children that are referred or embedded may be synced on their own (like <code>Child</code>) or not (like <code>NotIndexedModel</code>) (see <a href="/elastics/doc/4-elastics-models/4-Modules/1-Elastics::ModelSyncer.html">Elastics::ModelSyncer</a>).</p>
 
 <p><strong>Notice</strong>: Since version <code>0.5.0</code> syncing manages also to avoid circular references: a parent and a children could sync each other and everything will work as expected.</p>
 
-<h2 id='methods'>Methods</h2>
+<h2 id="methods">Methods</h2>
 
-<p>(see <a href='/elastics/doc/4-elastics-models/4-Modules/2-Elastics::ModelIndexer.html'>Elastics::ModelIndexer</a> and <a href='/elastics/doc/4-elastics-models/4-Modules/1-Elastics::ModelSyncer.html'>Elastics::ModelSyncer</a>)</p><br />
+<p>(see <a href="/elastics/doc/4-elastics-models/4-Modules/2-Elastics::ModelIndexer.html">Elastics::ModelIndexer</a> and <a href="/elastics/doc/4-elastics-models/4-Modules/1-Elastics::ModelSyncer.html">Elastics::ModelSyncer</a>)</p>
+
+<br />
       <div class="breadcrumb nocontent">
         <span><a href="/elastics/doc">Elastics</a></span> &gt; <span><a href="/elastics/doc/4-elastics-models">elastics-models</a></span> &gt; <span>ActiveRecord And Mongoid Integration</span>
       </div>
