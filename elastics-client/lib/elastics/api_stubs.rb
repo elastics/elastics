@@ -5,8 +5,12 @@ module Elastics
     # Notice: :index and :type variables are always shown as nil (default), although they may be required by elasticsearch
 
     #  ########## Elastics.store ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Index API
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  store:
     #  - PUT
@@ -18,6 +22,8 @@ module Elastics
     #                 :type  => nil,
     #                 :index => nil
     #
+    #  Notice: You must pass the :data variable.
+    #
     def self.store(*vars)
       ## this is a stub, used for reference
       super
@@ -26,8 +32,12 @@ module Elastics
 
 
     #  ########## Elastics.post_store ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Index API
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  post_store:
     #  - POST
@@ -38,15 +48,22 @@ module Elastics
     #  Elastics.post_store :index => nil,
     #                      :type  => nil
     #
+    #  Notice: The id is assigned by elasticsearch; you must pass the :data variable.
+    #
     def self.post_store(*vars)
       ## this is a stub, used for reference
       super
     end
+    # also aliased by: :put_store
 
 
     #  ########## Elastics.get ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Get API
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-get.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  get:
     #  - GET
@@ -65,8 +82,12 @@ module Elastics
 
 
     #  ########## Elastics.get_source ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Get API
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-get.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  get_source:
     #  - GET
@@ -85,8 +106,12 @@ module Elastics
 
 
     #  ########## Elastics.delete ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Delete API
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  delete:
     #  - DELETE
@@ -98,6 +123,8 @@ module Elastics
     #                  :type  => nil,
     #                  :index => nil
     #
+    #  Notice: You must pass the :data variable.
+    #
     def self.delete(*vars)
       ## this is a stub, used for reference
       super
@@ -106,8 +133,12 @@ module Elastics
 
 
     #  ########## Elastics.update ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Update API
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  update:
     #  - POST
@@ -119,6 +150,8 @@ module Elastics
     #                  :type  => nil,
     #                  :index => nil
     #
+    #  Notice: You must pass script or doc and the other options as the :data variable.
+    #
     def self.update(*vars)
       ## this is a stub, used for reference
       super
@@ -126,8 +159,12 @@ module Elastics
 
 
     #  ########## Elastics.multi_get_ids ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Multi Get API
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-multi-get.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  multi_get_ids:
     #  - GET
@@ -140,6 +177,8 @@ module Elastics
     #                         :type  => nil,
     #                         :index => nil
     #
+    #  Notice: You must pass the :ids array.
+    #
     def self.multi_get_ids(*vars)
       ## this is a stub, used for reference
       super
@@ -148,8 +187,12 @@ module Elastics
 
 
     #  ########## Elastics.multi_get_docs ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Multi Get API
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-multi-get.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  multi_get_docs:
     #  - GET
@@ -162,15 +205,22 @@ module Elastics
     #                          :type  => nil,
     #                          :index => nil
     #
+    #  Notice: You must pass the :docs array.
+    #
     def self.multi_get_docs(*vars)
       ## this is a stub, used for reference
       super
     end
+    # also aliased by: :multi_get
 
 
     #  ########## Elastics.post_bulk_string ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Bulk API
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  post_bulk_string:
     #  - POST
@@ -181,6 +231,8 @@ module Elastics
     #  Usage:
     #  Elastics.post_bulk_string :bulk_string => bulk_string  # required
     #
+    #  Notice: You must pass the :docs array.
+    #
     def self.post_bulk_string(*vars)
       ## this is a stub, used for reference
       super
@@ -190,7 +242,7 @@ module Elastics
 
     #  ########## Elastics.termvector ##########
     #  ------------------
-    #  Elastics::Template
+    #  Elastics::Template::API
     #  ---
     #  termvector:
     #  - POST
@@ -209,8 +261,12 @@ module Elastics
 
 
     #  ########## Elastics.multi_termvectors ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Multi Termvectors API
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-multi-termvectors.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  multi_termvectors:
     #  - POST
@@ -223,6 +279,8 @@ module Elastics
     #                             :type  => nil,
     #                             :docs  => nil
     #
+    #  Notice: You must pass the docs array as the :docs variable or use the :data variable for the simplified request.
+    #
     def self.multi_termvectors(*vars)
       ## this is a stub, used for reference
       super
@@ -230,8 +288,12 @@ module Elastics
 
 
     #  ########## Elastics.search_shards ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Search Shards
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-shards.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  search_shards:
     #  - GET
@@ -242,6 +304,8 @@ module Elastics
     #  Elastics.search_shards :index => nil,
     #                         :type  => nil
     #
+    #  Notice: You can pass the parameters as the :params variable.
+    #
     def self.search_shards(*vars)
       ## this is a stub, used for reference
       super
@@ -249,8 +313,12 @@ module Elastics
 
 
     #  ########## Elastics.count ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Search Shards
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  count:
     #  - GET
@@ -261,6 +329,8 @@ module Elastics
     #  Elastics.count :index => nil,
     #                 :type  => nil
     #
+    #  Notice: You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable.
+    #
     def self.count(*vars)
       ## this is a stub, used for reference
       super
@@ -268,8 +338,12 @@ module Elastics
 
 
     #  ########## Elastics.search_exists ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Search Exists
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-exists.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  search_exists:
     #  - GET
@@ -281,6 +355,8 @@ module Elastics
     #                         :type  => nil,
     #                         :id    => nil
     #
+    #  Notice: You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable.
+    #
     def self.search_exists(*vars)
       ## this is a stub, used for reference
       super
@@ -288,8 +364,12 @@ module Elastics
 
 
     #  ########## Elastics.validate ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Validate
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-validate.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  validate:
     #  - GET
@@ -301,6 +381,8 @@ module Elastics
     #                    :type  => nil,
     #                    :id    => nil
     #
+    #  Notice: You must pass the query to validate as the :data variable. You can pass the parameters as the :params variable.
+    #
     def self.validate(*vars)
       ## this is a stub, used for reference
       super
@@ -308,8 +390,12 @@ module Elastics
 
 
     #  ########## Elastics.explain ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Validate
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-explain.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  explain:
     #  - GET
@@ -321,72 +407,21 @@ module Elastics
     #                   :type  => nil,
     #                   :id    => nil
     #
+    #  Notice: You must pass the query to explain as the :data variable. You can pass the parameters as the :params variable.
+    #
     def self.explain(*vars)
       ## this is a stub, used for reference
       super
     end
 
 
-    #  ########## Elastics.percolate ##########
-    #  ------------------
-    #  Elastics::Template
-    #  ---
-    #  percolate:
-    #  - GET
-    #  - "/<<index>>/<<type>>/_percolate"
-    #
-    #
-    #  Usage:
-    #  Elastics.percolate :index => nil,
-    #                     :type  => nil
-    #
-    def self.percolate(*vars)
-      ## this is a stub, used for reference
-      super
-    end
-
-
-    #  ########## Elastics.percolate_count ##########
-    #  ------------------
-    #  Elastics::Template
-    #  ---
-    #  percolate_count:
-    #  - GET
-    #  - "/<<index>>/<<type>>/_percolate/count"
-    #
-    #
-    #  Usage:
-    #  Elastics.percolate_count :index => nil,
-    #                           :type  => nil
-    #
-    def self.percolate_count(*vars)
-      ## this is a stub, used for reference
-      super
-    end
-
-
-    #  ########## Elastics.put_percolator ##########
-    #  ------------------
-    #  Elastics::Template
-    #  ---
-    #  put_percolator:
-    #  - PUT
-    #  - "/<<index>>/.percolator/<<id>>"
-    #
-    #
-    #  Usage:
-    #  Elastics.put_percolator :id    => id,  # required
-    #                          :index => nil
-    #
-    def self.put_percolator(*vars)
-      ## this is a stub, used for reference
-      super
-    end
-
-
     #  ########## Elastics.delete_percolator ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Percolator
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-percolate.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  delete_percolator:
     #  - DELETE
@@ -403,9 +438,88 @@ module Elastics
     end
 
 
+    #  ########## Elastics.percolate ##########
+    #
+    #  API Name: Percolator
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-percolate.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
+    #  ---
+    #  percolate:
+    #  - GET
+    #  - "/<<index>>/<<type>>/_percolate"
+    #
+    #
+    #  Usage:
+    #  Elastics.percolate :index => nil,
+    #                     :type  => nil
+    #
+    #  Notice: You must pass the the document (and additional queries) as :data variable.
+    #
+    def self.percolate(*vars)
+      ## this is a stub, used for reference
+      super
+    end
+
+
+    #  ########## Elastics.percolate_count ##########
+    #
+    #  API Name: Percolator
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-percolate.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
+    #  ---
+    #  percolate_count:
+    #  - GET
+    #  - "/<<index>>/<<type>>/_percolate/count"
+    #
+    #
+    #  Usage:
+    #  Elastics.percolate_count :index => nil,
+    #                           :type  => nil
+    #
+    #  Notice: You must pass the the document (and additional queries) as :data variable.
+    #
+    def self.percolate_count(*vars)
+      ## this is a stub, used for reference
+      super
+    end
+
+
+    #  ########## Elastics.put_percolator ##########
+    #
+    #  API Name: Percolator
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-percolate.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
+    #  ---
+    #  put_percolator:
+    #  - PUT
+    #  - "/<<index>>/.percolator/<<id>>"
+    #
+    #
+    #  Usage:
+    #  Elastics.put_percolator :id    => id,  # required
+    #                          :index => nil
+    #
+    #  Notice: You must pass the the document (and additional queries) as :data variable.
+    #
+    def self.put_percolator(*vars)
+      ## this is a stub, used for reference
+      super
+    end
+
+
     #  ########## Elastics.more_like_this ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: More Like This
+    #  API URL: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-more-like-this.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  more_like_this:
     #  - GET
@@ -417,6 +531,8 @@ module Elastics
     #                          :type  => nil,
     #                          :index => nil
     #
+    #  Notice: You can pass the search API as :data variable.
+    #
     def self.more_like_this(*vars)
       ## this is a stub, used for reference
       super
@@ -425,8 +541,12 @@ module Elastics
 
 
     #  ########## Elastics.put_index ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Create Index
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  put_index:
     #  - PUT
@@ -441,6 +561,8 @@ module Elastics
     #                     :number_of_shards   => 5,
     #                     :number_of_replicas => 1
     #
+    #  Notice: You can also pass the complete data structure as :data variable, so passing settings, mappings, warmers, aliases, ...
+    #
     def self.put_index(*vars)
       ## this is a stub, used for reference
       super
@@ -449,8 +571,12 @@ module Elastics
 
 
     #  ########## Elastics.post_index ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Create Index
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  post_index:
     #  - POST
@@ -465,15 +591,22 @@ module Elastics
     #                      :number_of_shards   => 5,
     #                      :number_of_replicas => 1
     #
+    #  Notice: You can also pass the complete data structure as :data variable, so passing settings, mappings, warmers, aliases, ...
+    #
     def self.post_index(*vars)
       ## this is a stub, used for reference
       super
     end
+    # also aliased by: :create_index
 
 
     #  ########## Elastics.delete_index ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Delete Index
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-delete-index.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  delete_index:
     #  - DELETE
@@ -490,8 +623,12 @@ module Elastics
 
 
     #  ########## Elastics.get_index ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Get Index
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-index.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  get_index:
     #  - GET
@@ -509,8 +646,12 @@ module Elastics
 
 
     #  ########## Elastics.indices_exists ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Indices Exists
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-exists.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  indices_exists:
     #  - HEAD
@@ -528,8 +669,12 @@ module Elastics
 
 
     #  ########## Elastics.close_index ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Open/Close Index
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-open-close.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  close_index:
     #  - POST
@@ -546,8 +691,12 @@ module Elastics
 
 
     #  ########## Elastics.open_index ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Open/Close Index
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-open-close.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  open_index:
     #  - POST
@@ -564,8 +713,12 @@ module Elastics
 
 
     #  ########## Elastics.put_index_mapping ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Put Mappings
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-put-mapping.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  put_index_mapping:
     #  - PUT
@@ -583,12 +736,16 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
-    # also aliased by: :put_mapping
+    # also aliased by: :put_mappings
 
 
     #  ########## Elastics.get_index_mapping ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Get Mappings
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-mapping.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  get_index_mapping:
     #  - GET
@@ -606,8 +763,12 @@ module Elastics
 
 
     #  ########## Elastics.get_field_mapping ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Get Field Mappings
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  get_field_mapping:
     #  - GET
@@ -626,8 +787,12 @@ module Elastics
 
 
     #  ########## Elastics.types_exists ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Types Exists
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-types-exists.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  types_exists:
     #  - HEAD
@@ -646,8 +811,12 @@ module Elastics
 
 
     #  ########## Elastics.delete_index_mapping ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Delete Mappings
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-delete-mapping.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  delete_index_mapping:
     #  - DELETE
@@ -664,28 +833,13 @@ module Elastics
     end
 
 
-    #  ########## Elastics.post_index_aliases ##########
-    #  ------------------
-    #  Elastics::Template
-    #  ---
-    #  post_index_aliases:
-    #  - POST
-    #  - "/_aliases"
-    #  - actions: "<<actions>>"
-    #
-    #
-    #  Usage:
-    #  Elastics.post_index_aliases :actions => actions  # required
-    #
-    def self.post_index_aliases(*vars)
-      ## this is a stub, used for reference
-      super
-    end
-
-
     #  ########## Elastics.get_index_aliases ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Index Aliases
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  get_index_aliases:
     #  - GET
@@ -701,28 +855,38 @@ module Elastics
     end
 
 
-    #  ########## Elastics.put_index_alias ##########
-    #  ------------------
-    #  Elastics::Template
+    #  ########## Elastics.post_index_aliases ##########
+    #
+    #  API Name: Index Aliases
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
-    #  put_index_alias:
-    #  - PUT
-    #  - "/<<index>>/_alias/<<alias>>"
+    #  post_index_aliases:
+    #  - POST
+    #  - "/_aliases"
+    #  - actions: "<<actions>>"
     #
     #
     #  Usage:
-    #  Elastics.put_index_alias :alias => alias,  # required
-    #                           :index => nil
+    #  Elastics.post_index_aliases :actions => actions  # required
     #
-    def self.put_index_alias(*vars)
+    #  Notice: This is the generic interface allowing all the options. You can pass the :actions array or the aliases API structure as the :data variable.
+    #
+    def self.post_index_aliases(*vars)
       ## this is a stub, used for reference
       super
     end
 
 
     #  ########## Elastics.delete_index_alias ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Index Aliases
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  delete_index_alias:
     #  - DELETE
@@ -740,8 +904,12 @@ module Elastics
 
 
     #  ########## Elastics.get_index_alias ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Index Aliases
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  get_index_alias:
     #  - GET
@@ -758,9 +926,38 @@ module Elastics
     end
 
 
+    #  ########## Elastics.put_index_alias ##########
+    #
+    #  API Name: Index Aliases
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
+    #  ---
+    #  put_index_alias:
+    #  - PUT
+    #  - "/<<index>>/_alias/<<alias>>"
+    #
+    #
+    #  Usage:
+    #  Elastics.put_index_alias :alias => alias,  # required
+    #                           :index => nil
+    #
+    #  Notice: This is the single index alias. You can pass other options as the :data variable.
+    #
+    def self.put_index_alias(*vars)
+      ## this is a stub, used for reference
+      super
+    end
+
+
     #  ########## Elastics.update_index_settings ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Update Indices Settings
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-update-settings.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  update_index_settings:
     #  - PUT
@@ -770,6 +967,8 @@ module Elastics
     #  Usage:
     #  Elastics.update_index_settings :index => nil
     #
+    #  Notice: You can pass the settings structure as the :data variable.
+    #
     def self.update_index_settings(*vars)
       ## this is a stub, used for reference
       super
@@ -778,8 +977,12 @@ module Elastics
 
 
     #  ########## Elastics.get_index_settings ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Get Indices Settings
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-settings.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  get_index_settings:
     #  - GET
@@ -793,29 +996,16 @@ module Elastics
       ## this is a stub, used for reference
       super
     end
-
-
-    #  ########## Elastics.get_settings ##########
-    #  ------------------
-    #  Elastics::Template
-    #  ---
-    #  get_settings:
-    #  - GET
-    #  - "/<<index>>/_settings"
-    #
-    #
-    #  Usage:
-    #  Elastics.get_settings :index => nil
-    #
-    def self.get_settings(*vars)
-      ## this is a stub, used for reference
-      super
-    end
+    # also aliased by: :get_settings
 
 
     #  ########## Elastics.analyze_index ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Analyze
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-analyze.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  analyze_index:
     #  - GET
@@ -825,33 +1015,21 @@ module Elastics
     #  Usage:
     #  Elastics.analyze_index :index => nil
     #
+    #  Notice: You can pass the text to analyze as the :data variable (or the param :text). You can pass the parameters as the :params variable.
+    #
     def self.analyze_index(*vars)
       ## this is a stub, used for reference
       super
     end
 
 
-    #  ########## Elastics.put_index_template ##########
-    #  ------------------
-    #  Elastics::Template
-    #  ---
-    #  put_index_template:
-    #  - PUT
-    #  - "/_template/<<template>>"
-    #
-    #
-    #  Usage:
-    #  Elastics.put_index_template :template => template  # required
-    #
-    def self.put_index_template(*vars)
-      ## this is a stub, used for reference
-      super
-    end
-
-
     #  ########## Elastics.delete_index_template ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Index Templates
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  delete_index_template:
     #  - DELETE
@@ -868,8 +1046,12 @@ module Elastics
 
 
     #  ########## Elastics.get_index_template ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Index Templates
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  get_index_template:
     #  - GET
@@ -886,8 +1068,12 @@ module Elastics
 
 
     #  ########## Elastics.index_template_exists ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Index Templates
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  index_template_exists:
     #  - HEAD
@@ -903,29 +1089,37 @@ module Elastics
     end
 
 
-    #  ########## Elastics.put_index_warmer ##########
-    #  ------------------
-    #  Elastics::Template
+    #  ########## Elastics.put_index_template ##########
+    #
+    #  API Name: Index Templates
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
-    #  put_index_warmer:
+    #  put_index_template:
     #  - PUT
-    #  - "/<<index>>/<<type>>/_warmer/<<warmer>>"
+    #  - "/_template/<<template>>"
     #
     #
     #  Usage:
-    #  Elastics.put_index_warmer :warmer => warmer,  # required
-    #                            :type   => nil,
-    #                            :index  => nil
+    #  Elastics.put_index_template :template => template  # required
     #
-    def self.put_index_warmer(*vars)
+    #  Notice: You must pass the template structure as the :data variable.
+    #
+    def self.put_index_template(*vars)
       ## this is a stub, used for reference
       super
     end
 
 
     #  ########## Elastics.delete_index_warmer ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Warmers
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-warmers.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  delete_index_warmer:
     #  - DELETE
@@ -942,9 +1136,39 @@ module Elastics
     end
 
 
+    #  ########## Elastics.put_index_warmer ##########
+    #
+    #  API Name: Warmers
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-warmers.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
+    #  ---
+    #  put_index_warmer:
+    #  - PUT
+    #  - "/<<index>>/<<type>>/_warmer/<<warmer>>"
+    #
+    #
+    #  Usage:
+    #  Elastics.put_index_warmer :warmer => warmer,  # required
+    #                            :type   => nil,
+    #                            :index  => nil
+    #
+    #  Notice: You must pass the warmer structure as the :data variable.
+    #
+    def self.put_index_warmer(*vars)
+      ## this is a stub, used for reference
+      super
+    end
+
+
     #  ########## Elastics.get_index_warmer ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Warmers
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-warmers.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  get_index_warmer:
     #  - GET
@@ -962,8 +1186,12 @@ module Elastics
 
 
     #  ########## Elastics.index_status ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Status
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-status.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  index_status:
     #  - GET
@@ -980,8 +1208,12 @@ module Elastics
 
 
     #  ########## Elastics.index_stats ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Stats
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-stats.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  index_stats:
     #  - GET
@@ -999,8 +1231,12 @@ module Elastics
 
 
     #  ########## Elastics.index_segments ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Segments
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-segments.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  index_segments:
     #  - GET
@@ -1017,8 +1253,12 @@ module Elastics
 
 
     #  ########## Elastics.index_recovery ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Recovery
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-recovery.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  index_recovery:
     #  - GET
@@ -1035,8 +1275,12 @@ module Elastics
 
 
     #  ########## Elastics.index_clearcache ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Recovery
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-clearcache.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  index_clearcache:
     #  - POST
@@ -1053,8 +1297,12 @@ module Elastics
 
 
     #  ########## Elastics.flush_index ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Flush
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-flush.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  flush_index:
     #  - POST
@@ -1064,6 +1312,8 @@ module Elastics
     #  Usage:
     #  Elastics.flush_index :index => nil
     #
+    #  Notice: You can pass the parameters as the :params variable.
+    #
     def self.flush_index(*vars)
       ## this is a stub, used for reference
       super
@@ -1071,8 +1321,12 @@ module Elastics
 
 
     #  ########## Elastics.synced_flush_index ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Synced Flush
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-synced-flush.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  synced_flush_index:
     #  - POST
@@ -1082,6 +1336,8 @@ module Elastics
     #  Usage:
     #  Elastics.synced_flush_index :index => nil
     #
+    #  Notice: You can pass the parameters as the :params variable.
+    #
     def self.synced_flush_index(*vars)
       ## this is a stub, used for reference
       super
@@ -1089,8 +1345,12 @@ module Elastics
 
 
     #  ########## Elastics.refresh_index ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Refresh
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-refresh.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  refresh_index:
     #  - POST
@@ -1107,8 +1367,12 @@ module Elastics
 
 
     #  ########## Elastics.optimize_index ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Optimize
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-optimize.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  optimize_index:
     #  - POST
@@ -1118,6 +1382,8 @@ module Elastics
     #  Usage:
     #  Elastics.optimize_index :index => nil
     #
+    #  Notice: You can pass the parameters as the :params variable.
+    #
     def self.optimize_index(*vars)
       ## this is a stub, used for reference
       super
@@ -1125,8 +1391,12 @@ module Elastics
 
 
     #  ########## Elastics.upgrade_index ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Upgrade
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-upgrade.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  upgrade_index:
     #  - POST
@@ -1136,15 +1406,44 @@ module Elastics
     #  Usage:
     #  Elastics.upgrade_index :index => nil
     #
+    #  Notice: You can pass the parameters as the :params variable.
+    #
     def self.upgrade_index(*vars)
       ## this is a stub, used for reference
       super
     end
 
 
+    #  ########## Elastics.cat ##########
+    #
+    #  API Name: Cat API
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/cat.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
+    #  ---
+    #  cat:
+    #  - GET
+    #  - "/"
+    #
+    #
+    #  Usage:
+    #  Elastics.cat
+    #  Notice: You must pass the :path variable or you can pass it as a simple string argument: Elastics.cat('/path')
+    #
+    def self.cat(*vars)
+      ## this is a stub, used for reference
+      super
+    end
+
+
     #  ########## Elastics.cluster_health ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Health
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  cluster_health:
     #  - GET
@@ -1154,6 +1453,8 @@ module Elastics
     #  Usage:
     #  Elastics.cluster_health :index => nil
     #
+    #  Notice: You can pass the params as the :params variable.
+    #
     def self.cluster_health(*vars)
       ## this is a stub, used for reference
       super
@@ -1161,8 +1462,12 @@ module Elastics
 
 
     #  ########## Elastics.cluster_state ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: State
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-state.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  cluster_state:
     #  - GET
@@ -1173,6 +1478,8 @@ module Elastics
     #  Elastics.cluster_state :metrics => "_all",
     #                         :index   => nil
     #
+    #  Notice: You can pass the metrics as the :metrics variable.
+    #
     def self.cluster_state(*vars)
       ## this is a stub, used for reference
       super
@@ -1180,8 +1487,12 @@ module Elastics
 
 
     #  ########## Elastics.cluster_stats ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Stats
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-stats.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  cluster_stats:
     #  - GET
@@ -1190,6 +1501,7 @@ module Elastics
     #
     #  Usage:
     #  Elastics.cluster_stats
+    #  Notice: You can pass the params as the :params variable.
     #
     def self.cluster_stats(*vars)
       ## this is a stub, used for reference
@@ -1198,8 +1510,12 @@ module Elastics
 
 
     #  ########## Elastics.cluster_pending_tasks ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Pending Cluster Tasks
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-pending.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  cluster_pending_tasks:
     #  - GET
@@ -1208,6 +1524,7 @@ module Elastics
     #
     #  Usage:
     #  Elastics.cluster_pending_tasks
+    #  Notice: You can pass the params as the :params variable.
     #
     def self.cluster_pending_tasks(*vars)
       ## this is a stub, used for reference
@@ -1216,8 +1533,12 @@ module Elastics
 
 
     #  ########## Elastics.cluster_reroute ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Cluster Reroute
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-reroute.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  cluster_reroute:
     #  - POST
@@ -1226,6 +1547,7 @@ module Elastics
     #
     #  Usage:
     #  Elastics.cluster_reroute
+    #  Notice: You must pass the data structure as the :data variable.
     #
     def self.cluster_reroute(*vars)
       ## this is a stub, used for reference
@@ -1233,27 +1555,13 @@ module Elastics
     end
 
 
-    #  ########## Elastics.put_cluster_settings ##########
-    #  ------------------
-    #  Elastics::Template
-    #  ---
-    #  put_cluster_settings:
-    #  - PUT
-    #  - "/_cluster/settings"
-    #
-    #
-    #  Usage:
-    #  Elastics.put_cluster_settings
-    #
-    def self.put_cluster_settings(*vars)
-      ## this is a stub, used for reference
-      super
-    end
-
-
     #  ########## Elastics.get_cluster_settings ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Cluster Update Settings
+    #  API URL: http://www.elasticsearch.org/guide/reference/api/admin-cluster-update-settings
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  get_cluster_settings:
     #  - GET
@@ -1262,16 +1570,42 @@ module Elastics
     #
     #  Usage:
     #  Elastics.get_cluster_settings
-    #
     def self.get_cluster_settings(*vars)
       ## this is a stub, used for reference
       super
     end
 
 
+    #  ########## Elastics.put_cluster_settings ##########
+    #
+    #  API Name: Cluster Update Settings
+    #  API URL: http://www.elasticsearch.org/guide/reference/api/admin-cluster-update-settings
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
+    #  ---
+    #  put_cluster_settings:
+    #  - PUT
+    #  - "/_cluster/settings"
+    #
+    #
+    #  Usage:
+    #  Elastics.put_cluster_settings
+    #  Notice: You must pass the data structure as the :data variable.
+    #
+    def self.put_cluster_settings(*vars)
+      ## this is a stub, used for reference
+      super
+    end
+
+
     #  ########## Elastics.cluster_nodes_stats ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Nodes Stats
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  cluster_nodes_stats:
     #  - GET
@@ -1282,6 +1616,8 @@ module Elastics
     #  Elastics.cluster_nodes_stats :nodes => nil,
     #                               :stats => nil
     #
+    #  Notice: You can pass the params as the :params variable. You must pass the data structure as the :data variable.
+    #
     def self.cluster_nodes_stats(*vars)
       ## this is a stub, used for reference
       super
@@ -1289,8 +1625,12 @@ module Elastics
 
 
     #  ########## Elastics.cluster_nodes_info ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Nodes Info
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-info.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  cluster_nodes_info:
     #  - GET
@@ -1301,6 +1641,8 @@ module Elastics
     #  Elastics.cluster_nodes_info :nodes => nil,
     #                              :info  => nil
     #
+    #  Notice: This template uses the _nodes shortcut.
+    #
     def self.cluster_nodes_info(*vars)
       ## this is a stub, used for reference
       super
@@ -1308,8 +1650,12 @@ module Elastics
 
 
     #  ########## Elastics.cluster_nodes_hot_threads ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name: Nodes Hot Threads
+    #  API URL: https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-hot-threads.html
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  cluster_nodes_hot_threads:
     #  - GET
@@ -1326,8 +1672,12 @@ module Elastics
 
 
     #  ########## Elastics.match_all ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name:
+    #  API URL:
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  match_all:
     #  - GET
@@ -1340,6 +1690,8 @@ module Elastics
     #  Elastics.match_all :index => nil,
     #                     :type  => nil
     #
+    #  Notice: Not a real API method, but handy.
+    #
     def self.match_all(*vars)
       ## this is a stub, used for reference
       super
@@ -1347,8 +1699,12 @@ module Elastics
 
 
     #  ########## Elastics.search_by_id ##########
-    #  ------------------
-    #  Elastics::Template
+    #
+    #  API Name:
+    #  API URL:
+    #
+    #  -----------------------
+    #  Elastics::Template::Api
     #  ---
     #  search_by_id:
     #  - GET
@@ -1363,9 +1719,12 @@ module Elastics
     #                        :type  => nil,
     #                        :index => nil
     #
+    #  Notice: Get a document without using the get API and without raising any error if it is missing.
+    #
     def self.search_by_id(*vars)
       ## this is a stub, used for reference
       super
     end
+
   end
 end

@@ -49,7 +49,11 @@ module Elastics
             formatted = lines.map{ |line| "%-#{max[0]}s %-#{max[1]}s => %-#{max[2]}s  %s" % line }
             indented  = formatted.shift
             indented  = [indented] + formatted.map{ |line| indent + line }
-            indented.join("\n") + "\n "
+            indented  = indented.join("\n") + "\n "
+            notice = if @template.is_a?(Elastics::Template::Api) && @template.references['notice']
+                       "\nNotice: #{@template.references['notice']}\n "
+                     end
+            indented + notice
           end
 
 
@@ -81,9 +85,6 @@ module Elastics
 
 
           def render_api
-            notice = if @template.is_a?(Elastics::Template::Api) && @template.references['notice']
-                       "\nNotice: #{@template.references['notice']}\n "
-                     end
             <<-output.gsub(/^ {12}/m,'')
             ########## #{@method_call} ##########
 
@@ -92,7 +93,7 @@ module Elastics
 
             #{render_sources}
             Usage:
-            #{render_usage(' ' * 12)}#{ notice }
+            #{render_usage(' ' * 12)}
             output
           end
 
