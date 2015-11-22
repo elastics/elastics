@@ -50,9 +50,9 @@ module Elastics
             indented  = formatted.shift
             indented  = [indented] + formatted.map{ |line| indent + line }
             indented  = indented.join("\n") + "\n "
-            notice = if @template.is_a?(Elastics::Template::Api) && @template.references['notice']
-                       "\nNotice: #{@template.references['notice']}\n "
-                     end
+            notice    = if @template.is_a?(Elastics::Template::Api) && @template.references['notice']
+                          "\nNotice: #{@template.references['notice']}\n "
+                        end
             indented + notice
           end
 
