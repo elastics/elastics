@@ -19,11 +19,6 @@ module Elastics
       end
       alias_method :documents, :collection
 
-      # deprecated
-      def facets
-        self['facets']
-      end
-
       def aggregations
         self['aggregations']
       end

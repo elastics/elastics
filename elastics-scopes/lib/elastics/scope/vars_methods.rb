@@ -69,10 +69,6 @@ module Elastics
         deep_merge :script_fields => hash
       end
 
-      def facets(hash)
-        deep_merge :facets => hash
-      end
-
       def highlight(hash)
         deep_merge :highlight => hash
       end

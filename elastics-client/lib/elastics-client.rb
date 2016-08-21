@@ -137,6 +137,7 @@ module Elastics
     alias_method :put_index_settings, :update_index_settings
 
     alias_method :mlt,                :more_like_this
+    alias_method :termvector,         :termvectors           # deprecated (backward compatibility)
   end
 
 

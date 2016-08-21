@@ -77,7 +77,7 @@ module Elastics
         result = if vars.first.is_a?(Symbol)
                    template = vars.shift
                    # preserves an eventual wrapper by calling the template method
-                   self[:context].send(template, params(:search_type => 'count'), *vars)
+                   self[:context].send(template, params(:size => 0), *vars)
                  else
                    Query.elastics.count_search(:get, self, *vars)
                  end

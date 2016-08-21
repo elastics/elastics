@@ -128,16 +128,17 @@ post_bulk_string:
 #-----------------------------------------------------------------------------#
 ### Term Vectors ###
 
-termvector:
+termvectors:
   - POST
-  - /<<index>>/<<type>>/<<id>>/_termvector
+  - /<<index>>/<<type>>/<<id>>/_termvectors
   -
   - REFERENCES:
       group: document_api
       api_name: Term Vectors
       api_url: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-termvectors.html
       notice: "You must pass the options as the :data variable."
-
+      aliases:
+        - :termvector
 
 
 #-----------------------------------------------------------------------------#

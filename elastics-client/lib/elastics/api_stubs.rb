@@ -240,24 +240,25 @@ module Elastics
     # also aliased by: :bulk
 
 
-    #  ########## Elastics.termvector ##########
+    #  ########## Elastics.termvectors ##########
     #  ------------------
     #  Elastics::Template::API
     #  ---
-    #  termvector:
+    #  termvectors:
     #  - POST
-    #  - "/<<index>>/<<type>>/<<id>>/_termvector"
+    #  - "/<<index>>/<<type>>/<<id>>/_termvectors"
     #
     #
     #  Usage:
-    #  Elastics.termvector :id    => id,   # required
-    #                      :type  => nil,
-    #                      :index => nil
+    #  Elastics.termvectors :id    => id,   # required
+    #                       :type  => nil,
+    #                       :index => nil
     #
-    def self.termvector(*vars)
+    def self.termvectors(*vars)
       ## this is a stub, used for reference
       super
     end
+    # also aliased by: :termvector
 
 
     #  ########## Elastics.multi_termvectors ##########
