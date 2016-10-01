@@ -34,7 +34,9 @@ module Elastics
           h[:request].delete(:data) if h[:request][:data].nil?
         end
         if logger.debug_result
-          h[:result] = result if result
+          if result
+            h[:result] = result.respond_to?(:raw_result) ? result.raw_result : result
+          end
         end
         logger.debug logger.curl_format ? curl_format(h[:request]) : yaml_format(h)
       end
