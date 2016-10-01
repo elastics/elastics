@@ -20,7 +20,7 @@ module Elastics
 
         h = {}
         if logger.debug_variables
-          h[:variables] = int[:vars] if int
+          h[:variables] = int[:vars].to_h if int
         end
         if logger.debug_request
           h[:request] = {}
@@ -35,7 +35,7 @@ module Elastics
         end
         if logger.debug_result
           if result
-            h[:result] = result.respond_to?(:raw_result) ? result.raw_result : result
+            h[:result] = (result.respond_to?(:raw_result) ? result.raw_result : result).to_h
           end
         end
         logger.debug logger.curl_format ? curl_format(h[:request]) : yaml_format(h)
