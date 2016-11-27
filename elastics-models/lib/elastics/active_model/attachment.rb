@@ -14,7 +14,7 @@ module Elastics
       def attribute_attachment(*args)
         name  = args.first.is_a?(Symbol) ? args.shift : :attachment
         props = {:properties => { 'type'   => 'attachment',
-                                  'fields' => { name.to_s      => { 'store' => 'yes', 'term_vector' => 'with_positions_offsets' },
+                                  'fields' => { 'content'      => { 'store' => 'yes', 'term_vector' => 'with_positions_offsets' },
                                                 'title'        => { 'store' => 'yes' },
                                                 'author'       => { 'store' => 'yes' },
                                                 'name'         => { 'store' => 'yes' },
